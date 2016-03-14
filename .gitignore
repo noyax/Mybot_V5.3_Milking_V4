@@ -1,47 +1,47 @@
-# Windows image file caches
-Thumbs.db
-ehthumbs.db
+# MyBot.run AUTOIT .gitignore file
 
-# Folder config file
-Desktop.ini
+# Global Files
+/.project
+*.ini
+*.log
+*.orig
+*.png
+*.jpg
+*.exe
 
-# Recycle Bin used on file shares
-$RECYCLE.BIN/
+# Global Folders
+[Pp]rofiles/
+[Tt]emplates/
+[Tt]emp/
+[Bb]ackup/
 
-# Windows Installer files
-*.cab
-*.msi
-*.msm
-*.msp
+# Obsolete Files and Folders
+[Ll]oots/
+[Aa]llTowns/
 
-# Windows shortcuts
-*.lnk
+# Exclusion Curl (used for PushBullet)
+![Cc]url.exe
 
-# =========================
-# Operating System Files
-# =========================
+# Exclusion Language .ini's
+![Ll]anguages/*.ini
 
-# OSX
-# =========================
+# Exclusion Images/Icon
+![Ii]mages/logo.jpg
+![Ii]mages/2arrow.jpg
+![Ii]mages/MyBot.ico
 
-.DS_Store
-.AppleDouble
-.LSOverride
+# Debug
+[Ll]ib/[Dd]ebug/
+[Ll]ib/[Tt]est.txt
+EnableMBRDebug.txt
 
-# Thumbnails
-._*
+# SQL (not in use)
+*.sqlite3
+*.db
 
-# Files that might appear in the root of a volume
-.DocumentRevisions-V100
-.fseventsd
-.Spotlight-V100
-.TemporaryItems
-.Trashes
-.VolumeIcon.icns
+# Release files
+TestVersion.txt
 
-# Directories potentially created on remote AFP share
-.AppleDB
-.AppleDesktop
-Network Trash Folder
-Temporary Items
-.apdisk
+# Exclusion Release
+!LastVersion*.txt
+!MyBot.run.exe
