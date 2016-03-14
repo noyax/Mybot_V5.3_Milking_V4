@@ -1,0 +1,19 @@
+NOTE  |Author: Noyax37 - ver. 1.0 - 19.01.2016 
+NOTE  |
+NOTE  |Attack: Milking only for black with gobelins
+NOTE  |Make these Troops: Bobelins 100%
+NOTE  |Will drop Gobelins
+
+      |------------------------------------- Milking with Gobelins start -----------------------------|
+
+      |EXTR. GOLD |EXTR.ELIXIR|EXTR. DARK |DEPO. GOLD |DEPO.ELIXIR|DEPO. DARK |TOWNHALL   |FORCED SIDE|
+SIDE  |           |           |1          |           |           |           |           |           |Up wich you prefer: exemple if you prefer elixir then put EXTR.ELIXIR to 5 and other to 1
+
+
+      |COLLECTOR__|INDEX______|QTY_X_VECT_|TROOPNAME__|DELAY_DROP_|DELAYCHANGE|SLEEPAFTER_|___________|Milking Gobs 
+MILK1 |D          |1          |6          |gobl       |0          |0          |0          |           |launch 6 gobelins and 2 minions at each point near mines
+WAIT  |500-1000   |           |           |           |           |           |           |           |Add a wait time; during wait time also CHECK exit values (exit if no resource left, exit if one or two starts reach)
+
+      |---------------------------------- Milking with Gobelins end-----------------------------------|
+
+

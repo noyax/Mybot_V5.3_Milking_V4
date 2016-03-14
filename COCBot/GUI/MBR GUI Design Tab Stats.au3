@@ -149,6 +149,20 @@ $btnResetStats = GUICtrlCreateButton(GetTranslated(11,31, "Reset Stats"), $x + 1
 GUICtrlSetOnEvent(-1, "btnResetStats")
 GUICtrlSetState(-1, $GUI_DISABLE)
 
+;noyax top
+$x = 20
+$chkCoCStats = GUICtrlCreateCheckbox("CoCStats Activate", $x+5 , $y , -1, -1)
+$txtTip = "Activate sending raid results to CoCStats.com"
+GUICtrlSetTip(-1, $txtTip)
+GUICtrlSetOnEvent(-1, "chkCoCStats")
+$x += 130
+$lblAPIKey = GUICtrlCreateLabel("API Key :", $x, $y+5 , -1, 21, $SS_LEFT)
+$txtAPIKey = GUICtrlCreateInput("", $x + 40, $y , 200, 20, BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER))
+$txtTip = "Join in CoCStats.com and input API Key here"
+GUICtrlSetTip(-1, $txtTip)
+GUICtrlSetOnEvent(-1, "txtAPIKey")
+;noyax bottom
+
 $x = 30
 $y = 260
 $grpStatsMisc = GUICtrlCreateGroup(GetTranslated(11,32, "Stats: Misc"), $x - 20, $y - 20, 450, 140)

@@ -1,4 +1,10 @@
-﻿﻿ What is it?
+﻿﻿ This version is a mod of Mybot to add milking strategy.
+
+- The modded version can be found here: https://mybot.run/forums/index.php?/topic/15769-updated-mod-mybot-515-milking-v3-de-drill-smartzap-telegram-notifications/
+
+
+
+What is it?
   -----------
 - A Free Clash of Clans bot. 
 - A bot is a general term in gaming that is used to refer to a character controlled by a computer.

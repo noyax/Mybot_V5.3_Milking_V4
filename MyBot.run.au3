@@ -24,6 +24,8 @@
 #pragma compile(LegalCopyright, © https://mybot.run)
 #pragma compile(Out, MyBot.run.exe)  ; Required
 
+Local $MilkVer = "V3.0.7" ;Noyax
+
 If @AutoItX64 = 1 Then
 	MsgBox(0, "", "Don't Run/Compile the Script as (x64)! try to Run/Compile the Script as (x86) to get the bot to work." & @CRLF & _
 			"If this message still appears, try to re-install AutoIt.")
@@ -48,7 +50,7 @@ If $aCmdLine[0] < 2 Then
 	If Not $FoundRunningAndroid Then DetectInstalledAndroid()
 EndIf
 ; Update Bot title
-$sBotTitle = $sBotTitle & "(" & ($AndroidInstance <> "" ? $AndroidInstance : $Android) & ")" ;Do not change this. If you do, multiple instances will not work.
+$sBotTitle = $sBotTitle & "(" & ($AndroidInstance <> "" ? $AndroidInstance : $Android) & ")" & " MOD Milking " & $MilkVer ; Noyax
 
 If $bBotLaunchOption_Restart = True Then
    If CloseRunningBot($sBotTitle) = True Then
@@ -160,6 +162,10 @@ WEnd
 
 Func runBot() ;Bot that runs everything in order
 	$TotalTrainedTroops = 0
+	;noyax add Ancient begin skip check
+	$skipStartTime = _NowCalc()
+;	setlog("$skipStartTime = " & $skipStartTime)
+	;noyax add Ancient end skip check
 	While 1
 		$Restart = False
 		$fullArmy = False
@@ -206,6 +212,30 @@ Func runBot() ;Bot that runs everything in order
 			If _Sleep($iDelayRunBot5) Then Return
 				checkMainScreen(False)
 				If $Restart = True Then ContinueLoop
+;Noyax top - this for don't waste time if full army in milking mode
+			ReplayShare($iShareAttackNow) ; moved to replay share if wanted before exit loop
+			If _Sleep($iDelayRunBot3) Then Return
+			If $Restart = True Then ContinueLoop
+			ReportPushBullet()
+				If _Sleep($iDelayRunBot3) Then Return
+				If $Restart = True Then ContinueLoop
+			Train()
+				If _Sleep($iDelayRunBot1) Then Return
+				checkMainScreen(False)
+				If $Restart = True Then ContinueLoop
+;			If $fullArmy = True And $MilkAtt = 1 Then
+;				If $debugsetlog = 1 Then Setlog("don't waste time with many functions before attacking")
+;			Else
+	;Ancient begin skip check
+			setlog("_DateAdd( 'n',15, $skipStartTime ) = " & _DateAdd( 'n',15, $skipStartTime ))
+			If $fullArmy = True And $MilkAtt = 1 And  _DateAdd( 'n', $TempoTrain, $skipStartTime ) > _NowCalc() Then
+				If $debugsetlog = 1 Then Setlog("don't waste time with many functions before attacking")
+				$Musttrain = 0
+			Else
+				$Musttrain = 1
+				$retourdeguerre = 0
+	;Ancient end skip check
+;Noyax bottom
 			Collect()
 				If _Sleep($iDelayRunBot1) Then Return
 				If $Restart = True Then ContinueLoop
@@ -215,20 +245,20 @@ Func runBot() ;Bot that runs everything in order
 			ReArm()
 				If _Sleep($iDelayRunBot3) Then Return
 				If $Restart = True Then ContinueLoop
-			ReplayShare($iShareAttackNow)
-				If _Sleep($iDelayRunBot3) Then Return
-				If $Restart = True Then ContinueLoop
-			ReportPushBullet()
-				If _Sleep($iDelayRunBot3) Then Return
-				If $Restart = True Then ContinueLoop
+;			ReplayShare($iShareAttackNow)
+;				If _Sleep($iDelayRunBot3) Then Return
+;				If $Restart = True Then ContinueLoop
+;			ReportPushBullet()
+;				If _Sleep($iDelayRunBot3) Then Return
+;				If $Restart = True Then ContinueLoop
 			DonateCC()
 				If _Sleep($iDelayRunBot1) Then Return
 				checkMainScreen(False) ; required here due to many possible exits
 				If $Restart = True Then ContinueLoop
-			Train()
-				If _Sleep($iDelayRunBot1) Then Return
-				checkMainScreen(False)
-				If $Restart = True Then ContinueLoop
+;			Train()
+;				If _Sleep($iDelayRunBot1) Then Return
+;				checkMainScreen(False)
+;				If $Restart = True Then ContinueLoop
 			BoostBarracks()
 				If $Restart = True Then ContinueLoop
 			BoostSpellFactory()
@@ -261,6 +291,7 @@ Func runBot() ;Bot that runs everything in order
 			UpgradeWall()
 				If _Sleep($iDelayRunBot3) Then Return
 				If $Restart = True Then ContinueLoop
+			EndIf ;noyax
 			Idle()
 				If _Sleep($iDelayRunBot3) Then Return
 				If $Restart = True Then ContinueLoop
@@ -431,7 +462,13 @@ Func AttackMain() ;Main control for attack functions
 	PrepareSearch()
 		If $OutOfGold = 1 Then Return ; Check flag for enough gold to search
 		If $Restart = True Then Return
-	VillageSearch()
+
+	If ($MilkAtt = 1 and $ichkUseAttackDBCSV = 0) then ; noyax
+		VillageSearch_Milking() ; noyax
+	Else ; noyax
+		VillageSearch()
+	EndIf
+
 		If $OutOfGold = 1 Then Return ; Check flag for enough gold to search
 		If $Restart = True Then Return
 	PrepareAttack($iMatchMode)
@@ -442,12 +479,16 @@ Func AttackMain() ;Main control for attack functions
 	Attack()
 		If $Restart = True Then Return
 	ReturnHome($TakeLootSnapShot)
+	$retourdeguerre = 1 ;Noyax
 		If _Sleep($iDelayAttackMain2) Then Return
 	Return True
 EndFunc   ;==>AttackMain
 
 Func Attack() ;Selects which algorithm
 	SetLog(" ====== Start Attack ====== ", $COLOR_GREEN)
+	If ($MilkAtt = 1 and $ichkUseAttackDBCSV = 0) then ; noyax
+		algorithm_AllTroops_Milk()
+	EndIf ; noyax
 	If  ($iMatchMode = $DB and $ichkUseAttackDBCSV = 1) or ($iMatchMode = $LB and $ichkUseAttackABCSV = 1) Then
 		Algorithm_AttackCSV()
 	Elseif $iMatchMode= $LB and  $iChkDeploySettings[$LB] = 6 Then

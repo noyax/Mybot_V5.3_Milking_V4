@@ -1,0 +1,157 @@
+V4.01
+- Adapt my mod to Mybot v5.3
+
+v3.0.7
+- hide cocstats api key when bot running
+- use lib imglocV8.dll by @trlopes
+- New logo, thanks to @davideroma94
+- can run multiple instance of MEmu now
+
+
+v3.0.6
+- Fix error variable used without being declared in FindPixelCloser.au3
+- Add translation possible like MBR official in section [99] on each language file
+
+
+V3.0.5
+- fix pb with cocstats
+
+v3.0.4
+- Adapt v3.0.3 to new version of Mybot V5.2.1
+
+
+V3.0.3
+- Add modif of @LKhjks to attack TH exposed in csv
+- Add train dark troops
+- Add function to attack base when loots in th snipe < X % (I think 10% is a good choise)
+
+
+v3.0.2
+- train spell when spell camps (?) are full
+- fix train minions in scripted attack G + M (brutal hard fix, when you want minions 45 be cooking in barrack)
+- make visible options debug in expert tab
+
+V3.0.1
+- adapt this mod to v5.1.4
+- begin to use imgloc.dll in new milking attack thanks to @trlopes
+
+
+v2.1.0
+- fix another error "...array..." thanks to @legion123
+- Fix error in train lightning spell, thanks to @TomRos
+
+
+V2.0.9:
+- Add TH snipe in CSV scripted attack milking special thanks to @legion123
+
+v2.0.8:
+- fix error "...array..." thanks to @legion123
+- fix to deploy 2nd troop in csv thanks to @MereDoku
+- fix pb with telegram pause thanks to @alepitta
+- fix pb with DEZAP in case of TH11 lvl thanks to @dustyhelp
+
+
+v2.0.6 and 2.0.7:
+- adapt to sc update
+
+
+v2.0.5
+- bug fix when deploy multi troops in csv
+- bug in stats notification in telegram
+- bug fix with clash version change
+
+v2.0.4
+-bug fix in TH snipe "3rd ..."
+
+
+v2.0.3
+- add cocstats (see http://www.cocstats.com )
+- fix bug when creating spell
+
+
+v2.0.2
+- add telegram notifications thank to @Araboy
+- increase speed when put troops on maps
+- can launch 2 type of troops on each pixel in csv like this:
+
+MILK1 |M |1 |6-2 |gobl-Mini |0 |0 |0 | |launch 6 gobl and 2 minions at each point near mines (M)
+
+- other...
+
+v2.0.1
+- Fix pb to drop troops
+- add ZAPDE function, thanks to @LunaEclipse
+- Fix pb detection TH, thanks to @mppa5
+
+V2.0
+- Add milking function in Mybot V5.1.1
+
+
+V1.7.3:
+- Add detect trapped v1.3 TH by @Araboy + add select air ou/and ground trapped by @Noyax
+- Fix pb array by @HArchH
+- In DB attack, check if TH is out and put gobelins near to fall
+- Add a number mini of gobs before train. For exemple you have 90 gobs to make milking and mini 40. The 1st time bot wait 90 to attack. When you come back if you have > 40 gobs in camps then attack again, and again , ...
+
+
+V1.7.2:
+* Modifications ask by @ancient = 
+	- raid with gobs + archers. 
+	- snipe combo can choise Only Dead, Live or both bases
+	- add "dualtroopmilking" in attack TH type 
+	- add "deploynormal" in "if TH is at bottom"
+	- add checkbox "and meets dead base search criteria
+	- milking is possible with gobs and arch
+	- choose number of gobs and / or archers to launch at each exposed collectors
+	- add reserve of gobs and / or archers for snipes
+
+
+V1.7.1:
+- Can choose how much gobs / exposed extractors launch => not necessary now to fix percent of exposed extractors to no attack
+
+V1.7
+- Add checkboxes to choose to attack only if collectors and mines are exposed
+
+V1.6.2:
+- Add min Dark value to search snipe combo
+
+V1.6.1:
+- fix error when running bot on Win XP, thanks to @shadow046
+- fix error found by @ezeck0001 in : https://mybot.run/forums/thread-13974.html
+
+
+V1.6:
+- Skip some functions to attack more faster
+- fix drop trophy
+- fix attack near redline in TH Snipe mode if % special thanks to @ezeck0001
+- If milking train max nb of gobs needed, if more => instant attack (now it's not needed to fix % to full camp)
+- re import images from @piervito10
+
+
+V1.5.5:
+- Fix another error in the calculation of % for launch DB Attack after snipe
+
+V1.5.4:
+- Fix timing to the end of DB attanck after TH Snipe
+- Fix error in the calculation of % for launch DB Attack after snipe
+
+V1.5.1 to 1.5.3:
+- Fixes mistake in code
+
+
+V1.5:
+- Fix I forget to put variable in global, sorry
+
+V1.4
+1) fixes issue when current trophy equals max trophy in GUI
+2) Fix issue when OOS happens during or immediately after trophy drop. Problem here is village trophy value is not updated due OOS skipping village report to update trophy value. 
+3) Add Check box in advanced tab to attack if loot < X % (at your choice but less 20%)
+
+For 1) and 2), thanls to monkeyhunter: https://mybot.run/forums/thread-13107-post-113833.html#pid113833
+
+V1.3
+1) add function to check when TH fall in TH snipe: if loots < 10% of total loots possible then => attack like dead base (like greedy mode). TH have 20% of global ressources il you take only 10% then it's dead base too ;)
+...
+
+V1...
+...
