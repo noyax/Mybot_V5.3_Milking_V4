@@ -92,7 +92,7 @@ Func DropTroopFromINI($vectors, $indexStart, $indexEnd, $qtaMin, $qtaMax, $troop
 	EndSwitch
 
 	If $troopPosition = -1 Or $usespell = False Then
-		If $usespell = True Then
+		If $usespell = True and $MilkAtt = 0 Then ; Noyax 
 			Setlog("No troop found in your attack troops list")
 			debugAttackCSV("No troop found in your attack troops list")
 		Else

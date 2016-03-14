@@ -110,7 +110,7 @@ Func _RemoteControl()
 						_DeleteMessage($iden[$x])
 					Case "BOT " & StringUpper($iOrigPushB) & " STATS"
 						SetLog("Pushbullet: Your request has been received. Statistics sent", $COLOR_GREEN)
-						_Push($iOrigPushB & " | Stats Village Report" & "\n" & "At Start\n[G]: " & _NumberFormat($iGoldStart) & " [E]: " & _NumberFormat($iElixirStart) & " [D]: " & _NumberFormat($iDarkStart) & " [T]: " & $iTrophyStart & "\n\nNow (Current Resources)\n[G]: " & _NumberFormat($iGoldCurrent) & " [E]: " & _NumberFormat($iElixirCurrent) & " [D]: " & _NumberFormat($iDarkCurrent) & " [T]: " & $iTrophyCurrent & " [GEM]: " & $iGemAmount & "\n \n [No. of Free Builders]: " & $iFreeBuilderCount & "\n [No. of Wall Up]: G: " & $iNbrOfWallsUppedGold & "/ E: " & $iNbrOfWallsUppedElixir & "\n\nAttacked: " & GUICtrlRead($lblresultvillagesattacked) & "\nSkipped: " & $iSkippedVillageCount)
+						_Push($iOrigPushB & " | Stats Village Report" & "\n" & "At Start\n[G]: " & _NumberFormat($iGoldStart) & " [E]: " & _NumberFormat($iElixirStart) & " [D]: " & _NumberFormat($iDarkStart) & " [T]: " & $iTrophyStart & "\n\nNow (Current Resources)\n[G]: " & _NumberFormat($iGoldCurrent) & " [E]: " & _NumberFormat($iElixirCurrent) & " [D]: " & _NumberFormat($iDarkCurrent) & " [T]: " & $iTrophyCurrent & " [GEM]: " & $iGemAmount & "\n \n [No. of Free Builders]: " & $iFreeBuilderCount & "\n [No. of Wall Up]: G: " & $iNbrOfWallsUppedGold & "/ E: " & $iNbrOfWallsUppedElixir & "\n\nAttacked: " & GUICtrlRead($lblresultvillagesattacked) & "\nSkipped: " & $iSkippedVillageCount & "\n\nGold per H: " & GUICtrlRead($lblHourlyStatsGold) & "/ Elix per H: " & GUICtrlRead($lblHourlyStatsElixir) & "/ Dark per H: " & GUICtrlRead($lblHourlyStatsDark)); Noyax = add stats gold / h, elix /h and dark / h)
 						_DeleteMessage($iden[$x])
 					Case "BOT " & StringUpper($iOrigPushB) & " SCREENSHOT"
 						SetLog("Pushbullet: ScreenShot request received", $COLOR_GREEN)
@@ -146,6 +146,221 @@ Func _RemoteControl()
 			EndIf
 		Next
 	EndIf
+;   endif
+  If $pEnabled2=1 then
+	  ;$access_token2 = $PushToken2
+	  $oHTTP = ObjCreate("WinHTTP.WinHTTPRequest.5.1")
+	  $url= "https://api.telegram.org/bot"
+	  $oHTTP.Open("Get", $url & $access_token2 & "/getupdates" , False)
+	  $oHTTP.Send()
+	  $Result = $oHTTP.ResponseText
+	  Local $findstr2 = StringRegExp(StringUpper($Result), '"TEXT":"')
+      If $findstr2 = 1 Then
+	   local $rmessage = _StringBetween($Result, 'text":"' ,'"}}' )           ;take message
+	   local $uid = _StringBetween($Result, 'update_id":' ,'"message"' )             ;take update id
+	   local $lastmessage = _Arraypop($rmessage)								 ;take last message
+	   local $lastuid = _Arraypop($uid)
+	   local $uclm = StringUpper(StringStripWS($lastmessage, $STR_STRIPLEADING + $STR_STRIPTRAILING + $STR_STRIPSPACES)) ;upercase & remove space laset message
+	   if $first = 0 then
+		  $first = 1
+		  $lastremote = $lastuid
+		  $oHTTP.Open("Get", $url & $access_token2 & "/getupdates?offset=" & $lastuid  , False)
+	      $oHTTP.Send()
+	   EndIf
+	   if $lastremote <> $lastuid Then
+      	 $lastremote = $lastuid
+		 		 Switch $uclm
+					case "\/START"
+						$oHTTP.Open("Post", "https://api.telegram.org/bot"&$access_token2&"/sendmessage", False)
+		                $oHTTP.SetRequestHeader("Content-Type", "application/json")
+						local $ppush3 = '{"text": "select your remote", "chat_id":' & $chat_id2 &', "reply_markup": {"keyboard": [["stop\n\u25fb","pause\n\II","restart\n\u21aa","resume\n\u25b6"],["help\n\u2753","delete\n\ud83d\udeae","log\n\ud83d\udcd1","stats\n\ud83d\udcca"],["screenshot\n\ud83c\udfa6","last raid txt\n\ud83d\udcc4","lastraid\n\ud83d\udcd1"]],"one_time_keyboard": false,"resize_keyboard":true}}}'
+						$oHTTP.Send($pPush3)
+					Case "HELP\N\U2753"
+						 Local $txtHelp = "You can remotely control your bot sending commands following this syntax:"
+						$txtHelp &= "\n" & "HELP - send this help message"
+						$txtHelp &= "\n" & "DELETE  - delete all your previous Push message"
+						$txtHelp &= "\n" & "RESTART - restart the bot named <Village Name> and bluestacks"
+						$txtHelp &= "\n" & "STOP - stop the bot named <Village Name>"
+						$txtHelp &= "\n" & "PAUSE - pause the bot named <Village Name>"
+						$txtHelp &= "\n" & "RESUME   - resume the bot named <Village Name>"
+						$txtHelp &= "\n" & "STATS - send Village Statistics of <Village Name>"
+						$txtHelp &= "\n" & "LOG - send the current log file of <Village Name>"
+						$txtHelp &= "\n" & "LASTRAID - send the last raid loot screenshot of <Village Name>"
+						$txtHelp &= "\n" & "LASTRAIDTXT - send the last raid loot values of <Village Name>"
+						$txtHelp &= "\n" & "SCREENSHOT - send a screenshot of <Village Name>"
+						$txtHelp &= "\n"
+						$txtHelp &= "\n" & "Send and recieve chats via pushbullet. Use BOT <myvillage> GETCHATS <interval|NOW|STOP> to get the latest clan chat as an image, and BOT <myvillage> SENDCHAT <chat message> to send a chat to your clan"
+						_Push($iOrigPushB & " | Request for Help" & "\n" & $txtHelp)
+						SetLog("Telegram: Your request has been received from ' " & $iOrigPushB & ". Help has been sent", $COLOR_GREEN)
+					Case "PAUSE\NII"
+						If $TPaused = False And $Runstate = True Then
+						 TogglePauseImpl("Push")
+						Else
+						 SetLog("Telegram: Your bot is currently paused, no action was taken", $COLOR_GREEN)
+						 _Push($iOrigPushB & " | Request to Pause" & "\n" & "Your bot is currently paused, no action was taken")
+						EndIf
+					Case "RESUME\N\U25B6"
+						If $TPaused = True And $Runstate = True Then
+						 TogglePauseImpl("Push")
+						Else
+						 SetLog("Telegram: Your bot is currently resumed, no action was taken", $COLOR_GREEN)
+						 _Push($iOrigPushB & " | Request to Resume" & "\n" & "Your bot is currently resumed, no action was taken")
+						EndIf
+					Case "DELETE\N\UD83D\UDEAE"
+		                $oHTTP.Open("Get", $url & $access_token2 & "/getupdates?offset=" & $lastuid  , False)
+	                    $oHTTP.Send()
+						SetLog("Telegram: Your request has been received.", $COLOR_GREEN)
+					Case "LOG\N\UD83D\UDCD1"
+						SetLog("Telegram: Your request has been received from " & $iOrigPushB & ". Log is now sent", $COLOR_GREEN)
+						_PushFile2($sLogFName, "logs", "text/plain; charset=utf-8", $iOrigPushB & " | Current Log " & "\n")
+						;_PushFile2($sLogFName, "logs", "application\/octet-stream", $iOrigPushB & " | Current Log " & "\n")
+						;_PushFile2($sLogFName, "logs", "application/octet-stream", $iOrigPushB & " | Current Log " & "\n")
+					Case "LASTRAID\N\UD83D\UDCD1"
+						If $AttackFile <> "" Then
+						 _PushFile($AttackFile, "Loots", "image/jpeg", $iOrigPushB & " | Last Raid " & "\n" & $AttackFile)
+						Else
+						 _Push($iOrigPushB & " | There is no last raid screenshot.")
+						EndIf
+						SetLog("Telegram: Push Last Raid Snapshot...", $COLOR_GREEN)
+					Case "LAST RAID TXT\N\UD83D\UDCC4"
+						SetLog("Telegram: Your request has been received. Last Raid txt sent", $COLOR_GREEN)
+						_Push($iOrigPushB & " | Last Raid txt" & "\n" & "[G]: " & _NumberFormat($iGoldLast) & " [E]: " & _NumberFormat($iElixirLast) & " [D]: " & _NumberFormat($iDarkLast) & " [T]: " & $iTrophyLast)
+					Case "STATS\N\UD83D\UDCCA"
+						SetLog("Telegram: Your request has been received. Statistics sent", $COLOR_GREEN)
+						_Push($iOrigPushB & " | Stats Village Report" & "\n" & "At Start\n[G]: " & _NumberFormat($iGoldStart) & " [E]: " & _NumberFormat($iElixirStart) & " [D]: " & _NumberFormat($iDarkStart) & " [T]: " & $iTrophyStart & "\n\nNow (Current Resources)\n[G]: " & _NumberFormat($iGoldCurrent) & " [E]: " & _NumberFormat($iElixirCurrent) & " [D]: " & _NumberFormat($iDarkCurrent) & " [T]: " & $iTrophyCurrent & " [GEM]: " & $iGemAmount & "\n \n [No. of Free Builders]: " & $iFreeBuilderCount & "\n [No. of Wall Up]: G: " & $iNbrOfWallsUppedGold & "/ E: " & $iNbrOfWallsUppedElixir & "\n\nAttacked: " & GUICtrlRead($lblresultvillagesattacked) & "\nSkipped: " & $iSkippedVillageCount & "\n\nGold per H: " & GUICtrlRead($lblHourlyStatsGold) & "/ Elix per H: " & GUICtrlRead($lblHourlyStatsElixir) & "/ Dark per H: " & GUICtrlRead($lblHourlyStatsDark))
+					Case "SCREENSHOT\N\UD83C\UDFA6"
+						SetLog("Telegram: ScreenShot request received", $COLOR_GREEN)
+						$RequestScreenshot = 1
+					Case "RESTART\N\U21AA"
+						SetLog("Telegram: Your request has been received. Bot and BS restarting...", $COLOR_GREEN)
+						_Push($iOrigPushB & " | Request to Restart..." & "\n" & "Your bot and BS are now restarting...")
+						SaveConfig()
+						_Restart()
+					Case "STOP\N\U25FB"
+						SetLog("Telegram: Your request has been received. Bot is now stopped", $COLOR_GREEN)
+						If $Runstate = True Then
+						 _Push($iOrigPushB & " | Request to Stop..." & "\n" & "Your bot is now stopping...")
+						 btnStop()
+						Else
+						 _Push($iOrigPushB & " | Request to Stop..." & "\n" & "Your bot is currently stopped, no action was taken")
+						EndIf
+					Case Else
+							Local $lenstr = StringLen("BOT " & StringUpper($iOrigPushB) & " ")
+							Local $teststr = StringLeft($uclm, $lenstr)
+							If $teststr = ("BOT " & StringUpper($iOrigPushB) & " ") Then
+								SetLog("Telegram: received command syntax wrong, command ignored.", $COLOR_RED)
+								_Push($iOrigPushB & " | Command not recognized" & "\n" & "Please push BOT HELP to obtain a complete command list.")
+
+					EndIf
+		 EndSwitch
+#cs
+		 Switch $uclm
+			Case "BOT HELP"
+						Local $txtHelp = "You can remotely control your bot sending commands following this syntax:"
+						$txtHelp &= "\n" & "BOT HELP - send this help message"
+						$txtHelp &= "\n" & "BOT DELETE  - delete all your previous Push message"
+						$txtHelp &= "\n" & "BOT <Village Name> RESTART - restart the bot named <Village Name> and bluestacks"
+						$txtHelp &= "\n" & "BOT <Village Name> STOP - stop the bot named <Village Name>"
+						$txtHelp &= "\n" & "BOT <Village Name> PAUSE - pause the bot named <Village Name>"
+						$txtHelp &= "\n" & "BOT <Village Name> RESUME   - resume the bot named <Village Name>"
+						$txtHelp &= "\n" & "BOT <Village Name> STATS - send Village Statistics of <Village Name>"
+						$txtHelp &= "\n" & "BOT <Village Name> LOG - send the current log file of <Village Name>"
+						$txtHelp &= "\n" & "BOT <Village Name> LASTRAID - send the last raid loot screenshot of <Village Name>"
+						$txtHelp &= "\n" & "BOT <Village Name> LASTRAIDTXT - send the last raid loot values of <Village Name>"
+						$txtHelp &= "\n" & "BOT <Village Name> SCREENSHOT - send a screenshot of <Village Name>"
+						$txtHelp &= "\n"
+						$txtHelp &= "\n" & "Examples:"
+						$txtHelp &= "\n" & "Bot MyVillage Pause"
+						$txtHelp &= "\n" & "Bot Delete "
+						$txtHelp &= "\n" & "Bot MyVillage ScreenShot"
+						$txtHelp &= "\n" & "Send and recieve chats via pushbullet. Use BOT <myvillage> GETCHATS <interval|NOW|STOP> to get the latest clan chat as an image, and BOT <myvillage> SENDCHAT <chat message> to send a chat to your clan"
+						_Push($iOrigPushB & " | Request for Help" & "\n" & $txtHelp)
+						SetLog("Pushbullet: Your request has been received from ' " & $iOrigPushB & ". Help has been sent", $COLOR_GREEN)
+			Case "BOT " & StringUpper($iOrigPushB) & " PAUSE"
+						If $TPaused = False And $Runstate = True Then
+						 TogglePauseImpl("Push")
+						Else
+						 SetLog("Pushbullet: Your bot is currently paused, no action was taken", $COLOR_GREEN)
+						 _Push($iOrigPushB & " | Request to Pause" & "\n" & "Your bot is currently paused, no action was taken")
+						EndIf
+			Case "BOT " & StringUpper($iOrigPushB) & " RESUME"
+						If $TPaused = True And $Runstate = True Then
+						 TogglePauseImpl("Push")
+						Else
+						 SetLog("Pushbullet: Your bot is currently resumed, no action was taken", $COLOR_GREEN)
+						 _Push($iOrigPushB & " | Request to Resume" & "\n" & "Your bot is currently resumed, no action was taken")
+						EndIf
+			Case "BOT DELETE"
+						$oHTTP.Open("Get", $url & $access_token2 & "/getupdates?offset=" & $lastuid  , False)
+	                    $oHTTP.Send()
+						SetLog("Pushbullet: Your request has been received.", $COLOR_GREEN)
+			Case "BOT " & StringUpper($iOrigPushB) & " LOG"
+						SetLog("Pushbullet: Your request has been received from " & $iOrigPushB & ". Log is now sent", $COLOR_GREEN)
+						_PushFile($sLogFName, "logs", "text/plain; charset=utf-8", $iOrigPushB & " | Current Log " & "\n")
+			Case "BOT " & StringUpper($iOrigPushB) & " LASTRAID"
+						If $AttackFile <> "" Then
+						 _PushFile($AttackFile, "Loots", "image/jpeg", $iOrigPushB & " | Last Raid " & "\n" & $AttackFile)
+						Else
+						 _Push($iOrigPushB & " | There is no last raid screenshot.")
+						EndIf
+						SetLog("Pushbullet: Push Last Raid Snapshot...", $COLOR_GREEN)
+			Case "BOT " & StringUpper($iOrigPushB) & " LASTRAIDTXT"
+						SetLog("Pusbullet: Your request has been received. Last Raid txt sent", $COLOR_GREEN)
+						_Push($iOrigPushB & " | Last Raid txt" & "\n" & "[G]: " & _NumberFormat($lootGold) & " [E]: " & _NumberFormat($lootElixir) & " [D]: " & _NumberFormat($lootDarkElixir) & " [T]: " & $lootTrophies)
+			Case "BOT " & StringUpper($iOrigPushB) & " STATS"
+						SetLog("Pushbullet: Your request has been received. Statistics sent", $COLOR_GREEN)
+						_Push($iOrigPushB & " | Stats Village Report" & "\n" & "At Start\n[G]: " & _NumberFormat($GoldStart) & " [E]: " & _NumberFormat($ElixirStart) & " [D]: " & _NumberFormat($DarkStart) & " [T]: " & $TrophyStart & "\n\nNow (Current Resources)\n[G]: " & _NumberFormat($GoldVillage) & " [E]: " & _NumberFormat($ElixirVillage) & " [D]: " & _NumberFormat($DarkVillage) & " [T]: " & $TrophyVillage & " [GEM]: " & $GemCount & "\n \n [No. of Free Builders]: " & $FreeBuilder & "\n [No. of Wall Up]: G: " & $wallgoldmake & "/ E: " & $wallelixirmake & "\n\nAttacked: " & GUICtrlRead($lblresultvillagesattacked) & "\nSkipped: " & GUICtrlRead($lblresultvillagesskipped))
+			Case "BOT " & StringUpper($iOrigPushB) & " SCREENSHOT"
+						SetLog("Pushbullet: ScreenShot request received", $COLOR_GREEN)
+						$RequestScreenshot = 1
+			Case "BOT " & StringUpper($iOrigPushB) & " RESTART"
+						SetLog("Your request has been received. Bot and BS restarting...", $COLOR_GREEN)
+						_Push($iOrigPushB & " | Request to Restart..." & "\n" & "Your bot and BS are now restarting...")
+						SaveConfig()
+						_Restart()
+			Case "BOT " & StringUpper($iOrigPushB) & " STOP"
+						SetLog("Your request has been received. Bot is now stopped", $COLOR_GREEN)
+						If $Runstate = True Then
+						 _Push($iOrigPushB & " | Request to Stop..." & "\n" & "Your bot is now stopping...")
+						 btnStop()
+						Else
+						 _Push($iOrigPushB & " | Request to Stop..." & "\n" & "Your bot is currently stopped, no action was taken")
+						EndIf
+			Case Else ; Chat Bot
+					$startCmd = StringLeft($uclm, StringLen("BOT " & StringUpper($iOrigPushB) & " SENDCHAT "))
+					If $startCmd = "BOT " & StringUpper($iOrigPushB) & " SENDCHAT " Then
+						$chatMessage = StringRight($uclm, StringLen($uclm) - StringLen("BOT " & StringUpper($iOrigPushB) & " SENDCHAT "))
+						$chatMessage = StringLower($chatMessage)
+						ChatbotPushbulletQueueChat($chatMessage)
+						_Push($iOrigPushB & " | Chat queued, will send on next idle")
+					Else
+						$startCmd = StringLeft($uclm, StringLen("BOT " & StringUpper($iOrigPushB) & " GETCHATS "))
+						If $startCmd == "BOT " & StringUpper($iOrigPushB) & " GETCHATS " Then
+							$Interval = StringRight($uclm, StringLen($uclm) - StringLen("BOT " & StringUpper($iOrigPushB) & " GETCHATS "))
+							If $Interval = "STOP" Then
+								ChatbotPushbulletStopChatRead()
+								_Push($iOrigPushB & " | Stopping interval sending")
+							ElseIf $Interval = "NOW" Then
+								ChatbotPushbulletQueueChatRead()
+								_Push($iOrigPushB & " | Command queued, will send clan chat image on next idle")
+							Else
+								ChatbotPushbulletIntervalChatRead(Number($Interval))
+								_Push($iOrigPushB & " | Command queued, will send clan chat image on interval")
+							EndIf
+						Else
+							Local $lenstr = StringLen("BOT " & StringUpper($iOrigPushB) & " ")
+							Local $teststr = StringLeft($uclm, $lenstr)
+							If $teststr = ("BOT " & StringUpper($iOrigPushB) & " ") Then
+								SetLog("Pushbullet: received command syntax wrong, command ignored.", $COLOR_RED)
+								_Push($iOrigPushB & " | Command not recognized" & "\n" & "Please push BOT HELP to obtain a complete command list.")
+							EndIf
+						EndIf
+					EndIf
+		 EndSwitch
+#ce
+	   EndIf
+      EndIf
+   EndIf
 
 EndFunc   ;==>_RemoteControl
 
@@ -169,6 +384,24 @@ Func _PushBullet($pMessage = "")
 	Local $Time = @HOUR & "." & @MIN
 	Local $pPush = '{"type": "note", "body": "' & $pMessage & "\n" & $Date & "__" & $Time & '"}'
 	$oHTTP.Send($pPush)
+;    EndIf
+	if $pEnabled2= 1 then
+		 $oHTTP = ObjCreate("WinHTTP.WinHTTPRequest.5.1")
+		; if $chat_id2 = 0 Then
+		 $access_token2 = $PushToken2
+		 $oHTTP.Open("Get", "https://api.telegram.org/bot" & $access_token2 & "/getupdates" , False)
+		 $oHTTP.Send()
+		 $Result = $oHTTP.ResponseText
+		 local $chat_id = _StringBetween($Result, 'm":{"id":', ',"f')
+		 $chat_id2 = _Arraypop($chat_id)
+		; endif
+		 $oHTTP.Open("Post", "https://api.telegram.org/bot" & $access_token2&"/sendmessage", False)
+		 $oHTTP.SetRequestHeader("Content-Type", "application/json")
+	     Local $Date = @YEAR & '-' & @MON & '-' & @MDAY
+		 Local $Time = @HOUR & '.' & @MIN
+		 local $pPush3 = '{"text":"' & $pmessage & '\n' & $Date & '__' & $Time & '", "chat_id":' & $chat_id2 & '}}'
+		 $oHTTP.Send($pPush3)
+	  EndIf
 
 EndFunc   ;==>_PushBullet
 
@@ -184,7 +417,18 @@ Func _Push($pMessage)
 	Local $Time = @HOUR & "." & @MIN
 	Local $pPush = '{"type": "note", "body": "' & $pMessage & "\n" & $Date & "__" & $Time & '"}'
 	$oHTTP.Send($pPush)
-
+;	EndIf
+	If $pEnabled2= 1 then
+		   $access_token2 = $PushToken2
+		   $oHTTP = ObjCreate("WinHTTP.WinHTTPRequest.5.1")
+		   $url= "https://api.telegram.org/bot"
+		   $oHTTP.Open("Post",  $url & $access_token2&"/sendmessage", False)
+		   $oHTTP.SetRequestHeader("Content-Type", "application/json")
+		   Local $Date = @YEAR & '-' & @MON & '-' & @MDAY
+	       Local $Time = @HOUR & '.' & @MIN
+		   local $pPush3 = '{"text":"' & $pmessage & '\n' & $Date & '__' & $Time & '", "chat_id":' & $chat_id2 & '}}'
+		   $oHTTP.Send($pPush3)
+	EndIf
 EndFunc   ;==>_Push
 
 Func _PushFile($File, $Folder, $FileType, $body)
@@ -226,6 +470,42 @@ Func _PushFile($File, $Folder, $FileType, $body)
 		SetLog("Pushbullet: Unable to send file " & $File, $COLOR_RED)
 		_Push($iOrigPushB & " | Unable to Upload File" & "\n" & "Occured an error type 2 uploading file to PushBullet server...")
 	EndIf
+;	EndIf
+	 If $pEnabled2=1 then
+		 If FileExists($sProfilePath & "\" & $sCurrProfile & '\' & $Folder & '\' & $File) Then
+			$access_token2 = $PushToken2
+			$oHTTP = ObjCreate("WinHTTP.WinHTTPRequest.5.1")
+			Local $telegram_url = "https://api.telegram.org/bot" & $access_token2 & "/sendPhoto"
+			$Result = RunWait(@ScriptDir & "\curl\curl.exe -i -X POST " & $telegram_url & ' -F chat_id="' & $chat_id2 &' " -F photo=@"' & $sProfilePath & "\" & $sCurrProfile & '\' & $Folder & '\' & $File  & '"', "", @SW_HIDE)
+			$oHTTP.Open("Post", "https://api.telegram.org/bot" & $access_token2 & "/sendPhoto", False)
+			$oHTTP.SetRequestHeader("Content-Type", "application/json")
+			Local $pPush = '{"type": "file", "file_name": "' & $File & '", "file_type": "' & $FileType & '", "file_url": "' & $telegram_url & '", "body": "' & $body & '"}'
+			$oHTTP.Send($pPush)
+		 Else
+			SetLog("Telegram: Unable to send file " & $File, $COLOR_RED)
+			_Push($iOrigPushB & " | Unable to Upload File" & "\n" & "Occured an error type 2 uploading file to PushBullet server...")
+		 EndIf
+	 EndIf
+
+EndFunc   ;==>_PushFile
+
+Func _PushFile2($File, $Folder, $FileType, $body)
+		 If FileExists($sProfilePath & "\" & $sCurrProfile & '\' & $Folder & '\' & $File) Then
+			$access_token2 = $PushToken2
+			$oHTTP = ObjCreate("WinHTTP.WinHTTPRequest.5.1")
+			Local $telegram_url = "https://api.telegram.org/bot" & $access_token2 & "/sendDocument"
+			$Result = RunWait(@ScriptDir & "\curl\curl.exe -i -X POST " & $telegram_url & ' -F chat_id="' & $chat_id2 &' " -F file=@"' & $sProfilePath & "\" & $sCurrProfile & '\' & $Folder & '\' & $File  & '"', "", @SW_HIDE)
+			$oHTTP.Open("Post", "https://api.telegram.org/bot" & $access_token2 & "/sendDocument", False)
+			$oHTTP.SetRequestHeader("Content-Type", "application/json")
+			Local $pPush = '{"type": "file", "file_name": "' & $File & '", "file_type": "' & $FileType & '", "file_url": "' & $telegram_url & '", "body": "' & $body & '"}'
+			 ;Local $pPush = '{"type": "file", "file_name": "' & $File & '", "mime_type": "' & $FileType & '", "file_id": "' & $telegram_url & '", "body": "' & $body & '"}'
+			;Local $pPush = '{"type": "file", "file_name": "' & $File & '", "mime_type": "' & $FileType & '", "file_url": "' & $telegram_url & '", "body": "' & $body & '"}'
+			;Local $pPush = '{"type": "file", "file_name": "' & $File & '", "mime_type": "' & $FileType & '", "file_url": "' & $telegram_url  & '"}'
+			$oHTTP.Send($pPush)
+		 Else
+			SetLog("Telegram: Unable to send file " & $File, $COLOR_RED)
+			_Push($iOrigPushB & " | Unable to Upload File" & "\n" & "Occured an error type 2 uploading file to PushBullet server...")
+		 EndIf
 
 EndFunc   ;==>_PushFile
 
@@ -276,16 +556,16 @@ Func PushMsg($Message, $Source = "")
 	Local $hBitmap_Scaled
 	Switch $Message
 		Case "Restarted"
-			If $pEnabled = 1 And $pRemote = 1 Then _Push($iOrigPushB & " | Bot restarted")
+			If ($pEnabled = 1 or $pEnabled2 = 1 ) And $pRemote = 1 Then _Push($iOrigPushB & " | Bot restarted")
 		Case "OutOfSync"
-			If $pEnabled = 1 And $pOOS = 1 Then _Push($iOrigPushB & " | Restarted after Out of Sync Error" & "\n" & "Attacking now...")
+			If ($pEnabled = 1 or $pEnabled2 = 1 ) And $pOOS = 1 Then _Push($iOrigPushB & " | Restarted after Out of Sync Error" & "\n" & "Attacking now...")
 		Case "LastRaid"
-			If $pEnabled = 1 And $iAlertPBLastRaidTxt = 1 Then
+			If ($pEnabled = 1 or $pEnabled2 = 1 ) And $iAlertPBLastRaidTxt = 1 Then
 				_Push($iOrigPushB & " | Last Raid txt" & "\n" & "[G]: " & _NumberFormat($iGoldLast) & " [E]: " & _NumberFormat($iElixirLast) & " [D]: " & _NumberFormat($iDarkLast) & " [T]: " & $iTrophyLast)
 				If _Sleep($iDelayPushMsg1) Then Return
-				SetLog("Pushbullet: Last Raid Text has been sent!", $COLOR_GREEN)
+				SetLog("Pushbullet/Telegram: Last Raid Text has been sent!", $COLOR_GREEN)
 			EndIf
-			If $pEnabled = 1 And $pLastRaidImg = 1 Then
+			If ($pEnabled = 1 or $pEnabled2 = 1 ) And $pLastRaidImg = 1 Then
 				_CaptureRegion(0, 0, $DEFAULT_WIDTH, $DEFAULT_HEIGHT - 45)
 				;create a temporary file to send with pushbullet...
 				Local $Date = @YEAR & "-" & @MON & "-" & @MDAY
@@ -299,43 +579,43 @@ Func PushMsg($Message, $Source = "")
 				_GDIPlus_ImageSaveToFile($hBitmap_Scaled, $dirLoots & $AttackFile)
 				_GDIPlus_ImageDispose($hBitmap_Scaled)
 				;push the file
-				SetLog("Pushbullet: Last Raid screenshot has been sent!", $COLOR_GREEN)
+				SetLog("Pushbullet/Telegram: Last Raid screenshot has been sent!", $COLOR_GREEN)
 				_PushFile($AttackFile, "Loots", "image/jpeg", $iOrigPushB & " | Last Raid" & "\n" & $AttackFile)
 				;wait a second and then delete the file
 				If _Sleep($iDelayPushMsg1) Then Return
 				Local $iDelete = FileDelete($dirLoots & $AttackFile)
-				If Not ($iDelete) Then SetLog("Pushbullet: An error occurred deleting temporary screenshot file.", $COLOR_RED)
+				If Not ($iDelete) Then SetLog("Pushbullet/Telegram: An error occurred deleting temporary screenshot file.", $COLOR_RED)
 			EndIf
 		Case "FoundWalls"
-			If $pEnabled = 1 And $pWallUpgrade = 1 Then _Push($iOrigPushB & " | Found Wall level " & $icmbWalls + 4 & "\n" & " Wall segment has been located...\nUpgrading ...")
+			If ($pEnabled = 1 or $pEnabled2 = 1 ) And $pWallUpgrade = 1 Then _Push($iOrigPushB & " | Found Wall level " & $icmbWalls + 4 & "\n" & " Wall segment has been located...\nUpgrading ...")
 		Case "SkypWalls"
-			If $pEnabled = 1 And $pWallUpgrade = 1 Then _Push($iOrigPushB & " | Cannot find Wall level " & $icmbWalls + 4 & "\n" & "Skip upgrade ...")
+			If ($pEnabled = 1 or $pEnabled2 = 1 ) And $pWallUpgrade = 1 Then _Push($iOrigPushB & " | Cannot find Wall level " & $icmbWalls + 4 & "\n" & "Skip upgrade ...")
 		Case "AnotherDevice3600"
-			If $pEnabled = 1 And $pAnotherDevice = 1 Then _Push($iOrigPushB & " | 1. Another Device has connected" & "\n" & "Another Device has connected, waiting " & Floor(Floor($sTimeWakeUp / 60) / 60) & " hours " & Floor(Mod(Floor($sTimeWakeUp / 60), 60)) & " minutes " & Floor(Mod($sTimeWakeUp, 60)) & " seconds")
+			If ($pEnabled = 1 or $pEnabled2 = 1 ) And $pAnotherDevice = 1 Then _Push($iOrigPushB & " | 1. Another Device has connected" & "\n" & "Another Device has connected, waiting " & Floor(Floor($sTimeWakeUp / 60) / 60) & " hours " & Floor(Mod(Floor($sTimeWakeUp / 60), 60)) & " minutes " & Floor(Mod($sTimeWakeUp, 60)) & " seconds")
 		Case "AnotherDevice60"
-			If $pEnabled = 1 And $pAnotherDevice = 1 Then _Push($iOrigPushB & " | 2. Another Device has connected" & "\n" & "Another Device has connected, waiting " & Floor(Mod(Floor($sTimeWakeUp / 60), 60)) & " minutes " & Floor(Mod($sTimeWakeUp, 60)) & " seconds")
+			If ($pEnabled = 1 or $pEnabled2 = 1 ) And $pAnotherDevice = 1 Then _Push($iOrigPushB & " | 2. Another Device has connected" & "\n" & "Another Device has connected, waiting " & Floor(Mod(Floor($sTimeWakeUp / 60), 60)) & " minutes " & Floor(Mod($sTimeWakeUp, 60)) & " seconds")
 		Case "AnotherDevice"
-			If $pEnabled = 1 And $pAnotherDevice = 1 Then _Push($iOrigPushB & " | 3. Another Device has connected" & "\n" & "Another Device has connected, waiting " & Floor(Mod($sTimeWakeUp, 60)) & " seconds")
+			If ($pEnabled = 1 or $pEnabled2 = 1 ) And $pAnotherDevice = 1 Then _Push($iOrigPushB & " | 3. Another Device has connected" & "\n" & "Another Device has connected, waiting " & Floor(Mod($sTimeWakeUp, 60)) & " seconds")
 		Case "TakeBreak"
-			If $pEnabled = 1 And $pTakeAbreak = 1 Then _Push($iOrigPushB & " | Chief, we need some rest!" & "\n" & "Village must take a break..")
+			If ($pEnabled = 1 or $pEnabled2 = 1 ) And $pTakeAbreak = 1 Then _Push($iOrigPushB & " | Chief, we need some rest!" & "\n" & "Village must take a break..")
 		Case "CocError"
-			If $pEnabled = 1 And $pOOS = 1 Then _Push($iOrigPushB & " | CoC Has Stopped Error .....")
+			If ($pEnabled = 1 or $pEnabled2 = 1 ) And $pOOS = 1 Then _Push($iOrigPushB & " | CoC Has Stopped Error .....")
 		Case "Pause"
-			If $pEnabled = 1 And $pRemote = 1 And $Source = "Push" Then _Push($iOrigPushB & " | Request to Pause..." & "\n" & "Your request has been received. Bot is now paused")
+			If ($pEnabled = 1 or $pEnabled2 = 1 ) And $pRemote = 1 And $Source = "Push" Then _Push($iOrigPushB & " | Request to Pause..." & "\n" & "Your request has been received. Bot is now paused")
 		Case "Resume"
-			If $pEnabled = 1 And $pRemote = 1 And $Source = "Push" Then _Push($iOrigPushB & " | Request to Resume..." & "\n" & "Your request has been received. Bot is now resumed")
+			If ($pEnabled = 1 or $pEnabled2 = 1 ) And $pRemote = 1 And $Source = "Push" Then _Push($iOrigPushB & " | Request to Resume..." & "\n" & "Your request has been received. Bot is now resumed")
 		Case "OoSResources"
-			If $pEnabled = 1 And $pOOS = 1 Then _Push($iOrigPushB & " | Disconnected after " & StringFormat("%3s", $SearchCount) & " skip(s)" & "\n" & "Cannot locate Next button, Restarting Bot...")
+			If ($pEnabled = 1 or $pEnabled2 = 1 ) And $pOOS = 1 Then _Push($iOrigPushB & " | Disconnected after " & StringFormat("%3s", $SearchCount) & " skip(s)" & "\n" & "Cannot locate Next button, Restarting Bot...")
 		Case "MatchFound"
-			If $pEnabled = 1 And $pMatchFound = 1 Then _Push($iOrigPushB & " | " & $sModeText[$iMatchMode] & " Match Found! after " & StringFormat("%3s", $SearchCount) & " skip(s)" & "\n" & "[G]: " & _NumberFormat($searchGold) & "; [E]: " & _NumberFormat($searchElixir) & "; [D]: " & _NumberFormat($searchDark) & "; [T]: " & $searchTrophy)
+			If ($pEnabled = 1 or $pEnabled2 = 1 ) And $pMatchFound = 1 Then _Push($iOrigPushB & " | " & $sModeText[$iMatchMode] & " Match Found! after " & StringFormat("%3s", $SearchCount) & " skip(s)" & "\n" & "[G]: " & _NumberFormat($searchGold) & "; [E]: " & _NumberFormat($searchElixir) & "; [D]: " & _NumberFormat($searchDark) & "; [T]: " & $searchTrophy)
 		Case "UpgradeWithGold"
-			If $pEnabled = 1 And $pWallUpgrade = 1 Then _Push($iOrigPushB & " | Upgrade completed by using GOLD" & "\n" & "Complete by using GOLD ...")
+			If ($pEnabled = 1 or $pEnabled2 = 1 ) And $pWallUpgrade = 1 Then _Push($iOrigPushB & " | Upgrade completed by using GOLD" & "\n" & "Complete by using GOLD ...")
 		Case "UpgradeWithElixir"
-			If $pEnabled = 1 And $pWallUpgrade = 1 Then _Push($iOrigPushB & " | Upgrade completed by using ELIXIR" & "\n" & "Complete by using ELIXIR ...")
+			If ($pEnabled = 1 or $pEnabled2 = 1 ) And $pWallUpgrade = 1 Then _Push($iOrigPushB & " | Upgrade completed by using ELIXIR" & "\n" & "Complete by using ELIXIR ...")
 		Case "NoUpgradeWallButton"
-			If $pEnabled = 1 And $pWallUpgrade = 1 Then _Push($iOrigPushB & " | No Upgrade Gold Button" & "\n" & "Cannot find gold upgrade button ...")
+			If ($pEnabled = 1 or $pEnabled2 = 1 ) And $pWallUpgrade = 1 Then _Push($iOrigPushB & " | No Upgrade Gold Button" & "\n" & "Cannot find gold upgrade button ...")
 		Case "NoUpgradeElixirButton"
-			If $pEnabled = 1 And $pWallUpgrade = 1 Then _Push($iOrigPushB & " | No Upgrade Elixir Button" & "\n" & "Cannot find elixir upgrade button ...")
+			If ($pEnabled = 1 or $pEnabled2 = 1 ) And $pWallUpgrade = 1 Then _Push($iOrigPushB & " | No Upgrade Elixir Button" & "\n" & "Cannot find elixir upgrade button ...")
 		Case "RequestScreenshot"
 			Local $Date = @YEAR & "-" & @MON & "-" & @MDAY
 			Local $Time = @HOUR & "." & @MIN
@@ -345,18 +625,18 @@ Func PushMsg($Message, $Source = "")
 			_GDIPlus_ImageSaveToFile($hBitmap_Scaled, $dirTemp & $Screnshotfilename)
 			_GDIPlus_ImageDispose($hBitmap_Scaled)
 			_PushFile($Screnshotfilename, "Temp", "image/jpeg", $iOrigPushB & " | Screenshot of your village " & "\n" & $Screnshotfilename)
-			SetLog("Pushbullet: Screenshot sent!", $COLOR_GREEN)
+			SetLog("Pushbullet/Telegram: Screenshot sent!", $COLOR_GREEN)
 			$RequestScreenshot = 0
 			;wait a second and then delete the file
 			If _Sleep($iDelayPushMsg2) Then Return
 			Local $iDelete = FileDelete($dirTemp & $Screnshotfilename)
-			If Not ($iDelete) Then SetLog("Pushbullet: An error occurred deleting the temporary screenshot file.", $COLOR_RED)
+			If Not ($iDelete) Then SetLog("Pushbullet/Telegram: An error occurred deleting the temporary screenshot file.", $COLOR_RED)
 		Case "DeleteAllPBMessages"
 			_DeletePush(GUICtrlRead($PushBTokenValue))
-			SetLog("PushBullet: All messages deleted.", $COLOR_GREEN)
+			SetLog("PushBullet/Telegram: All messages deleted.", $COLOR_GREEN)
 			$iDeleteAllPushesNow = False ; reset value
 		Case "CampFull"
-			If $pEnabled = 1 And $ichkAlertPBCampFull = 1 Then
+			If ($pEnabled = 1 or $pEnabled2 = 1 ) And $ichkAlertPBCampFull = 1 Then
 				If $ichkAlertPBCampFullTest = 0 Then
 					_Push($iOrigPushB & " | Your Army Camps are now Full")
 					$ichkAlertPBCampFullTest = 1

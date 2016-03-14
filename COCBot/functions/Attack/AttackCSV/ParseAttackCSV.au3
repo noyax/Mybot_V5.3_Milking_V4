@@ -56,6 +56,43 @@ Func ParseAttackCSV($debug = False)
 				Switch $command
 					Case ""
 						debugAttackCSV("comment line")
+					Case "MILK1"
+						Local $hTimerTOTAL = TimerInit()
+						; REDAREA -----------------------------------------------------------------------------------------------------------------------------------------
+						Local $hTimer = TimerInit()
+						If $TestLoots then
+							Global $PixelRedArea[0]
+							_ArrayAdd($PixelRedArea, $PixelRedArea2)
+							Global $PixelRedAreaFurther[0]
+							_ArrayAdd($PixelRedAreaFurther, $PixelRedAreaFurther2)
+							Global $PixelTopLeft[0]
+							_ArrayAdd($PixelTopLeft, $PixelTopLeft2)
+							Global $PixelBottomLeft[0]
+							_ArrayAdd($PixelBottomLeft, $PixelBottomLeft2)
+							Global $PixelBottomRight[0]
+							_ArrayAdd($PixelBottomRight, $PixelBottomRight2)
+							Global $PixelTopRight[0]
+							_ArrayAdd($PixelTopRight, $PixelTopRight2)
+						Else
+							_WinAPI_DeleteObject($hBitmapFirst)
+							$hBitmapFirst = _CaptureRegion2()
+							_GetRedArea()
+						EndIf
+						Local $htimerREDAREA = Round(TimerDiff($hTimer) / 1000, 2)
+						debugAttackCSV("Calculated  (in " & $htimerREDAREA & " seconds) :")
+						debugAttackCSV("	[" & UBound($PixelTopLeft) & "] pixels TopLeft")
+						debugAttackCSV("	[" & UBound($PixelTopRight) & "] pixels TopRight")
+						debugAttackCSV("	[" & UBound($PixelBottomLeft) & "] pixels BottomLeft")
+						debugAttackCSV("	[" & UBound($PixelBottomRight) & "] pixels BottomRight")
+						
+						ParseAttackCSVMILK($value1, $value2, $value3, $value4, $value5, $value6, $value7)
+					Case "MILK"
+						ParseAttackCSVMILK($value1, $value2, $value3, $value4, $value5, $value6, $value7)
+					Case "ZAP"
+						$itxtMinDark = $value2
+						$ichkSmartLightSpell = 1
+						DEDropSmartSpell()
+						$ichkSmartLightSpell = 0
 					Case "MAKE"
 						ReleaseClicks()
 						If CheckCsvValues("MAKE", 2, $value2) Then
@@ -249,6 +286,9 @@ Func ParseAttackCSV($debug = False)
 						Local $hSleepTimer = TimerInit()
 						While TimerDiff($hSleepTimer) < $sleep
 							;READ RESOURCES
+							local $tmpGold = $Gold ;Noyax
+							local $tmpElix = $Elixir ;Noyax
+							local $tmpDark = $DarkElixir ;Noyax
 							$Gold = getGoldVillageSearch(48, 69)
 							$Elixir = getElixirVillageSearch(48, 69 + 29)
 							$Trophies = getTrophyVillageSearch(48, 69 + 99)
@@ -258,7 +298,7 @@ Func ParseAttackCSV($debug = False)
 								$DarkElixir = ""
 								$Trophies = getTrophyVillageSearch(48, 69 + 69)
 							EndIf
-							If $DebugSetLog = 1 Then SetLog("detected [G]: " & $Gold & " [E]: " & $Elixir & " [DE]: " & $DarkElixir, $COLOR_BLUE)
+							If ($tmpGold <> $Gold) or ($tmpElix <> $Elixir) or ($tmpDark <> $DarkElixir) then SetLog("detected [G]: " & $Gold & " [E]: " & $Elixir & " [DE]: " & $DarkElixir, $COLOR_BLUE)
 							;EXIT IF RESOURCES = 0
 							If $ichkEndNoResources = 1 And Number($Gold) = 0 And Number($Elixir) = 0 And Number($DarkElixir) = 0 Then
 								If $DebugSetLog = 1 Then Setlog("From Attackcsv: Gold & Elixir & DE = 0, end battle ", $COLOR_PURPLE)

@@ -195,6 +195,8 @@ Func btnStart()
 		readConfig()
 		applyConfig(False) ; bot window redraw stays disabled!
 
+		GUICtrlSetState($txtAPIKey, $GUI_HIDE) ;noyax
+
 	    If BitAND($AndroidSupportFeature, 1+2) = 0 And $ichkBackground = 1 Then
 		   GUICtrlSetState($chkBackground, $GUI_UNCHECKED)
 		   chkBackground() ; Invoke Event manually
@@ -261,6 +263,8 @@ Func btnStop()
 		If $iTownHallLevel > 2 Then GUICtrlSetState($btnSearchMode, $GUI_ENABLE)
 		GUICtrlSetState($btnSearchMode, $GUI_SHOW)
 		;GUICtrlSetState($btnMakeScreenshot, $GUI_ENABLE)
+
+		GUICtrlSetState($txtAPIKey, $GUI_SHOW); Noyax
 
 		; hide attack buttons if show
 		GUICtrlSetState($btnAttackNowDB, $GUI_HIDE)

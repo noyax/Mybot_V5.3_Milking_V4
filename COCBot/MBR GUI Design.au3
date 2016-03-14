@@ -50,6 +50,7 @@ GUICtrlSetOnEvent(-1, "")
 #include "GUI\MBR GUI Design Tab Stats.au3" ; includes '$LastControlToHide" on GUI
 #include "GUI\MBR GUI Design Collectors.au3"
 #include "GUI\MBR GUI Design Milking.au3"
+#include "GUI\MBR GUI Design Tab Milking.au3" ;noyax
 ;~ -------------------------------------------------------------
 ;~ About Us Tab
 ;~ -------------------------------------------------------------

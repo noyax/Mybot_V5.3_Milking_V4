@@ -1,0 +1,32 @@
+NOTE  |Author: Noyax37 - ver. 1.0 - 19.01.2016 
+NOTE  |
+NOTE  |Attack: Milking with gobelins, +1 tile from redline
+NOTE  |Make these Troops: Bobelins 100%
+NOTE  |Will drop Gobelins, All Heroes and Castle if enabled from GUI
+
+      |------------------------------------- Milking with Gobelins start -----------------------------|
+
+      |EXTR. GOLD |EXTR.ELIXIR|EXTR. DARK |DEPO. GOLD |DEPO.ELIXIR|DEPO. DARK |TOWNHALL   |FORCED SIDE|
+SIDE  |1          |1          |1          |           |           |           |           |           |Up wich you prefer: exemple if you prefer elixir then put EXTR.ELIXIR to 5 and other to 1
+
+
+      |COLLECTOR__|INDEX______|QTY_X_VECT_|TROOPNAME__|DELAY_DROP_|DELAYCHANGE|SLEEPAFTER_|___________|Milking Gobs 
+MILK1 |M          |1          |6-6        |gobl-arch  |0          |0          |0          |           |launch 6 gobl and 6 archers nearly M = mines; E = Elixir and D = Dark...
+MILK  |E          |1          |6-6        |gobl-arch  |0          |0          |0          |           |launch 6 gobl and 6 archers nearly M = mines; E = Elixir and D = Dark...
+MILK  |D          |1          |6-6        |gobl-arch  |0          |0          |0          |           |launch 6 gobl and 6 archers nearly M = mines; E = Elixir and D = Dark...
+MILK  |TH         |1          |4          |gobl       |0          |0          |0          |           |launch gobl nearly TH = Town Hall...  X gobs / index
+WAIT  |500-1000   |           |           |           |           |           |           |           |Add a wait time; during wait time also CHECK exit values (exit if no resource left, exit if one or two starts reach)
+
+      |VECTOR_____|SIDE_______|DROP_POINTS|ADDTILES___|VERSUS_____|RANDOMX_PX_|RANDOMY_PX_|___________|MAKE VECTORS TO DROP KINK, QUEEN and CASTLE
+MAKE  |Q          |RANDOM     |70         |1          |INT-EXT    |2          |2          |           |random side to drop king, at 1 tile from redarea
+MAKE  |R          |RANDOM     |70         |3          |INT-EXT    |2          |2          |           |random side to drop queen and castle, at 3 tiles from redarea
+
+      |VECTOR_____|INDEX______|QTY_X_VECT_|TROOPNAME__|DELAY_DROP_|DELAYCHANGE|SLEEPAFTER_|___________|DROP BARBARIANS 
+DROP  |Q          |3          |10         |king       |0          |0          |100-500    |           |launch King                                                       king
+DROP  |R          |8          |15         |castle     |0          |0          |500-1000   |           |launch Castle                                                     castle
+DROP  |R          |3          |2          |queen      |0          |0          |100-500    |           |launch Queen                                                      queen
+DROP  |R          |3          |2          |Warden     |0          |0          |0          |           |launch Grand Warden                                               queen
+      |                                                                                               |
+      |---------------------------------- Milking with Gobelins end-----------------------------------|
+
+
