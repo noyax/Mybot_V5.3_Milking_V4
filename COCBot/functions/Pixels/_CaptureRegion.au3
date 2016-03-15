@@ -125,3 +125,40 @@ EndFunc   ;==>NeedCaptureRegion
 Func ForceCaptureRegion()
 	$ForceCapture = True
 EndFunc   ;==>ForceCaptureRegion
+
+Func _CaptureRegion3($iLeft = 0, $iTop = 0, $iRight = $DEFAULT_WIDTH, $iBottom = $DEFAULT_HEIGHT)
+    Local $SuspendMode
+	Local $hHBitmap
+
+	If $ichkBackground = 1 Then
+		Local $iW = Number($iRight) - Number($iLeft), $iH = Number($iBottom) - Number($iTop)
+
+		If $AndroidAdbScreencap = True Then
+		   $hHBitmap = AndroidScreencap($iLeft, $iTop, $iW, $iH)
+	    Else
+		   $SuspendMode = ResumeAndroid(False)
+		   Local $hDC_Capture = _WinAPI_GetWindowDC(ControlGetHandle($Title, "", $AppClassInstance))
+		   Local $hMemDC = _WinAPI_CreateCompatibleDC($hDC_Capture)
+		   $hHBitmap = _WinAPI_CreateCompatibleBitmap($hDC_Capture, $iW, $iH)
+		   Local $hObjectOld = _WinAPI_SelectObject($hMemDC, $hHBitmap)
+
+		   DllCall("user32.dll", "int", "PrintWindow", "hwnd", $HWnD, "handle", $hMemDC, "int", 0)
+		   _WinAPI_SelectObject($hMemDC, $hHBitmap)
+		   _WinAPI_BitBlt($hMemDC, 0, 0, $iW, $iH, $hDC_Capture, $iLeft, $iTop, 0x00CC0020)
+
+		   ;Global $hBitmap = _GDIPlus_BitmapCreateFromHBITMAP($hHBitmap)
+
+		   _WinAPI_DeleteDC($hMemDC)
+		   _WinAPI_SelectObject($hMemDC, $hObjectOld)
+		   _WinAPI_ReleaseDC($HWnD, $hDC_Capture)
+		   SuspendAndroid($SuspendMode, False)
+	    EndIf
+	Else
+	    getBSPos()
+		$SuspendMode = ResumeAndroid(False)
+		$hHBitmap = _ScreenCapture_Capture("", $iLeft + $BSpos[0], $iTop + $BSpos[1], $iRight + $BSpos[0] - 1, $iBottom + $BSpos[1] - 1, False)
+		SuspendAndroid($SuspendMode, False)
+	EndIf
+
+	Return $hHBitmap
+EndFunc   ;==>_CaptureRegion3
