@@ -1,5 +1,8 @@
-V4.02
+V4.03
 - fix bug
+
+V4.02
+- forget it :)
 
 V4.01
 - Adapt my mod to Mybot v5.3
