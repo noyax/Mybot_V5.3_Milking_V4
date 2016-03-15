@@ -74,9 +74,9 @@ Func ParseAttackCSV($debug = False)
 							Global $PixelTopRight[0]
 							_ArrayAdd($PixelTopRight, $PixelTopRight2)
 						Else
-							_WinAPI_DeleteObject($hBitmapFirst)
-							$hBitmapFirst = _CaptureRegion2()
-							_GetRedArea()
+							Global $hBitmapFirst
+							$hBitmapFirst = _CaptureRegion3()
+							_GetRedArea2()
 						EndIf
 						Local $htimerREDAREA = Round(TimerDiff($hTimer) / 1000, 2)
 						debugAttackCSV("Calculated  (in " & $htimerREDAREA & " seconds) :")
