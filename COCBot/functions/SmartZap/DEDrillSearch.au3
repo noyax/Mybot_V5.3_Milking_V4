@@ -26,7 +26,7 @@ Func DEDrillSearch($bReTest = False)
 	ZoomOut()
 	; Checks the screen and stores the results as $result
 	_WinAPI_DeleteObject($hBitmapFirst)
-	$hBitmapFirst = _CaptureRegion2()
+	$hBitmapFirst = _CaptureRegion3()
 	$result = DllCall($LibDir & "\MBRfunctions.dll", "str", "getLocationDarkElixirExtractorWithLevel", "ptr", $hBitmapFirst)
 
 	; Debugger
