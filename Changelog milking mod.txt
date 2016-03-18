@@ -1,3 +1,11 @@
+v4.05
+- fix cocstat
+- put new italian translate (thanks to @Davideroma84)
+- fix boost barracks pb
+
+V4.04
+- fix some pb
+
 V4.03
 - fix bug
 
