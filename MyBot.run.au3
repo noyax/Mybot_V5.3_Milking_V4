@@ -24,7 +24,7 @@
 #pragma compile(LegalCopyright, © https://mybot.run)
 #pragma compile(Out, MyBot.run.exe)  ; Required
 
-Local $MilkVer = "V4.04" ;Noyax
+Local $MilkVer = "V4.05" ;Noyax
 
 If @AutoItX64 = 1 Then
 	MsgBox(0, "", "Don't Run/Compile the Script as (x64)! try to Run/Compile the Script as (x86) to get the bot to work." & @CRLF & _
@@ -219,6 +219,18 @@ Func runBot() ;Bot that runs everything in order
 			ReportPushBullet()
 				If _Sleep($iDelayRunBot3) Then Return
 				If $Restart = True Then ContinueLoop
+			BoostBarracks()
+				If $Restart = True Then ContinueLoop
+			BoostSpellFactory()
+				If $Restart = True Then ContinueLoop
+			BoostDarkSpellFactory()
+				If $Restart = True Then ContinueLoop
+			BoostKing()
+				If $Restart = True Then ContinueLoop
+			BoostQueen()
+				If $Restart = True Then ContinueLoop
+			BoostWarden()
+				If $Restart = True Then ContinueLoop
 			Train()
 				If _Sleep($iDelayRunBot1) Then Return
 				checkMainScreen(False)
@@ -259,18 +271,18 @@ Func runBot() ;Bot that runs everything in order
 ;				If _Sleep($iDelayRunBot1) Then Return
 ;				checkMainScreen(False)
 ;				If $Restart = True Then ContinueLoop
-			BoostBarracks()
-				If $Restart = True Then ContinueLoop
-			BoostSpellFactory()
-				If $Restart = True Then ContinueLoop
-			BoostDarkSpellFactory()
-				If $Restart = True Then ContinueLoop
-			BoostKing()
-				If $Restart = True Then ContinueLoop
-			BoostQueen()
-				If $Restart = True Then ContinueLoop
-			BoostWarden()
-				If $Restart = True Then ContinueLoop
+;			BoostBarracks()
+;				If $Restart = True Then ContinueLoop
+;			BoostSpellFactory()
+;				If $Restart = True Then ContinueLoop
+;			BoostDarkSpellFactory()
+;				If $Restart = True Then ContinueLoop
+;			BoostKing()
+;				If $Restart = True Then ContinueLoop
+;			BoostQueen()
+;				If $Restart = True Then ContinueLoop
+;			BoostWarden()
+;				If $Restart = True Then ContinueLoop
 			RequestCC()
 				If _Sleep($iDelayRunBot1) Then Return
 				checkMainScreen(False) ; required here due to many possible exits
