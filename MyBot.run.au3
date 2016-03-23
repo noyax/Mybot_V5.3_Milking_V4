@@ -242,9 +242,9 @@ Func runBot() ;Bot that runs everything in order
 			setlog("_DateAdd( 'n',15, $skipStartTime ) = " & _DateAdd( 'n',15, $skipStartTime ))
 			If $fullArmy = True And $MilkAtt = 1 And  _DateAdd( 'n', $TempoTrain, $skipStartTime ) > _NowCalc() Then
 				If $debugsetlog = 1 Then Setlog("don't waste time with many functions before attacking")
-				$Musttrain = 0
+;				$Musttrain = 0
 			Else
-				$Musttrain = 1
+;				$Musttrain = 1
 				$retourdeguerre = 0
 	;Ancient end skip check
 ;Noyax bottom
