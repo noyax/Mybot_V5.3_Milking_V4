@@ -20,11 +20,11 @@
 #pragma compile(ProductName, My Bot)
 
 #pragma compile(ProductVersion, 5.3)
-#pragma compile(FileVersion, 5.3)
+#pragma compile(FileVersion, 5.3.1)
 #pragma compile(LegalCopyright, © https://mybot.run)
 #pragma compile(Out, MyBot.run.exe)  ; Required
 
-Local $MilkVer = "V4.05" ;Noyax
+Local $MilkVer = "V4.06" ;Noyax
 
 If @AutoItX64 = 1 Then
 	MsgBox(0, "", "Don't Run/Compile the Script as (x64)! try to Run/Compile the Script as (x86) to get the bot to work." & @CRLF & _
@@ -39,7 +39,7 @@ EndIf
 ;~ ProcessSetPriority(@AutoItPID, $PROCESS_ABOVENORMAL)
 #include "COCBot\MBR Global Variables.au3"
 
-$sBotVersion = "v5.3" ;~ Don't add more here, but below. Version can't be longer than vX.y.z because it it also use on Checkversion()
+$sBotVersion = "v5.3.1" ;~ Don't add more here, but below. Version can't be longer than vX.y.z because it it also use on Checkversion()
 $sBotTitle = "My Bot " & $sBotVersion & " " ;~ Don't use any non file name supported characters like \ / : * ? " < > |
 
 Opt("WinTitleMatchMode", 3) ; Window Title exact match mode
@@ -160,6 +160,9 @@ While 1
 	EndSwitch
 WEnd
 
+BotClose()
+
+
 Func runBot() ;Bot that runs everything in order
 	$TotalTrainedTroops = 0
 	;noyax add Ancient begin skip check
@@ -175,8 +178,7 @@ Func runBot() ;Bot that runs everything in order
 		If $Restart = True Then ContinueLoop
 		chkShieldStatus()
 		If $Restart = True Then ContinueLoop
-	    checkAndroidTimeLag()
-		If $Restart = True Then ContinueLoop
+	    If checkAndroidTimeLag() = True Then ContinueLoop
 		If $Is_ClientSyncError = False And $Is_SearchLimit = False Then
 			If BotCommand() Then btnStop()
 			If _Sleep($iDelayRunBot2) Then Return
@@ -219,6 +221,7 @@ Func runBot() ;Bot that runs everything in order
 			ReportPushBullet()
 				If _Sleep($iDelayRunBot3) Then Return
 				If $Restart = True Then ContinueLoop
+			If checkAndroidTimeLag() = True Then ContinueLoop
 			BoostBarracks()
 				If $Restart = True Then ContinueLoop
 			BoostSpellFactory()
@@ -235,6 +238,7 @@ Func runBot() ;Bot that runs everything in order
 				If _Sleep($iDelayRunBot1) Then Return
 				checkMainScreen(False)
 				If $Restart = True Then ContinueLoop
+			If checkAndroidTimeLag() = True Then ContinueLoop
 ;			If $fullArmy = True And $MilkAtt = 1 Then
 ;				If $debugsetlog = 1 Then Setlog("don't waste time with many functions before attacking")
 ;			Else
@@ -242,9 +246,9 @@ Func runBot() ;Bot that runs everything in order
 			setlog("_DateAdd( 'n',15, $skipStartTime ) = " & _DateAdd( 'n',15, $skipStartTime ))
 			If $fullArmy = True And $MilkAtt = 1 And  _DateAdd( 'n', $TempoTrain, $skipStartTime ) > _NowCalc() Then
 				If $debugsetlog = 1 Then Setlog("don't waste time with many functions before attacking")
-				$Musttrain = 0
+;				$Musttrain = 0
 			Else
-				$Musttrain = 1
+;				$Musttrain = 1
 				$retourdeguerre = 0
 	;Ancient end skip check
 ;Noyax bottom
@@ -267,6 +271,7 @@ Func runBot() ;Bot that runs everything in order
 				If _Sleep($iDelayRunBot1) Then Return
 				checkMainScreen(False) ; required here due to many possible exits
 				If $Restart = True Then ContinueLoop
+			If checkAndroidTimeLag() = True Then ContinueLoop
 ;			Train()
 ;				If _Sleep($iDelayRunBot1) Then Return
 ;				checkMainScreen(False)
@@ -351,6 +356,8 @@ Func Idle() ;Sequence that runs until Full Army
 	Local $TimeIdle = 0 ;In Seconds
 	;If $debugsetlog = 1 Then SetLog("Func Idle ", $COLOR_PURPLE)
 	While $fullArmy = False Or $bFullArmyHero = False
+		checkAndroidTimeLag()
+
 		If $RequestScreenshot = 1 Then PushMsg("RequestScreenshot")
 		If _Sleep($iDelayIdle1) Then Return
 		If $CommandStop = -1 Then SetLog("====== Waiting for full army ======", $COLOR_GREEN)
@@ -420,9 +427,6 @@ Func Idle() ;Sequence that runs until Full Army
 		If $canRequestCC = True Then RequestCC()
 
 		SetLog("Time Idle: " & StringFormat("%02i", Floor(Floor($TimeIdle / 60) / 60)) & ":" & StringFormat("%02i", Floor(Mod(Floor($TimeIdle / 60), 60))) & ":" & StringFormat("%02i", Floor(Mod($TimeIdle, 60))))
-
-		checkAndroidTimeLag()
-		If $Restart = True Then ExitLoop
 
 		If $OutOfGold = 1 Or $OutOfElixir = 1 Then Return  ; Halt mode due low resources, only 1 idle loop
 		If $iChkSnipeWhileTrain = 1 Then SnipeWhileTrain()  ;snipe while train
