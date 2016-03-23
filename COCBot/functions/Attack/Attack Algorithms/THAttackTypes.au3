@@ -367,6 +367,7 @@ Func AttackTHParseCSV($test = False)
 
 	;Noyax top
 	setlog ("Get red area")
+	Global $hBitmapFirst
 	_WinAPI_DeleteObject($hBitmapFirst)
 	$hBitmapFirst = _CaptureRegion2()
 	_GetRedArea()
