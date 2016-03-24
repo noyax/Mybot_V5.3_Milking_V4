@@ -1,3 +1,9 @@
+v4.08
+- fix bug
+
+v4.06 4.07
+- huhhhh
+
 v4.05
 - fix cocstat
 - put new italian translate (thanks to @Davideroma84)
