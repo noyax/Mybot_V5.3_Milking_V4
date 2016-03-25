@@ -61,6 +61,7 @@ $tabMilking = GUICtrlCreateTabItem(GetTranslated(99,1, "Milking"))
 ;		$y += 23
 ;		$lblPixelmaxExposed2 = GUICtrlCreateLabel(" more chance you have to fail attack. 25 seems to be the minimum but too strict. 40 seems good result.", $x - 5 , $y )
 		$y += 30
+#cs
 		$lblnew = GUICtrlCreateLabel(GetTranslated(99,15, "****** New method, inactivates if scripted attack is chosen. It's for future update *******"), $x , $y + 3)
 		$y += 23
 		$lblPixelmaxExposed = GUICtrlCreateLabel(GetTranslated(99,16, "Nb tiles to redline to consider exposed:"), $x - 5 , $y )
@@ -93,6 +94,7 @@ $tabMilking = GUICtrlCreateTabItem(GetTranslated(99,1, "Milking"))
 		$picMilkAttackNearDarkElixirDrill = GUICtrlCreateIcon($pIconLib, $eIcnDrill, $x + 250 , $y - 3, 24, 24)
  			GUICtrlSetTip(-1, $txtTip)
 		$y += 40
+#ce
 		$lblnew = GUICtrlCreateLabel(GetTranslated(99,20, "****** Option TH Snipe *******"), $x , $y + 3)
 		$y += 23
 		$chkAttIfDB = GUICtrlCreateCheckbox(GetTranslated(99,21, "Attack if loots <"), $x  , $y, -1, -1)
@@ -105,19 +107,45 @@ $tabMilking = GUICtrlCreateTabItem(GetTranslated(99,1, "Milking"))
 			GUICtrlSetTip(-1, $txtTip)
 			GUICtrlSetLimit(-1, 2)
 			GUICtrlSetState(-1, $GUI_ENABLE)
-		$y += 30
-;		$lblnew = GUICtrlCreateLabel("****** Train troop in dark barracks *******", $x , $y + 3)
-;		$y += 23
-;		$lblBarrack5 = GUICtrlCreateLabel("5:", $x - 5, $y, -1, -1)
-;		$cmbBarrack5 = GUICtrlCreateCombo("", $x + 10, $y, 100, 25, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
-;			GUICtrlSetTip(-1, $txtTip & " 5.")
-;			GUICtrlSetData(-1, "-----------|" & $sTxtMinions & "|" & $sTxtHogRiders & "|" & $sTxtValkyries & "|" & $sTxtGolems & "|" & $sTxtWitches & "|" & $sTxtLavaHounds, "-----------")
-;			GUICtrlSetState(-1, $GUI_DISABLE)      
-;		$lblBarrack6 = GUICtrlCreateLabel("6:", $x +140, $y, -1, -1)
-;		$cmbBarrack6 = GUICtrlCreateCombo("", $x + 155, $y, 100, 25, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
-;			GUICtrlSetTip(-1, $txtTip & " 6.")
-;			GUICtrlSetData(-1, "-----------|" & $sTxtMinions & "|" & $sTxtHogRiders & "|" & $sTxtValkyries & "|" & $sTxtGolems & "|" & $sTxtWitches & "|" & $sTxtLavaHounds, "-----------")
-;			GUICtrlSetState(-1, $GUI_DISABLE)         
+
+
+		$y += 21
+		$cmbTSMeetGEMilk = GUICtrlCreateCombo("", $x , $y + 10, 65, -1, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
+			$txtTip = GetTranslated(4,103, "Search for a base that meets the values set for Gold And/Or/Plus Elixir.") & @CRLF & GetTranslated(4,104, "AND: Both conditions must meet, Gold and Elixir.") & @CRLF & GetTranslated(4,105, "OR: One condition must meet, Gold or Elixir.") & @CRLF & GetTranslated(4,106, "+ (PLUS): Total amount of Gold + Elixir must meet.")
+			GUICtrlSetData(-1, GetTranslated(4,107, "G And E") &"|" & GetTranslated(4,108, "G Or E") & "|" & GetTranslated(4,109, "G + E"), GetTranslated(4,107, "G And E"))
+			GUICtrlSetTip(-1, $txtTip)
+			GUICtrlSetOnEvent(-1, "cmbTSGoldElixir")
+;			GUICtrlSetState(-1, $GUI_DISABLE)
+		$txtTSMinGoldMilk = GUICtrlCreateInput("80000", $x + 80, $y, 50, 18, BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER, $ES_NUMBER))
+			$txtTip = GetTranslated(4,110, "Set the Min. amount of Gold to search for on a village to attack.")
+			GUICtrlSetTip(-1, $txtTip)
+			GUICtrlSetLimit(-1, 6)
+;			GUICtrlSetState(-1, $GUI_DISABLE)
+		$picTSMinGoldMilk = GUICtrlCreateIcon($pIconLib, $eIcnGold, $x + 131, $y, 16, 16)
+			GUICtrlSetTip(-1, $txtTip)
+		$y += 21
+		$txtTSMinElixirMilk = GUICtrlCreateInput("80000", $x + 80, $y, 50, 18, BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER, $ES_NUMBER))
+			$txtTip = GetTranslated(4,111, "Set the Min. amount of Elixir to search for on a village to attack.")
+			GUICtrlSetTip(-1, $txtTip)
+			GUICtrlSetLimit(-1, 6)
+;			GUICtrlSetState(-1, $GUI_DISABLE)
+		$picTSMinElixirMilk = GUICtrlCreateIcon($pIconLib, $eIcnElixir, $x + 131, $y, 16, 16)
+			GUICtrlSetTip(-1, $txtTip)
+		$y -= 11
+		$txtTSMinGoldPlusElixirMilk = GUICtrlCreateInput("160000", $x + 80, $y, 50, 20, BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER, $ES_NUMBER))
+			$txtTip = GetTranslated(4,112, "Set the Min. amount of Gold + Elixir to search for on a village to attack.")
+			GUICtrlSetTip(-1, $txtTip)
+			GUICtrlSetLimit(-1, 6)
+			GUICtrlSetState (-1, $GUI_HIDE)
+		$picTSMinGPEGoldMilk = GUICtrlCreateIcon($pIconLib, $eIcnGold, $x + 131, $y + 1, 16, 16)
+			GUICtrlSetTip(-1, $txtTip)
+			GUICtrlSetState (-1, $GUI_HIDE)
+		$lblTSMinGPE = GUICtrlCreateLabel("+", $x + 147, $y + 1, -1, -1)
+			GUICtrlSetTip(-1, $txtTip)
+			GUICtrlSetState (-1, $GUI_HIDE)
+		$picTSMinGPEElixirMilk = GUICtrlCreateIcon($pIconLib, $eIcnElixir, $x + 153, $y + 1, 16, 16)
+			GUICtrlSetTip(-1, $txtTip)
+			GUICtrlSetState (-1, $GUI_HIDE)
 
 	GUICtrlCreateGroup("", -99, -99, 1, 1)
 GUICtrlCreateTabItem("")

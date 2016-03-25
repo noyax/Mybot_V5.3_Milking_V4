@@ -60,6 +60,8 @@ Global $MyApiKey = ""
 Global $PixelRedArea2[0]
 Global $PixelRedAreaFurther2[0]
 Global $TestLoots = False
+Global $iMinGoldMilk, $iMinElixirMilk, $iMinGoldPlusElixirMilk, $iCmbMeetGEMilk, $lblTSMinGPEMilk; Minimum Resources conditions
+
 
 Func milkingatt()
 	If GUICtrlRead($chkDBAttMilk) = $GUI_CHECKED Then
@@ -152,6 +154,11 @@ Func saveparamMilk()
 	EndIf
 	IniWrite($configMilk, "TH Snipe", "THsnPercent", GUICtrlRead($txtAttIfDB))
 
+	IniWrite($configMilk, "TH Snipe", "TSMeetGE", _GUICtrlComboBox_GetCurSel($cmbTSMeetGEMilk))
+	IniWrite($configMilk, "TH Snipe", "TSsearchGold", GUICtrlRead($txtTSMinGoldMilk))
+	IniWrite($configMilk, "TH Snipe", "TSsearchElixir", GUICtrlRead($txtTSMinElixirMilk))
+	IniWrite($configMilk, "TH Snipe", "TSsearchGoldPlusElixir", GUICtrlRead($txtTSMinGoldPlusElixirMilk))
+
 ;train dark troops
 ;	IniWrite($configMilk, "troop", "troop5", _GUICtrlComboBox_GetCurSel($cmbBarrack5))
 ;	IniWrite($configMilk, "troop", "troop6", _GUICtrlComboBox_GetCurSel($cmbBarrack6))  
@@ -185,6 +192,10 @@ Func readconfigMilk()
 	$iOptAttIfDB = IniRead($configMilk, "TH Snipe", "THsnAttIfDB", "1")
 	$iPercentThsn = IniRead($configMilk, "TH Snipe", "THsnPercent", "10")
 
+	$iMinGoldMilk = IniRead($configMilk, "TH Snipe", "TSsearchGold", "80000")
+	$iMinElixirMilk = IniRead($configMilk, "TH Snipe", "TSsearchElixir", "80000")
+	$iMinGoldPlusElixirMilk = IniRead($configMilk, "TH Snipe", "TSsearchGoldPlusElixir", "160000")
+	$iCmbMeetGEMilk = IniRead($configMilk, "TH Snipe", "TSMeetGE", "2")
 ;train dark troops
 ;	ReDim $barrackTroop[Ubound($barrackTroop) + 2]
 ;	For $i = 4 To 5 ;Covers all 2 dark Barracks
@@ -253,12 +264,19 @@ Func applyconfigMilk()
 		GUICtrlSetState($chkAttIfDB, $GUI_UNCHECKED)
 	EndIf
 	GUICtrlSetData($txtAttIfDB, $iPercentThsn)
+
+	GUICtrlSetData($txtTSMinGoldMilk, $iMinGoldMilk)
+	GUICtrlSetData($txtTSMinElixirMilk, $iMinElixirMilk)
+	GUICtrlSetData($txtTSMinGoldPlusElixirMilk, $iMinGoldPlusElixirMilk)
+	_GUICtrlComboBox_SetCurSel($cmbTSMeetGEMilk, $iCmbMeetGEMilk)
+	cmbTSGoldElixirMilk()
 	
 ;  _GUICtrlComboBox_SetCurSel($cmbBarrack5, $barrackTroop[4])
 ;  _GUICtrlComboBox_SetCurSel($cmbBarrack6, $barrackTroop[5])
 
 
 EndFunc
+
 
 ;CocStats
 Func txtAPIKey()
@@ -305,7 +323,25 @@ Func TestLoots($Gold1 = 0, $Elixir1 = 0)
 	Setlog ("% Gold = 100 * " & $Ggold & " / " & $Gold1 & " = " & Round(100 * $Ggold / $Gold1, 1))
 	Setlog ("Elixir loots = " & $Elixir1 & " - " & $Elixir2 & " = " & $Gelixir)
 	Setlog ("% Elixir = 100 * " & $Gelixir & " / " & $Elixir1 & " = " & Round(100 * $Gelixir / $Elixir1, 1))
-	If Round(100 * $Ggold / $Gold1, 1) < $iPercentThsn Or Round(100 * $Gelixir / $Elixir1, 1) < $iPercentThsn Then 
+
+	Local $G = (Number($Gold1) >= Number($iMinGoldMilk))
+	Local $E = (Number($Elixir1) >= Number($iMinElixirMilk))
+	Local $GPE = ((Number($Elixir1) + Number($Gold1)) >= Number($iMinGoldPlusElixirMilk))
+
+	If _GUICtrlComboBox_GetCurSel($cmbTSMeetGEMilk) = 0 then
+		Local $ressMilk = $G and $E
+	Else
+		If _GUICtrlComboBox_GetCurSel($cmbTSMeetGEMilk) = 1 then
+			Local $ressMilk = $G or $E
+		Else
+			Local $ressMilk = $GPE
+		EndIF
+	EndIf
+
+	Setlog ("$ressMilk = " & $ressMilk)
+	SetLog ("$iOptAttIfDB = " & $iOptAttIfDB)
+	
+	If (Round(100 * $Ggold / $Gold1, 1) < $iPercentThsn Or Round(100 * $Gelixir / $Elixir1, 1) < $iPercentThsn) and $iOptAttIfDB = 1 and  $ressMilk = True Then 
 		Setlog ("Go to attack this dead base")
 		If $zoomedin = True Then
 			ZoomOut()
@@ -328,3 +364,27 @@ Func TestLoots($Gold1 = 0, $Elixir1 = 0)
 	EndIf
 	
 EndFunc
+
+;TH Snipe
+Func cmbTSGoldElixirMilk()
+	If _GUICtrlComboBox_GetCurSel($cmbTSMeetGEMilk) < 2 Then
+		GUICtrlSetState($txtTSMinGoldMilk, $GUI_SHOW)
+		GUICtrlSetState($picTSMinGoldMilk, $GUI_SHOW)
+		GUICtrlSetState($txtTSMinElixirMilk, $GUI_SHOW)
+		GUICtrlSetState($picTSMinElixirMilk, $GUI_SHOW)
+		GUICtrlSetState($txtTSMinGoldPlusElixirMilk, $GUI_HIDE)
+		GUICtrlSetState($picTSMinGPEGoldMilk, $GUI_HIDE)
+		GUICtrlSetState($lblTSMinGPEMilk, $GUI_HIDE)
+		GUICtrlSetState($picTSMinGPEElixirMilk, $GUI_HIDE)
+	Else
+		GUICtrlSetState($txtTSMinGoldMilk, $GUI_HIDE)
+		GUICtrlSetState($picTSMinGoldMilk, $GUI_HIDE)
+		GUICtrlSetState($txtTSMinElixirMilk, $GUI_HIDE)
+		GUICtrlSetState($picTSMinElixirMilk, $GUI_HIDE)
+		GUICtrlSetState($txtTSMinGoldPlusElixirMilk, $GUI_SHOW)
+		GUICtrlSetState($picTSMinGPEGoldMilk, $GUI_SHOW)
+		GUICtrlSetState($lblTSMinGPEMilk, $GUI_SHOW)
+		GUICtrlSetState($picTSMinGPEElixirMilk, $GUI_SHOW)
+	EndIf
+EndFunc   ;==>cmbTSGoldElixir
+
