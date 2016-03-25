@@ -1,3 +1,6 @@
+V4.09
+- Add ressources conditions when loots th snipe < X % to attack like dead base
+
 v4.08
 - fix bug
 

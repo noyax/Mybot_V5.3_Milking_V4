@@ -60,7 +60,7 @@ Global $MyApiKey = ""
 Global $PixelRedArea2[0]
 Global $PixelRedAreaFurther2[0]
 Global $TestLoots = False
-Global $iMinGoldMilk, $iMinElixirMilk, $iMinGoldPlusElixirMilk; Minimum Resources conditions
+Global $iMinGoldMilk, $iMinElixirMilk, $iMinGoldPlusElixirMilk, $iCmbMeetGEMilk, $lblTSMinGPEMilk; Minimum Resources conditions
 
 
 Func milkingatt()
@@ -192,10 +192,10 @@ Func readconfigMilk()
 	$iOptAttIfDB = IniRead($configMilk, "TH Snipe", "THsnAttIfDB", "1")
 	$iPercentThsn = IniRead($configMilk, "TH Snipe", "THsnPercent", "10")
 
-	$iMinGoldMilk = IniRead($config, "TH Snipe", "TSsearchGold", "80000")
-	$iMinElixirMilk = IniRead($config, "TH Snipe", "TSsearchElixir", "80000")
-	$iMinGoldPlusElixirMilk = IniRead($config, "TH Snipe", "TSsearchGoldPlusElixir", "160000")
-
+	$iMinGoldMilk = IniRead($configMilk, "TH Snipe", "TSsearchGold", "80000")
+	$iMinElixirMilk = IniRead($configMilk, "TH Snipe", "TSsearchElixir", "80000")
+	$iMinGoldPlusElixirMilk = IniRead($configMilk, "TH Snipe", "TSsearchGoldPlusElixir", "160000")
+	$iCmbMeetGEMilk = IniRead($configMilk, "TH Snipe", "TSMeetGE", "2")
 ;train dark troops
 ;	ReDim $barrackTroop[Ubound($barrackTroop) + 2]
 ;	For $i = 4 To 5 ;Covers all 2 dark Barracks
@@ -337,6 +337,9 @@ Func TestLoots($Gold1 = 0, $Elixir1 = 0)
 			Local $ressMilk = $GPE
 		EndIF
 	EndIf
+
+	Setlog ("$ressMilk = " & $ressMilk)
+	SetLog ("$iOptAttIfDB = " & $iOptAttIfDB)
 	
 	If (Round(100 * $Ggold / $Gold1, 1) < $iPercentThsn Or Round(100 * $Gelixir / $Elixir1, 1) < $iPercentThsn) and $iOptAttIfDB = 1 and  $ressMilk = True Then 
 		Setlog ("Go to attack this dead base")

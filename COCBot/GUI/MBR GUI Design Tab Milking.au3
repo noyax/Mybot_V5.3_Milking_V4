@@ -61,6 +61,7 @@ $tabMilking = GUICtrlCreateTabItem(GetTranslated(99,1, "Milking"))
 ;		$y += 23
 ;		$lblPixelmaxExposed2 = GUICtrlCreateLabel(" more chance you have to fail attack. 25 seems to be the minimum but too strict. 40 seems good result.", $x - 5 , $y )
 		$y += 30
+#cs
 		$lblnew = GUICtrlCreateLabel(GetTranslated(99,15, "****** New method, inactivates if scripted attack is chosen. It's for future update *******"), $x , $y + 3)
 		$y += 23
 		$lblPixelmaxExposed = GUICtrlCreateLabel(GetTranslated(99,16, "Nb tiles to redline to consider exposed:"), $x - 5 , $y )
@@ -93,6 +94,7 @@ $tabMilking = GUICtrlCreateTabItem(GetTranslated(99,1, "Milking"))
 		$picMilkAttackNearDarkElixirDrill = GUICtrlCreateIcon($pIconLib, $eIcnDrill, $x + 250 , $y - 3, 24, 24)
  			GUICtrlSetTip(-1, $txtTip)
 		$y += 40
+#ce
 		$lblnew = GUICtrlCreateLabel(GetTranslated(99,20, "****** Option TH Snipe *******"), $x , $y + 3)
 		$y += 23
 		$chkAttIfDB = GUICtrlCreateCheckbox(GetTranslated(99,21, "Attack if loots <"), $x  , $y, -1, -1)
@@ -113,12 +115,12 @@ $tabMilking = GUICtrlCreateTabItem(GetTranslated(99,1, "Milking"))
 			GUICtrlSetData(-1, GetTranslated(4,107, "G And E") &"|" & GetTranslated(4,108, "G Or E") & "|" & GetTranslated(4,109, "G + E"), GetTranslated(4,107, "G And E"))
 			GUICtrlSetTip(-1, $txtTip)
 			GUICtrlSetOnEvent(-1, "cmbTSGoldElixir")
-			GUICtrlSetState(-1, $GUI_DISABLE)
+;			GUICtrlSetState(-1, $GUI_DISABLE)
 		$txtTSMinGoldMilk = GUICtrlCreateInput("80000", $x + 80, $y, 50, 18, BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER, $ES_NUMBER))
 			$txtTip = GetTranslated(4,110, "Set the Min. amount of Gold to search for on a village to attack.")
 			GUICtrlSetTip(-1, $txtTip)
 			GUICtrlSetLimit(-1, 6)
-			GUICtrlSetState(-1, $GUI_DISABLE)
+;			GUICtrlSetState(-1, $GUI_DISABLE)
 		$picTSMinGoldMilk = GUICtrlCreateIcon($pIconLib, $eIcnGold, $x + 131, $y, 16, 16)
 			GUICtrlSetTip(-1, $txtTip)
 		$y += 21
@@ -126,7 +128,7 @@ $tabMilking = GUICtrlCreateTabItem(GetTranslated(99,1, "Milking"))
 			$txtTip = GetTranslated(4,111, "Set the Min. amount of Elixir to search for on a village to attack.")
 			GUICtrlSetTip(-1, $txtTip)
 			GUICtrlSetLimit(-1, 6)
-			GUICtrlSetState(-1, $GUI_DISABLE)
+;			GUICtrlSetState(-1, $GUI_DISABLE)
 		$picTSMinElixirMilk = GUICtrlCreateIcon($pIconLib, $eIcnElixir, $x + 131, $y, 16, 16)
 			GUICtrlSetTip(-1, $txtTip)
 		$y -= 11
