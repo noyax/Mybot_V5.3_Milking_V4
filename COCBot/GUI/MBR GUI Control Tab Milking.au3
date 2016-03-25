@@ -1,6 +1,6 @@
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: MBR GUI Milking
-; Description ...: This file Includes all functions to current GUI
+; Description ...: This file Includes GUI Milking
 ; Syntax ........:
 ; Parameters ....: None
 ; Return values .: None
@@ -12,319 +12,138 @@
 ; Link ..........: https://github.com/MyBotRun/MyBot/wiki
 ; Example .......: No
 ; ===============================================================================================================================
-#include "..\functions\Attack\Attack Algorithms\algorithm_AllTroops_Milk.au3"
-#include "..\functions\Image Search\CheckMilking.au3"
-#include "..\functions\Search\VillageSearch_Milking.au3"
 
-Global $chkMilkenabled
-Global $countFindPixCloser = 0 ;Noyax count collector exposed
-Global $countCollectorexposed = 0 ;Noyax count collector exposed	
-Global $MilkAtt, $NbTrpMilk, $PercentExposed, $DBUseGobsForCollector, $NbPercentExposed, $NbPixelmaxExposed, $NbPixelmaxExposed2, $AttackAnyway, $ToAttackAnyway[16], $HysterGobs, $TempoTrain ;Noyax for milking
-Global $retourdeguerre = 0 ; noyax
-Global $HDVOutDB = 0 ;Noyax 
-Global $icmbDetectTrapedTH, $ichkAirTrapTH, $ichkGroundTrapTH ;Noyax detect trapped TH
-Global $TestLoots = False ;Noyax
-Global $iOptAttIfDB = 1 ; Noyax attack when TH Snipe found DB
-Global $iPercentThsn = 10 ; Noyax % loots to considere dead base in TH Snipe
-Global $skipStartTime ;noyax add Ancient used to prevent infinate skips
-Global $configMilk = $sProfilePath & "\" & $sCurrProfile & "\configMilk.ini"
-Global $MilkAttackNearGoldMine, $MilkAttackNearElixirCollector, $MilkAttackNearDarkElixirDrill
-;ZAP DE
-Global $ichkSmartLightSpell
-global $ichkTrainLightSpell
-Global $iDrills[4][4] = [[-1, -1, -1, -1], [-1, -1, -1, -1], [-1, -1, -1, -1], [-1, -1, -1, -1]] ; [LocX, LocY, BldgLvl, Quantity=filled by other functions]
-Global $smartZapGain = 0
-Global $iSnipeSprint = 0
-Global $iSnipeSprintCount = 0
-Global $iSniperTroop = 0
-Global $NumLTSpellsUsed = 0
-Global $ichkDrillZapTH
-Global $itxtMinDark
-Global $txtMinDark
-Global $iLTSpellCost, $LTSCost , $LTSpellCost
-
-;telegram
-Global $PushToken2 = ""
-global $access_token2
-Global $first = 0
-global $chat_id2 = 0
-Global $lastremote = 0
-Global $pEnabled2
-
-; CoCStats
-Global $ichkCoCStats = 0
-Global $stxtAPIKey = ""
-Global $MyApiKey = ""
-
-; TH Snipe
-Global $PixelRedArea2[0]
-Global $PixelRedAreaFurther2[0]
-Global $TestLoots = False
-
-Func milkingatt()
-	If GUICtrlRead($chkDBAttMilk) = $GUI_CHECKED Then
-		GUICtrlSetState($txtchkPixelmaxExposed, $GUI_ENABLE)
-		GUICtrlSetState($txtchkPixelmaxExposed2, $GUI_ENABLE)
-		GUICtrlSetState($txtDBUseGobsForCollector, $GUI_ENABLE)
-		GUICtrlSetState($txtchkTempoTrain, $GUI_ENABLE)
-		GUICtrlSetState($txtDBAttMilk, $GUI_ENABLE)
-		GUICtrlSetState($txtchkHysterGobs, $GUI_ENABLE)
-		GUICtrlSetState($chkMilkAttackNearGoldMine, $GUI_ENABLE)
-		GUICtrlSetState($chkMilkAttackNearElixirCollector, $GUI_ENABLE)
-		GUICtrlSetState($chkMilkAttackNearDarkElixirDrill, $GUI_ENABLE)
-		$MilkAtt = 1
-	Else
-		GUICtrlSetState($txtchkPixelmaxExposed, $GUI_ENABLE)
-		GUICtrlSetState($txtchkPixelmaxExposed2, $GUI_ENABLE)
-		GUICtrlSetState($txtDBUseGobsForCollector, $GUI_DISABLE)
-		GUICtrlSetState($txtchkHysterGobs, $GUI_DISABLE)
-		GUICtrlSetState($txtchkTempoTrain, $GUI_DISABLE)
-		GUICtrlSetState($txtDBAttMilk, $GUI_DISABLE)
-		GUICtrlSetState($chkMilkAttackNearGoldMine, $GUI_DISABLE)
-		GUICtrlSetState($chkMilkAttackNearElixirCollector, $GUI_DISABLE)
-		GUICtrlSetState($chkMilkAttackNearDarkElixirDrill, $GUI_DISABLE)
-		$MilkAtt = 0
-	EndIf
-EndFunc   ;==>milkingatt
-
-Func saveparamMilk()
-
-	$configMilk = $sProfilePath & "\" & $sCurrProfile & "\configMilk.ini"
-	
-	Local $hFile = -1
-	If $ichkExtraAlphabets = 1 Then $hFile = FileOpen($configMilk, $FO_UTF16_LE + $FO_OVERWRITE)
-
-	If GUICtrlRead($chkDBAttMilk) = $GUI_CHECKED Then
-		IniWrite($configMilk, "Milking", "Milking", 1)
-	Else
-		IniWrite($configMilk, "Milking", "Milking", 0)
-	EndIf
-	IniWrite($configMilk, "Milking", "NbTrpMilk", GUICtrlRead($txtDBAttMilk))
-	IniWrite($configMilk, "Milking", "HysterGobs", GUICtrlRead($txtchkHysterGobs))
-	IniWrite($configMilk, "Milking", "TempoTrain", GUICtrlRead($txtchkTempoTrain))
-	IniWrite($configMilk, "Milking", "NbPixelmaxExposed", GUICtrlRead($txtchkPixelmaxExposed))
-	IniWrite($configMilk, "Milking", "NbPixelmaxExposed2", GUICtrlRead($txtchkPixelmaxExposed2))
-	IniWrite($configMilk, "Milking", "DBUseGobsForCollector", GUICtrlRead($txtDBUseGobsForCollector))
-
-	If GUICtrlRead($chkMilkAttackNearGoldMine) = $GUI_CHECKED Then
-		IniWrite($configMilk, "Milking", "MilkAttackNearGoldMine", 1)
-	Else
-		IniWrite($configMilk, "Milking", "MilkAttackNearGoldMine", 0)
-	EndIf
-
-	If GUICtrlRead($chkMilkAttackNearElixirCollector) = $GUI_CHECKED Then
-		IniWrite($configMilk, "Milking", "MilkAttackNearElixirCollector", 1)
-	Else
-		IniWrite($configMilk, "Milking", "MilkAttackNearElixirCollector", 0)
-	EndIf
-
-	If GUICtrlRead($chkMilkAttackNearDarkElixirDrill) = $GUI_CHECKED Then
-		IniWrite($configMilk, "Milking", "MilkAttackNearDarkElixirDrill", 1)
-	Else
-		IniWrite($configMilk, "Milking", "MilkAttackNearDarkElixirDrill", 0)
-	EndIf
-
-;	IniWrite($configMilk, "advanced", "THsnPercent", GUICtrlRead($txtAttIfDB))
-
-	If $hFile <> -1 Then FileClose($hFile)
-
-	IniWrite($configMilk, "Telegram", "AccountToken2", GUICtrlRead($PushBTokenValue2)) ; noyax telegram
-
- 	If GUICtrlRead($chkPBenabled2) = $GUI_CHECKED Then
-		IniWrite($configMilk, "Telegram", "PBEnabled2", 1)
-	Else
-		IniWrite($configMilk, "Telegram", "PBEnabled2", 0)
-	EndIf
-
-; CoCStats
-	If GUICtrlRead($chkCoCStats) = $GUI_CHECKED Then
-		IniWrite($configMilk, "Stats", "chkCoCStats", "1")
-	Else
-		IniWrite($configMilk, "Stats", "chkCoCStats", "0")
-	EndIf
-	IniWrite($configMilk, "Stats", "txtAPIKey", GUICtrlRead($txtAPIKey))
-
-;TH Snipe
-	If GUICtrlRead($chkAttIfDB) = $GUI_CHECKED Then
-		IniWrite($configMilk, "TH Snipe", "THsnAttIfDB", 1)
-	Else
-		IniWrite($configMilk, "TH Snipe", "THsnAttIfDB", 0)
-	EndIf
-	IniWrite($configMilk, "TH Snipe", "THsnPercent", GUICtrlRead($txtAttIfDB))
-
-;train dark troops
-;	IniWrite($configMilk, "troop", "troop5", _GUICtrlComboBox_GetCurSel($cmbBarrack5))
-;	IniWrite($configMilk, "troop", "troop6", _GUICtrlComboBox_GetCurSel($cmbBarrack6))  
-	
-EndFunc
-
-Func readconfigMilk()
-	$configMilk = $sProfilePath & "\" & $sCurrProfile & "\configMilk.ini"
-	If FileExists($configMilk) Then
-		$MilkAtt = IniRead($configMilk, "Milking", "Milking", "0")
-		$NbTrpMilk = IniRead($configMilk, "Milking", "NbTrpMilk", "90")
-		$NbPixelmaxExposed = IniRead($configMilk, "Milking", "NbPixelmaxExposed", "1")
-		$NbPixelmaxExposed2 = IniRead($configMilk, "Milking", "NbPixelmaxExposed2", "40")
-		$DBUseGobsForCollector = IniRead($configMilk, "Milking", "DBUseGobsForCollector", "5")
-		$HysterGobs = IniRead($configMilk, "Milking", "HysterGobs", "40")
-		$TempoTrain = IniRead($configMilk, "Milking", "TempoTrain", "15")
-		$MilkAttackNearGoldMine = IniRead($configMilk, "Milking", "MilkAttackNearGoldMine", "1")
-		$MilkAttackNearElixirCollector = IniRead($configMilk, "Milking", "MilkAttackNearElixirCollector", "1")
-		$MilkAttackNearDarkElixirDrill = IniRead($configMilk, "Milking", "MilkAttackNearDarkElixirDrill", "0")
-	Else
-		Return False
-	EndIf
-
-	$PushToken2 = IniRead($configMilk, "Telegram", "AccountToken2", "") ; noyax telegram
-	$pEnabled2 = IniRead($configMilk, "Telegram", "PBEnabled2", "0") ; noyax telegram
-; CoCStats
-	$ichkCoCStats = IniRead($configMilk, "Stats", "chkCoCStats", "0")
-	$stxtAPIKey = IniRead($configMilk, "Stats", "txtAPIKey", "")
-
-;TH Snipe
-	$iOptAttIfDB = IniRead($configMilk, "TH Snipe", "THsnAttIfDB", "1")
-	$iPercentThsn = IniRead($configMilk, "TH Snipe", "THsnPercent", "10")
-
-;train dark troops
-;	ReDim $barrackTroop[Ubound($barrackTroop) + 2]
-;	For $i = 4 To 5 ;Covers all 2 dark Barracks
-;		$barrackTroop[$i] = IniRead($configMilk, "troop", "troop" & $i + 1, "0")
-;	Next
-
-	
-EndFunc 
-
-Func applyconfigMilk()
-	GUICtrlSetData($txtDBAttMilk, $NbTrpMilk)
-	If $MilkAtt = 1 Then
-		GUICtrlSetState($chkDBAttMilk, $GUI_CHECKED)
-	Else
-		GUICtrlSetState($chkDBAttMilk, $GUI_UNCHECKED)
-	EndIf
-	If $MilkAttackNearGoldMine = 1 Then
-		GUICtrlSetState($chkMilkAttackNearGoldMine, $GUI_CHECKED)
-	Else
-		GUICtrlSetState($chkMilkAttackNearGoldMine, $GUI_UNCHECKED)
-	EndIf
-	If $MilkAttackNearElixirCollector = 1 Then
-		GUICtrlSetState($chkMilkAttackNearElixirCollector, $GUI_CHECKED)
-	Else
-		GUICtrlSetState($chkMilkAttackNearElixirCollector, $GUI_UNCHECKED)
-	EndIf
-	If $MilkAttackNearDarkElixirDrill = 1 Then
-		GUICtrlSetState($chkMilkAttackNearDarkElixirDrill, $GUI_CHECKED)
-	Else
-		GUICtrlSetState($chkMilkAttackNearDarkElixirDrill, $GUI_UNCHECKED)
-	EndIf
-	GUICtrlSetData($txtchkPixelmaxExposed, $NbPixelmaxExposed)
-	GUICtrlSetData($txtchkPixelmaxExposed2, $NbPixelmaxExposed2)
-	GUICtrlSetData($txtDBUseGobsForCollector, $DBUseGobsForCollector)
-	GUICtrlSetData($txtchkHysterGobs, $HysterGobs)
-	GUICtrlSetData($txtchkTempoTrain, $TempoTrain)
-	milkingatt()
-	
-	GUICtrlSetData($PushBTokenValue2, $PushToken2);noyax telegram
-
-;noyax top telegram
-	 If $pEnabled2 = 1 Then
-		GUICtrlSetState($chkPBenabled2, $GUI_CHECKED)
-		chkPBenabled2()
-	ElseIf $pEnabled2 = 0 Then
-		GUICtrlSetState($chkPBenabled2, $GUI_UNCHECKED)
-		chkPBenabled2()
-	EndIf
-;noyax bottom telegram
-	; CoCStats
-	If $ichkCoCStats = 1 Then
-		GUICtrlSetState($chkCoCStats, $GUI_CHECKED)
-		GUICtrlSetState($txtAPIKey, $GUI_ENABLE)
-	Else
-		GUICtrlSetState($chkCoCStats, $GUI_UNCHECKED)
-		GUICtrlSetState($txtAPIKey, $GUI_DISABLE)
-	EndIf
-	GUICtrlSetData($txtAPIKey, $stxtAPIKey)
-	chkCoCStats()
-	txtAPIKey()
-	
-;th snipe
-	If $iOptAttIfDB = 1 Then
-		GUICtrlSetState($chkAttIfDB, $GUI_CHECKED)
-	Else
-		GUICtrlSetState($chkAttIfDB, $GUI_UNCHECKED)
-	EndIf
-	GUICtrlSetData($txtAttIfDB, $iPercentThsn)
-	
-;  _GUICtrlComboBox_SetCurSel($cmbBarrack5, $barrackTroop[4])
-;  _GUICtrlComboBox_SetCurSel($cmbBarrack6, $barrackTroop[5])
+;~ -------------------------------------------------------------
+;~ Milking Tab
+;~ -------------------------------------------------------------
+$tabMilking = GUICtrlCreateTabItem(GetTranslated(99,1, "Milking"))
+	Local $x = 30, $y = 150
+	$grpMilking = GUICtrlCreateGroup(GetTranslated(99,2, "Milking Parameters"), $x - 20, $y - 20, 450, 375)
+		$lblcommon = GUICtrlCreateLabel(GetTranslated(99,3, "***** Common to 2 Milking methods (Scripted and new below)*****"), $x , $y + 3)
+		$y += 23
+		$chkDBAttMilk = GUICtrlCreateCheckbox(GetTranslated(99,4, "Milking with"), $x, $y, -1, -1)
+			$txtTip = GetTranslated(99,5, "Use Gobelins Power to try Milking.")
+			GUICtrlSetTip(-1, $txtTip)
+			GUICtrlSetState(-1, $GUI_CHECKED)
+			GUICtrlSetOnEvent(-1, "milkingatt")
+		$txtDBAttMilk = GUICtrlCreateInput("90", $x + 75, $y + 3, 25, 18, BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER, $ES_NUMBER))
+			$txtTip = GetTranslated(99,6, "Number of troops used for milking attack")
+			GUICtrlSetTip(-1, $txtTip)
+			GUICtrlSetLimit(-1, 5)
+			_GUICtrlEdit_SetReadOnly(-1, False)
+		$lblDBAttMilkDB = GUICtrlCreateLabel(GetTranslated(99,7, "Troops in camps before 1st attack"), $x + 102, $y + 3)
+		$y += 23
+		$lblHysterGobs = GUICtrlCreateLabel(GetTranslated(99,8, "Nb troops mini in camps before re-train:"), $x - 5 , $y + 3)
+		$txtchkHysterGobs = GUICtrlCreateInput("40", $x + 200, $y , 25, 18, BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER, $ES_NUMBER))
+			$txtTip = GetTranslated(99,9, "Number min of troops before train again")
+			GUICtrlSetTip(-1, $txtTip)
+			GUICtrlSetLimit(-1, 3)
+			_GUICtrlEdit_SetReadOnly(-1, False)
+		$y += 21
+		$lblTempoTrain = GUICtrlCreateLabel(GetTranslated(99,10, "Nb minutes max between 2 training:"), $x - 5 , $y + 3)
+;		$y += 23
+		$txtchkTempoTrain = GUICtrlCreateInput("15", $x + 200, $y , 25, 18, BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER, $ES_NUMBER))
+			$txtTip = GetTranslated(99,11, "Number minutes max between 2 trains troops")
+			GUICtrlSetTip(-1, $txtTip)
+			GUICtrlSetLimit(-1, 3)
+			_GUICtrlEdit_SetReadOnly(-1, False)
+		$y += 23
+		$lblnew = GUICtrlCreateLabel(GetTranslated(99,12, "****** Scripted method, use only if scripted attack is chosen *******"), $x , $y + 3)
+		$y += 23
+		$lblPixelmaxExposed2 = GUICtrlCreateLabel(GetTranslated(99,13, "Nb pixels to redline to consider exposed:"), $x - 5 , $y )
+		$txtchkPixelmaxExposed2 = GUICtrlCreateInput("40", $x + 200, $y , 25, 18, BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER, $ES_NUMBER))
+			$txtTip = GetTranslated(99,14, "Number min of Pixels to considere collectors exposed")
+			GUICtrlSetTip(-1, $txtTip)
+			GUICtrlSetLimit(-1, 3)
+			_GUICtrlEdit_SetReadOnly(-1, False)
+;		$y += 23
+;		$lblPixelmaxExposed2 = GUICtrlCreateLabel("Nb pixels between center of collector to the redline, higher is this number", $x - 5 , $y )
+;		$y += 23
+;		$lblPixelmaxExposed2 = GUICtrlCreateLabel(" more chance you have to fail attack. 25 seems to be the minimum but too strict. 40 seems good result.", $x - 5 , $y )
+		$y += 30
+		$lblnew = GUICtrlCreateLabel(GetTranslated(99,15, "****** New method, inactivates if scripted attack is chosen. It's for future update *******"), $x , $y + 3)
+		$y += 23
+		$lblPixelmaxExposed = GUICtrlCreateLabel(GetTranslated(99,16, "Nb tiles to redline to consider exposed:"), $x - 5 , $y )
+		$txtchkPixelmaxExposed = GUICtrlCreateInput("1", $x + 200, $y , 25, 18, BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER, $ES_NUMBER))
+			$txtTip = GetTranslated(99,17, "Number min of Tiles to considere collectors exposed")
+			GUICtrlSetTip(-1, $txtTip)
+			GUICtrlSetLimit(-1, 3)
+			_GUICtrlEdit_SetReadOnly(-1, False)
+		$y += 21
+		$txtDBUseGobsForCollector = GUICtrlCreateInput("5", $x, $y, 25, 18, BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER, $ES_NUMBER))
+			$txtTip = GetTranslated(99,18, "Bot tries to use X amount of Goblins to attack each exposed collector")
+			GUICtrlSetTip(-1, $txtTip)
+			GUICtrlSetLimit(-1, 3)
+			_GUICtrlEdit_SetReadOnly(-1, False)
+		$lblUseForColl2 = GUICtrlCreateLabel(GetTranslated(99,19, "Gobs / collectors"), $x + 30, $y, -1, -1)
+;		$y += 26
+		$chkMilkAttackNearGoldMine = GUICtrlCreateCheckbox("", $x + 120, $y, 17, 17)
+			$txtTip = GetTranslated(3,37, "Drop troops near Gold Mines")
+			GUICtrlSetTip(-1, $txtTip)
+		$picMilkAttackNearGoldMine = GUICtrlCreateIcon($pIconLib, $eIcnMine, $x + 140 , $y - 3 , 24, 24)
+			GUICtrlSetTip(-1, $txtTip)
+		$chkMilkAttackNearElixirCollector = GUICtrlCreateCheckbox("", $x + 175, $y, 17, 17)
+			$txtTip = GetTranslated(3,38, "Drop troops near Elixir Collectors")
+			GUICtrlSetTip(-1, $txtTip)
+		$picMilkAttackNearElixirCollector = GUICtrlCreateIcon($pIconLib, $eIcnCollector, $x + 195 , $y - 3 , 24, 24)
+			GUICtrlSetTip(-1, $txtTip)
+  		$chkMilkAttackNearDarkElixirDrill = GUICtrlCreateCheckbox("", $x + 230, $y, 17, 17)
+			$txtTip = GetTranslated(3,39, "Drop troops near Dark Elixir Drills")
+ 			GUICtrlSetTip(-1, $txtTip)
+		$picMilkAttackNearDarkElixirDrill = GUICtrlCreateIcon($pIconLib, $eIcnDrill, $x + 250 , $y - 3, 24, 24)
+ 			GUICtrlSetTip(-1, $txtTip)
+		$y += 40
+		$lblnew = GUICtrlCreateLabel(GetTranslated(99,20, "****** Option TH Snipe *******"), $x , $y + 3)
+		$y += 23
+		$chkAttIfDB = GUICtrlCreateCheckbox(GetTranslated(99,21, "Attack if loots <"), $x  , $y, -1, -1)
+			$txtTip = GetTranslated(99,22, "Attack if TH Snipe found dead base")
+			GUICtrlSetTip(-1, $txtTip)
+			GUICtrlSetState(-1, $GUI_ENABLE)
+		$lblAttIfDB = GUICtrlCreateLabel(GetTranslated(99,23, "% of total loots"), $x + 125, $y+5, -1, 17)
+		    GUICtrlSetTip(-1, $txtTip)
+		$txtAttIfDB = GUICtrlCreateInput("10", $x + 95, $y + 1, 25, 18, BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER, $ES_NUMBER))
+			GUICtrlSetTip(-1, $txtTip)
+			GUICtrlSetLimit(-1, 2)
+			GUICtrlSetState(-1, $GUI_ENABLE)
 
 
-EndFunc
+		$y += 21
+		$cmbTSMeetGEMilk = GUICtrlCreateCombo("", $x , $y + 10, 65, -1, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
+			$txtTip = GetTranslated(4,103, "Search for a base that meets the values set for Gold And/Or/Plus Elixir.") & @CRLF & GetTranslated(4,104, "AND: Both conditions must meet, Gold and Elixir.") & @CRLF & GetTranslated(4,105, "OR: One condition must meet, Gold or Elixir.") & @CRLF & GetTranslated(4,106, "+ (PLUS): Total amount of Gold + Elixir must meet.")
+			GUICtrlSetData(-1, GetTranslated(4,107, "G And E") &"|" & GetTranslated(4,108, "G Or E") & "|" & GetTranslated(4,109, "G + E"), GetTranslated(4,107, "G And E"))
+			GUICtrlSetTip(-1, $txtTip)
+			GUICtrlSetOnEvent(-1, "cmbTSGoldElixir")
+			GUICtrlSetState(-1, $GUI_DISABLE)
+		$txtTSMinGoldMilk = GUICtrlCreateInput("80000", $x + 80, $y, 50, 18, BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER, $ES_NUMBER))
+			$txtTip = GetTranslated(4,110, "Set the Min. amount of Gold to search for on a village to attack.")
+			GUICtrlSetTip(-1, $txtTip)
+			GUICtrlSetLimit(-1, 6)
+			GUICtrlSetState(-1, $GUI_DISABLE)
+		$picTSMinGoldMilk = GUICtrlCreateIcon($pIconLib, $eIcnGold, $x + 131, $y, 16, 16)
+			GUICtrlSetTip(-1, $txtTip)
+		$y += 21
+		$txtTSMinElixirMilk = GUICtrlCreateInput("80000", $x + 80, $y, 50, 18, BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER, $ES_NUMBER))
+			$txtTip = GetTranslated(4,111, "Set the Min. amount of Elixir to search for on a village to attack.")
+			GUICtrlSetTip(-1, $txtTip)
+			GUICtrlSetLimit(-1, 6)
+			GUICtrlSetState(-1, $GUI_DISABLE)
+		$picTSMinElixirMilk = GUICtrlCreateIcon($pIconLib, $eIcnElixir, $x + 131, $y, 16, 16)
+			GUICtrlSetTip(-1, $txtTip)
+		$y -= 11
+		$txtTSMinGoldPlusElixirMilk = GUICtrlCreateInput("160000", $x + 80, $y, 50, 20, BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER, $ES_NUMBER))
+			$txtTip = GetTranslated(4,112, "Set the Min. amount of Gold + Elixir to search for on a village to attack.")
+			GUICtrlSetTip(-1, $txtTip)
+			GUICtrlSetLimit(-1, 6)
+			GUICtrlSetState (-1, $GUI_HIDE)
+		$picTSMinGPEGoldMilk = GUICtrlCreateIcon($pIconLib, $eIcnGold, $x + 131, $y + 1, 16, 16)
+			GUICtrlSetTip(-1, $txtTip)
+			GUICtrlSetState (-1, $GUI_HIDE)
+		$lblTSMinGPE = GUICtrlCreateLabel("+", $x + 147, $y + 1, -1, -1)
+			GUICtrlSetTip(-1, $txtTip)
+			GUICtrlSetState (-1, $GUI_HIDE)
+		$picTSMinGPEElixirMilk = GUICtrlCreateIcon($pIconLib, $eIcnElixir, $x + 153, $y + 1, 16, 16)
+			GUICtrlSetTip(-1, $txtTip)
+			GUICtrlSetState (-1, $GUI_HIDE)
 
-;CocStats
-Func txtAPIKey()
-   $stxtAPIKey  = GUICtrlRead($txtAPIKey)
-   IniWrite($configMilk, "Stats", "txtAPIKey", $stxtAPIKey)
-   $MyApiKey = $stxtAPIKey
-EndFunc ;==> txtAPIKey
-
-Func chkCoCStats()
-   If GUICtrlRead($chkCoCStats) = $GUI_CHECKED Then
-	  $ichkCoCStats = 1
-	  GUICtrlSetState($txtAPIKey, $GUI_ENABLE)
-   Else
-	  $ichkCoCStats = 0
-	  GUICtrlSetState($txtAPIKey, $GUI_DISABLE)
-EndIf
-IniWrite($configMilk, "Stats", "chkCoCStats",$ichkCoCStats)
-EndFunc ;==> chkCoCStats
-
-
-
-; #FUNCTION# ====================================================================================================================
-; Name ..........: TestLoots
-; Description ...: test loot when Th fall
-; Syntax ........: 
-; Parameters ....: 
-; Return values .: 
-; Author ........: Noyax37 
-; Modified ......:
-; Remarks .......: This file is part of MyBot Copyright 2015
-;                  MyBot is distributed under the terms of the GNU GPL
-; Related .......:
-; Example .......: 
-; ===============================================================================================================================
-Func TestLoots($Gold1 = 0, $Elixir1 = 0)
-
-	Local $Gold2 = getGoldVillageSearch(48, 69)
-	Local $Elixir2 = getElixirVillageSearch(48, 69 + 29)
-	Local $Ggold = 0
-	$Ggold = $Gold1 - $Gold2
-	Local $Gelixir = 0
-	$Gelixir = $Elixir1 - $Elixir2
-	Setlog ("Gold loots = " & $Gold1 & " - " & $Gold2 & " = " & $Ggold)
-	Setlog ("% Gold = 100 * " & $Ggold & " / " & $Gold1 & " = " & Round(100 * $Ggold / $Gold1, 1))
-	Setlog ("Elixir loots = " & $Elixir1 & " - " & $Elixir2 & " = " & $Gelixir)
-	Setlog ("% Elixir = 100 * " & $Gelixir & " / " & $Elixir1 & " = " & Round(100 * $Gelixir / $Elixir1, 1))
-	If Round(100 * $Ggold / $Gold1, 1) < $iPercentThsn Or Round(100 * $Gelixir / $Elixir1, 1) < $iPercentThsn Then 
-		Setlog ("Go to attack this dead base")
-		If $zoomedin = True Then
-			ZoomOut()
-			$zoomedin = False
-			$zCount = 0
-			$sCount = 0
-		EndIf
-		$TestLoots = True
-		$iMatchMode = $DB
-		PrepareAttack($iMatchMode)
-		If $Restart = True Then 
-			$TestLoots = False
-			$iMatchMode = $TS
-			Return
-		EndIf
-		Attack()
-		$TestLoots = False
-		$iMatchMode = $TS
-		Return
-	EndIf
-	
-EndFunc
+	GUICtrlCreateGroup("", -99, -99, 1, 1)
+GUICtrlCreateTabItem("")
