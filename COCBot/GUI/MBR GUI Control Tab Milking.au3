@@ -268,7 +268,7 @@ Func applyconfigMilk()
 	GUICtrlSetData($txtTSMinGoldMilk, $iMinGoldMilk)
 	GUICtrlSetData($txtTSMinElixirMilk, $iMinElixirMilk)
 	GUICtrlSetData($txtTSMinGoldPlusElixirMilk, $iMinGoldPlusElixirMilk)
-	_GUICtrlComboBox_SetCurSel($cmbTSMeetGE, $iCmbMeetGEMilk)
+	_GUICtrlComboBox_SetCurSel($cmbTSMeetGEMilk, $iCmbMeetGEMilk)
 	cmbTSGoldElixirMilk()
 	
 ;  _GUICtrlComboBox_SetCurSel($cmbBarrack5, $barrackTroop[4])
