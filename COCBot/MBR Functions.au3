@@ -262,3 +262,7 @@
 #include "functions\SmartZap\smartZap.au3"
 #include "functions\Other\CoCStats.com.au3"
 #include "functions\Image Search\NewImageSearch.au3"
+
+; Unit Info file for casting lightning spell - Added by LunaEclipse
+#include "functions\Attack\unitInfo.au3"
+

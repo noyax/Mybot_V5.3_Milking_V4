@@ -335,7 +335,6 @@ Func UpdateStats()
 	EndIf
 
 	; Noyax : SmartZap Spells Used - Added by LunaEclipse
-	
 	If $iOldNumLTSpellsUsed <> $numLSpellsUsed Then
 		GUICtrlSetData($lblLightningUsed, _NumberFormat($numLSpellsUsed, True))
 		$iOldNumLTSpellsUsed = $numLSpellsUsed
