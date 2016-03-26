@@ -299,6 +299,19 @@ Func UpdateStats()
 		$iOldDElixirFromDrills = $iDElixirFromDrills
 	EndIf
 
+	; Noyax : SmartZap DE Gain - Added by LunaEclipse
+	If $iOldSmartZapGain <> $smartZapGain Then
+		GUICtrlSetData($lblSmartZap, _NumberFormat($smartZapGain, True))
+		$iOldSmartZapGain = $smartZapGain
+	EndIf
+
+	; Noyax : SmartZap Spells Used - Added by LunaEclipse
+	
+	If $iOldNumLTSpellsUsed <> $numLSpellsUsed Then
+		GUICtrlSetData($lblLightningUsed, _NumberFormat($numLSpellsUsed, True))
+		$iOldNumLTSpellsUsed = $numLSpellsUsed
+	EndIf
+	; SmartZap DE Gain - end
 	Local $iAttackedCount = 0
 
 	For $i = 0 To $iModeCount

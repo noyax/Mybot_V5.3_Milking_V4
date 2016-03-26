@@ -63,6 +63,10 @@ Global $TestLoots = False
 Global $iMinGoldMilk, $iMinElixirMilk, $iMinGoldPlusElixirMilk, $iCmbMeetGEMilk, $lblTSMinGPEMilk; Minimum Resources conditions
 
 
+; SmartZap Totals - Added by LunaEclipse
+Global $iOldsmartZapGain = 0, $iOldNumLTSpellsUsed = 0
+
+
 Func milkingatt()
 	If GUICtrlRead($chkDBAttMilk) = $GUI_CHECKED Then
 		GUICtrlSetState($txtchkPixelmaxExposed, $GUI_ENABLE)
