@@ -162,7 +162,7 @@ Func Train()
 			return
 ;		EndIf
 	EndIf
-	$skipStartTime = _NowCalc()
+;	$skipStartTime = _NowCalc()
 ;noyax bottom
 
 	; CHECK IF NEED TO MAKE TROOPS
