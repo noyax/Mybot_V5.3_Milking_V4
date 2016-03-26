@@ -258,7 +258,7 @@
 
 ;Noyax mod Milking
 #include "functions\Attack\AttackCSV\ParseAttackCSVMILK.au3"
-#include "functions\SmartZap\DEDrillSearch.au3"
-#include "functions\SmartZap\DEDropSmartSpell.au3"
+#include "functions\SmartZap\drillSearch.au3"
+#include "functions\SmartZap\smartZap.au3"
 #include "functions\Other\CoCStats.com.au3"
 #include "functions\Image Search\NewImageSearch.au3"

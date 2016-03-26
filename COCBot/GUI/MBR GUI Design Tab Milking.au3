@@ -63,37 +63,50 @@ $tabMilking = GUICtrlCreateTabItem(GetTranslated(99,1, "Milking"))
 		$y += 30
 
 		$lblnew = GUICtrlCreateLabel(GetTranslated(99,15, "****** New method, inactivates if scripted attack is chosen. It's for future update *******"), $x , $y + 3)
+			GUICtrlSetState(-1, $GUI_HIDE)
 		$y += 23
 		$lblPixelmaxExposed = GUICtrlCreateLabel(GetTranslated(99,16, "Nb tiles to redline to consider exposed:"), $x - 5 , $y )
+			GUICtrlSetState(-1, $GUI_HIDE)
 		$txtchkPixelmaxExposed = GUICtrlCreateInput("1", $x + 200, $y , 25, 18, BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER, $ES_NUMBER))
 			$txtTip = GetTranslated(99,17, "Number min of Tiles to considere collectors exposed")
 			GUICtrlSetTip(-1, $txtTip)
 			GUICtrlSetLimit(-1, 3)
 			_GUICtrlEdit_SetReadOnly(-1, False)
+			GUICtrlSetState(-1, $GUI_HIDE)
 		$y += 21
 		$txtDBUseGobsForCollector = GUICtrlCreateInput("5", $x, $y, 25, 18, BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER, $ES_NUMBER))
 			$txtTip = GetTranslated(99,18, "Bot tries to use X amount of Goblins to attack each exposed collector")
 			GUICtrlSetTip(-1, $txtTip)
 			GUICtrlSetLimit(-1, 3)
 			_GUICtrlEdit_SetReadOnly(-1, False)
+			GUICtrlSetState(-1, $GUI_HIDE)
 		$lblUseForColl2 = GUICtrlCreateLabel(GetTranslated(99,19, "Gobs / collectors"), $x + 30, $y, -1, -1)
+			GUICtrlSetState(-1, $GUI_HIDE)
 ;		$y += 26
 		$chkMilkAttackNearGoldMine = GUICtrlCreateCheckbox("", $x + 120, $y, 17, 17)
 			$txtTip = GetTranslated(3,37, "Drop troops near Gold Mines")
 			GUICtrlSetTip(-1, $txtTip)
+			GUICtrlSetState(-1, $GUI_HIDE)
 		$picMilkAttackNearGoldMine = GUICtrlCreateIcon($pIconLib, $eIcnMine, $x + 140 , $y - 3 , 24, 24)
 			GUICtrlSetTip(-1, $txtTip)
+			GUICtrlSetState(-1, $GUI_HIDE)
 		$chkMilkAttackNearElixirCollector = GUICtrlCreateCheckbox("", $x + 175, $y, 17, 17)
 			$txtTip = GetTranslated(3,38, "Drop troops near Elixir Collectors")
 			GUICtrlSetTip(-1, $txtTip)
+			GUICtrlSetState(-1, $GUI_HIDE)
 		$picMilkAttackNearElixirCollector = GUICtrlCreateIcon($pIconLib, $eIcnCollector, $x + 195 , $y - 3 , 24, 24)
 			GUICtrlSetTip(-1, $txtTip)
-  		$chkMilkAttackNearDarkElixirDrill = GUICtrlCreateCheckbox("", $x + 230, $y, 17, 17)
+ 			GUICtrlSetState(-1, $GUI_HIDE)
+ 		$chkMilkAttackNearDarkElixirDrill = GUICtrlCreateCheckbox("", $x + 230, $y, 17, 17)
 			$txtTip = GetTranslated(3,39, "Drop troops near Dark Elixir Drills")
  			GUICtrlSetTip(-1, $txtTip)
+			GUICtrlSetState(-1, $GUI_HIDE)
 		$picMilkAttackNearDarkElixirDrill = GUICtrlCreateIcon($pIconLib, $eIcnDrill, $x + 250 , $y - 3, 24, 24)
  			GUICtrlSetTip(-1, $txtTip)
+			GUICtrlSetState(-1, $GUI_HIDE)
 		$y += 40
+
+		$y -= 84
 
 		$lblnew = GUICtrlCreateLabel(GetTranslated(99,20, "****** Option TH Snipe *******"), $x , $y + 3)
 		$y += 23
@@ -101,17 +114,18 @@ $tabMilking = GUICtrlCreateTabItem(GetTranslated(99,1, "Milking"))
 			$txtTip = GetTranslated(99,22, "Attack if TH Snipe found dead base")
 			GUICtrlSetTip(-1, $txtTip)
 			GUICtrlSetState(-1, $GUI_ENABLE)
-		$lblAttIfDB = GUICtrlCreateLabel(GetTranslated(99,23, "% of total loots"), $x + 125, $y+5, -1, 17)
+		$lblAttIfDB = GUICtrlCreateLabel(GetTranslated(99,23, "% of total loots and"), $x + 125, $y+5, -1, 17)
 		    GUICtrlSetTip(-1, $txtTip)
 		$txtAttIfDB = GUICtrlCreateInput("10", $x + 95, $y + 1, 25, 18, BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER, $ES_NUMBER))
 			GUICtrlSetTip(-1, $txtTip)
 			GUICtrlSetLimit(-1, 2)
 			GUICtrlSetState(-1, $GUI_ENABLE)
 
-
-		$y += 21
+		
+		$y -= 10
+		$x += 220
 		$cmbTSMeetGEMilk = GUICtrlCreateCombo("", $x , $y + 10, 65, -1, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
-			$txtTip = GetTranslated(4,103, "Search for a base that meets the values set for Gold And/Or/Plus Elixir.") & @CRLF & GetTranslated(4,104, "AND: Both conditions must meet, Gold and Elixir.") & @CRLF & GetTranslated(4,105, "OR: One condition must meet, Gold or Elixir.") & @CRLF & GetTranslated(4,106, "+ (PLUS): Total amount of Gold + Elixir must meet.")
+			$txtTip = GetTranslated(4,103, "Attack after TH Snipe like dead base when meets the values set for Gold And/Or/Plus Elixir.") & @CRLF & GetTranslated(4,104, "AND: Both conditions must meet, Gold and Elixir.") & @CRLF & GetTranslated(4,105, "OR: One condition must meet, Gold or Elixir.") & @CRLF & GetTranslated(4,106, "+ (PLUS): Total amount of Gold + Elixir must meet.")
 			GUICtrlSetData(-1, GetTranslated(4,107, "G And E") &"|" & GetTranslated(4,108, "G Or E") & "|" & GetTranslated(4,109, "G + E"), GetTranslated(4,107, "G And E"))
 			GUICtrlSetTip(-1, $txtTip)
 			GUICtrlSetOnEvent(-1, "cmbTSGoldElixir")
@@ -146,6 +160,48 @@ $tabMilking = GUICtrlCreateTabItem(GetTranslated(99,1, "Milking"))
 		$picTSMinGPEElixirMilk = GUICtrlCreateIcon($pIconLib, $eIcnElixir, $x + 153, $y + 1, 16, 16)
 			GUICtrlSetTip(-1, $txtTip)
 			GUICtrlSetState (-1, $GUI_HIDE)
+		$x -= 220	
+		
+;smartzap
+		$y += 40
+
+		$lblnew = GUICtrlCreateLabel(GetTranslated(99,20, "****** Stat for smart ZAP *******"), $x , $y + 3)
+		$y += 23
+		$picSmartZap = GUICtrlCreateIcon($pIconLib, $eIcnDark, $x + 100, $y + 3, 24, 24)
+		$lblSmartZap = GUICtrlCreateLabel("0", $x , $y + 5, 80, 30, $SS_RIGHT)
+			GUICtrlSetFont(-1, 12, $FW_BOLD, Default, "arial", $CLEARTYPE_QUALITY)
+			GUICtrlSetColor(-1, 0x279B61)
+			$txtTip = "Number of dark elixir zapped during the attack with lightning."
+			GUICtrlSetTip(-1, $txtTip)
+			GUICtrlCreateIcon($pIconLib, $eIcnLightSpell, $x + 260, $y + 3, 24, 24)
+		$lblLightningUsed = GUICtrlCreateLabel("0", $x + 160, $y + 5, 80, 30, $SS_RIGHT)
+			GUICtrlSetFont(-1, 12, $FW_BOLD, Default, "arial", $CLEARTYPE_QUALITY)
+			GUICtrlSetColor(-1, 0x279B61)
+			$txtTip = "Amount of used spells."
+			GUICtrlSetTip(-1, $txtTip)
+
+; ageofclash - start
+		$y += 40
+		$lblnew = GUICtrlCreateLabel("****** Option Trophy Push *******", $x , $y + 3)
+		$y += 21
+		$lblTrophiesBottomLevel1 = GUICtrlCreateLabel("If trophies < ", $x, $y+5, -1, 17)
+		$txtTip = "Set the min. trophies level before stopping the bot, and the duration of the pause."
+			GUICtrlSetTip(-1, $txtTip)
+		$lblTrophiesBottomLevel2 = GUICtrlCreateLabel(" then take a rest for ", $x + 130, $y+5, -1, 17)
+			GUICtrlSetTip(-1, $txtTip)
+		$txtTrophiesBottomLevel = GUICtrlCreateInput("0", $x + 65, $y + 1, 50, 18, BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER, $ES_NUMBER))
+			GUICtrlSetTip(-1, $txtTip)
+			GUICtrlSetLimit(-1, 4)
+			GUICtrlSetState(-1, $GUI_ENABLE)
+		$txtTrophiesPause = GUICtrlCreateInput("15", $x + 235, $y + 1, 30, 18, BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER, $ES_NUMBER))
+			GUICtrlSetTip(-1, $txtTip)
+			GUICtrlSetLimit(-1, 2)
+			GUICtrlSetState(-1, $GUI_ENABLE)
+		$lblTrophiesPause = GUICtrlCreateLabel(" minute(s) ", $x + 270, $y+5, -1, 17)
+			GUICtrlSetTip(-1, $txtTip)
+; ageofclash - end
+
+			
 
 	GUICtrlCreateGroup("", -99, -99, 1, 1)
 GUICtrlCreateTabItem("")

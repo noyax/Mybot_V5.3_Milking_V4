@@ -89,10 +89,10 @@ Func ParseAttackCSV($debug = False)
 					Case "MILK"
 						ParseAttackCSVMILK($value1, $value2, $value3, $value4, $value5, $value6, $value7)
 					Case "ZAP"
-						$itxtMinDark = $value2
-						$ichkSmartLightSpell = 1
-						DEDropSmartSpell()
-						$ichkSmartLightSpell = 0
+						$itxtMinDE = $value2
+						$ichkSmartZap = 1
+						smartZap()
+						$ichkSmartZap = 0
 					Case "MAKE"
 						ReleaseClicks()
 						If CheckCsvValues("MAKE", 2, $value2) Then

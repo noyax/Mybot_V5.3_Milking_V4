@@ -20,6 +20,7 @@ Global $chkMilkenabled
 Global $countFindPixCloser = 0 ;Noyax count collector exposed
 Global $countCollectorexposed = 0 ;Noyax count collector exposed	
 Global $MilkAtt, $NbTrpMilk, $PercentExposed, $DBUseGobsForCollector, $NbPercentExposed, $NbPixelmaxExposed, $NbPixelmaxExposed2, $AttackAnyway, $ToAttackAnyway[16], $HysterGobs, $TempoTrain ;Noyax for milking
+Global $iTrophiesBottomLevel = 0, $iTrophiesPause = 15 ; ageofclash
 Global $retourdeguerre = 0 ; noyax
 Global $HDVOutDB = 0 ;Noyax 
 Global $icmbDetectTrapedTH, $ichkAirTrapTH, $ichkGroundTrapTH ;Noyax detect trapped TH
@@ -61,6 +62,10 @@ Global $PixelRedArea2[0]
 Global $PixelRedAreaFurther2[0]
 Global $TestLoots = False
 Global $iMinGoldMilk, $iMinElixirMilk, $iMinGoldPlusElixirMilk, $iCmbMeetGEMilk, $lblTSMinGPEMilk; Minimum Resources conditions
+
+
+; SmartZap Totals - Added by LunaEclipse
+Global $iOldsmartZapGain = 0, $iOldNumLTSpellsUsed = 0
 
 
 Func milkingatt()
@@ -107,6 +112,11 @@ Func saveparamMilk()
 	IniWrite($configMilk, "Milking", "NbPixelmaxExposed", GUICtrlRead($txtchkPixelmaxExposed))
 	IniWrite($configMilk, "Milking", "NbPixelmaxExposed2", GUICtrlRead($txtchkPixelmaxExposed2))
 	IniWrite($configMilk, "Milking", "DBUseGobsForCollector", GUICtrlRead($txtDBUseGobsForCollector))
+
+	; ageofclash -- start
+	IniWrite($configMilk, "Milking", "TrophiesBottomLevel", GUICtrlRead($txtTrophiesBottomLevel))
+	IniWrite($configMilk, "Milking", "TrophiesPause", GUICtrlRead($txtTrophiesPause))
+	; ageofclash -- end 
 
 	If GUICtrlRead($chkMilkAttackNearGoldMine) = $GUI_CHECKED Then
 		IniWrite($configMilk, "Milking", "MilkAttackNearGoldMine", 1)
@@ -178,6 +188,12 @@ Func readconfigMilk()
 		$MilkAttackNearGoldMine = IniRead($configMilk, "Milking", "MilkAttackNearGoldMine", "1")
 		$MilkAttackNearElixirCollector = IniRead($configMilk, "Milking", "MilkAttackNearElixirCollector", "1")
 		$MilkAttackNearDarkElixirDrill = IniRead($configMilk, "Milking", "MilkAttackNearDarkElixirDrill", "0")
+
+; ageofclash - start
+	    $iTrophiesBottomLevel = IniRead ($configMilk, "Milking", "TrophiesBottomLevel", "0")
+	    $iTrophiesPause = IniRead ($configMilk, "Milking", "TrophiesPause", "15")
+; ageofclash - end
+
 	Else
 		Return False
 	EndIf
@@ -206,6 +222,11 @@ Func readconfigMilk()
 EndFunc 
 
 Func applyconfigMilk()
+; ageofclash - start
+     GUICtrlSetData($txtTrophiesBottomLevel, $iTrophiesBottomLevel)
+     GUICtrlSetData($txtTrophiesPause, $iTrophiesPause)
+; ageofclash - end
+
 	GUICtrlSetData($txtDBAttMilk, $NbTrpMilk)
 	If $MilkAtt = 1 Then
 		GUICtrlSetState($chkDBAttMilk, $GUI_CHECKED)
