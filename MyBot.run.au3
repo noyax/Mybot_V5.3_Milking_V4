@@ -24,7 +24,7 @@
 #pragma compile(LegalCopyright, © https://mybot.run)
 #pragma compile(Out, MyBot.run.exe)  ; Required
 
-Local $MilkVer = "V4.10" ;Noyax
+Local $MilkVer = "V4.11" ;Noyax
 
 If @AutoItX64 = 1 Then
 	MsgBox(0, "", "Don't Run/Compile the Script as (x64)! try to Run/Compile the Script as (x86) to get the bot to work." & @CRLF & _

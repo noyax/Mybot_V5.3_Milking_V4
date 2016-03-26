@@ -1,3 +1,7 @@
+v4.11
+- add new zap DE, thanks to @LunaEclipse
+- add pause to increase trophy push, thanks to @AgeOfClash
+
 V4.10
 - fix to collect ressource
 - Set to 90 secondes the "Stuck At Search Clouds, Restarting CoC and Bot" (45 sec in official version)

@@ -167,19 +167,41 @@ $tabMilking = GUICtrlCreateTabItem(GetTranslated(99,1, "Milking"))
 
 		$lblnew = GUICtrlCreateLabel(GetTranslated(99,20, "****** Stat for smart ZAP *******"), $x , $y + 3)
 		$y += 23
-		$picSmartZap = GUICtrlCreateIcon($pIconLib, $eIcnDark, $x + 160, $y + 3, 24, 24)
-		$lblSmartZap = GUICtrlCreateLabel("0", $x + 60, $y + 5, 80, 30, $SS_RIGHT)
-			GUICtrlSetFont(-1, 16, $FW_BOLD, Default, "arial", $CLEARTYPE_QUALITY)
+		$picSmartZap = GUICtrlCreateIcon($pIconLib, $eIcnDark, $x + 100, $y + 3, 24, 24)
+		$lblSmartZap = GUICtrlCreateLabel("0", $x , $y + 5, 80, 30, $SS_RIGHT)
+			GUICtrlSetFont(-1, 12, $FW_BOLD, Default, "arial", $CLEARTYPE_QUALITY)
 			GUICtrlSetColor(-1, 0x279B61)
 			$txtTip = "Number of dark elixir zapped during the attack with lightning."
 			GUICtrlSetTip(-1, $txtTip)
-			GUICtrlCreateIcon($pIconLib, $eIcnLightSpell, $x + 160, $y + 40, 24, 24)
-		$lblLightningUsed = GUICtrlCreateLabel("0", $x + 60, $y + 40, 80, 30, $SS_RIGHT)
-			GUICtrlSetFont(-1, 16, $FW_BOLD, Default, "arial", $CLEARTYPE_QUALITY)
+			GUICtrlCreateIcon($pIconLib, $eIcnLightSpell, $x + 260, $y + 3, 24, 24)
+		$lblLightningUsed = GUICtrlCreateLabel("0", $x + 160, $y + 5, 80, 30, $SS_RIGHT)
+			GUICtrlSetFont(-1, 12, $FW_BOLD, Default, "arial", $CLEARTYPE_QUALITY)
 			GUICtrlSetColor(-1, 0x279B61)
 			$txtTip = "Amount of used spells."
 			GUICtrlSetTip(-1, $txtTip)
-		
+
+; ageofclash - start
+		$y += 40
+		$lblnew = GUICtrlCreateLabel("****** Option Trophy Push *******", $x , $y + 3)
+		$y += 21
+		$lblTrophiesBottomLevel1 = GUICtrlCreateLabel("If trophies < ", $x, $y+5, -1, 17)
+		$txtTip = "Set the min. trophies level before stopping the bot, and the duration of the pause."
+			GUICtrlSetTip(-1, $txtTip)
+		$lblTrophiesBottomLevel2 = GUICtrlCreateLabel(" then take a rest for ", $x + 130, $y+5, -1, 17)
+			GUICtrlSetTip(-1, $txtTip)
+		$txtTrophiesBottomLevel = GUICtrlCreateInput("0", $x + 65, $y + 1, 50, 18, BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER, $ES_NUMBER))
+			GUICtrlSetTip(-1, $txtTip)
+			GUICtrlSetLimit(-1, 4)
+			GUICtrlSetState(-1, $GUI_ENABLE)
+		$txtTrophiesPause = GUICtrlCreateInput("15", $x + 235, $y + 1, 30, 18, BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER, $ES_NUMBER))
+			GUICtrlSetTip(-1, $txtTip)
+			GUICtrlSetLimit(-1, 2)
+			GUICtrlSetState(-1, $GUI_ENABLE)
+		$lblTrophiesPause = GUICtrlCreateLabel(" minute(s) ", $x + 270, $y+5, -1, 17)
+			GUICtrlSetTip(-1, $txtTip)
+; ageofclash - end
+
+			
 
 	GUICtrlCreateGroup("", -99, -99, 1, 1)
 GUICtrlCreateTabItem("")
