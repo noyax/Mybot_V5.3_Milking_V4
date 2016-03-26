@@ -1,3 +1,7 @@
+V4.10
+- fix to collect ressource
+- Set to 90 secondes the "Stuck At Search Clouds, Restarting CoC and Bot" (45 sec in official version)
+
 V4.09
 - Add ressources conditions when loots th snipe < X % to attack like dead base
 
