@@ -66,6 +66,7 @@ Func UpdateStats()
 		 SetLog("let's kick some ass again :)", $COLOR_RED)
 	EndIf
 ; Noyax by ageofclash -- end	If $FirstRun = 1 Then
+	If $FirstRun = 1 Then
 		GUICtrlSetState($lblResultStatsTemp, $GUI_HIDE)
 		GUICtrlSetState($lblVillageReportTemp, $GUI_HIDE)
 		GUICtrlSetState($picResultGoldTemp, $GUI_HIDE)
