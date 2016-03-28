@@ -375,8 +375,8 @@ Func IsSearchModeActive($pMode)
 EndFunc   ;==>IsSearchModeActive
 
 Func IsWeakBase($pMode)
-	_WinAPI_DeleteObject($hBitmapFirst)
-	$hBitmapFirst = _CaptureRegion2()
+	Global $hBitmapFirst
+	$hBitmapFirst = _CaptureRegion3()
 	Local $resultHere = DllCall($hFuncLib, "str", "CheckConditionForWeakBase", "ptr", $hBitmapFirst, "int", ($iCmbWeakMortar[$pMode] + 1), "int", ($iCmbWeakWizTower[$pMode] + 1), "int", 10)
 	If @error Then ; detect if DLL error and return weakbase not found
 		SetLog("Weakbase search DLL error", $COLOR_RED)

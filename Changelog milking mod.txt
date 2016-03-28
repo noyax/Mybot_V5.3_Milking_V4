@@ -1,4 +1,10 @@
-v4.11
+v4.13
+- close android instance in function added by @AgeOfClash
+- send push message when pause
+- clear base before pause to trophy push, idea of @Maximus B
+- csv milking_gob put 6 gobelins instead of 4
+
+v4.12
 - add new zap DE, thanks to @LunaEclipse
 - add pause to increase trophy push, thanks to @AgeOfClash
 

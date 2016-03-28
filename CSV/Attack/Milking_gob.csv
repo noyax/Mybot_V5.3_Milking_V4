@@ -12,9 +12,9 @@ SIDE  |1          |1          |1          |           |           |           | 
 
       |COLLECTOR__|INDEX______|QTY_X_VECT_|TROOPNAME__|DELAY_DROP_|DELAYCHANGE|SLEEPAFTER_|___________|Milking Gobs 
 MILK1 |TH         |1          |4          |gobl       |0          |0          |0          |           |launch 4 gobl nearly TH = Town Hall...  X gobs / index
-MILK  |M          |1          |4          |gobl       |0          |0          |0          |           |launch 6 gobelins and 2 minions at each point near mines
-MILK  |E          |1          |4          |gobl       |0          |0          |0          |           |launch gobl nearly M = mines; E = Elixir and D = Dark...  X gobs / index
-MILK  |D          |1          |4          |gobl       |0          |0          |0          |           |launch gobl nearly M = mines; E = Elixir and D = Dark...  X gobs / index
+MILK  |M          |1          |6          |gobl       |0          |0          |0          |           |launch 6 gobelins and 2 minions at each point near mines
+MILK  |E          |1          |6          |gobl       |0          |0          |0          |           |launch gobl nearly M = mines; E = Elixir and D = Dark...  X gobs / index
+MILK  |D          |1          |6          |gobl       |0          |0          |0          |           |launch gobl nearly M = mines; E = Elixir and D = Dark...  X gobs / index
 WAIT  |500-1000   |           |           |           |           |           |           |           |Add a wait time; during wait time also CHECK exit values (exit if no resource left, exit if one or two starts reach)
 
       |VECTOR_____|SIDE_______|DROP_POINTS|ADDTILES___|VERSUS_____|RANDOMX_PX_|RANDOMY_PX_|___________|MAKE VECTORS TO DROP KINK, QUEEN and CASTLE

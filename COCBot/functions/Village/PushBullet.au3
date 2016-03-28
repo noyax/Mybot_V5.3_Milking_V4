@@ -616,7 +616,13 @@ Func PushMsg($Message, $Source = "")
 			If ($pEnabled = 1 or $pEnabled2 = 1 ) And $pWallUpgrade = 1 Then _Push($iOrigPushB & " | No Upgrade Gold Button" & "\n" & "Cannot find gold upgrade button ...")
 		Case "NoUpgradeElixirButton"
 			If ($pEnabled = 1 or $pEnabled2 = 1 ) And $pWallUpgrade = 1 Then _Push($iOrigPushB & " | No Upgrade Elixir Button" & "\n" & "Cannot find elixir upgrade button ...")
-		Case "RequestScreenshot"
+
+		;Noyax by ageofclash -- start
+		Case "PushBreak"
+			If ($pEnabled = 1 or $pEnabled2 = 1 ) Then _Push($iOrigPushB & " | Chief, we need some rest [" & $iTrophiesPause & " minute(s)] to push up our trophies!" & "\n" & "Village take a break..")
+		;Noyax by ageofclash -- end
+
+			Case "RequestScreenshot"
 			Local $Date = @YEAR & "-" & @MON & "-" & @MDAY
 			Local $Time = @HOUR & "." & @MIN
 			_CaptureRegion(0, 0, $DEFAULT_WIDTH, $DEFAULT_HEIGHT)

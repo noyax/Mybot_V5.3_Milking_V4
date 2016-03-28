@@ -109,8 +109,8 @@ Func CheckMilking()
 		SetLog("Locating Mines, Collectors or/and Drills", $COLOR_BLUE)
 		$hTimer = TimerInit()
 
-		_WinAPI_DeleteObject($hBitmapFirst)
-		$hBitmapFirst = _CaptureRegion2()
+		Global $hBitmapFirst
+		$hBitmapFirst = _CaptureRegion3()
 		_CaptureRegion(0,0,$DEFAULT_WIDTH,$DEFAULT_HEIGHT,true)
 		$sendHBitmap = _GDIPlus_BitmapCreateHBITMAPFromBitmap($hBitmap)
 
