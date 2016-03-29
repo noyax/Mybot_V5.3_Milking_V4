@@ -1158,7 +1158,6 @@ Func Train()
 		$iDarkTotal -= $tempDElixirSpent
 	EndIf
 
- ;noyax UpdateStats()
-	If $TrophyAoC = 0 then UpdateStats() ; noyax add condition to prevent loop in trophy push @AgeOfClash
-
+ 	UpdateStats()
+	
 EndFunc   ;==>Train

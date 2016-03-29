@@ -24,7 +24,7 @@
 #pragma compile(LegalCopyright, © https://mybot.run)
 #pragma compile(Out, MyBot.run.exe)  ; Required
 
-Local $MilkVer = "V4.15" ;Noyax
+Local $MilkVer = "V4.16" ;Noyax
 
 If @AutoItX64 = 1 Then
 	MsgBox(0, "", "Don't Run/Compile the Script as (x64)! try to Run/Compile the Script as (x86) to get the bot to work." & @CRLF & _
@@ -222,6 +222,24 @@ Func runBot() ;Bot that runs everything in order
 				If _Sleep($iDelayRunBot3) Then Return
 				If $Restart = True Then ContinueLoop
 			If checkAndroidTimeLag() = True Then ContinueLoop
+; Noyax by ageofclash -- start
+			if $iTrophyCurrent < ($iTrophiesBottomLevel*1) then
+				SetLog("It's time to get a pause ... ehy, out of there, please attack me and push me up! :) ", $COLOR_RED)
+				; take a rest
+				Setlog("Prepare base before push trophy break..", $COLOR_BLUE)
+				$TrophyAoC = 1
+				Train()
+				Collect() ; Empty Collectors
+				$TrophyAoC = 0
+				SetLog("wait " & $iTrophiesPause & " minute(s)", $COLOR_RED)
+				ToggleTrophyPause ()
+				CloseCoC(False)
+				PushMsg("PushBreak", "Push")
+				_SleepStatus($iTrophiesPause * 60 * 1000)
+				OpenCoC()
+				ToggleTrophyPause ()
+				SetLog("let's kick some ass again :)", $COLOR_RED)
+			EndIf
 			BoostBarracks()
 				If $Restart = True Then ContinueLoop
 			BoostSpellFactory()

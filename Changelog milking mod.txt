@@ -1,3 +1,7 @@
+v4.16
+- deplace function trophy push in Mybot.run.au3
+
+
 v4.15
 - fix cause of loop when collect before close to trophy push
 
