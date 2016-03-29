@@ -176,5 +176,7 @@ Func Collect()
 		$iDarkTotal += $tempDElixirCollected
 	EndIf
 
-	UpdateStats()
+;noyax UpdateStats()
+	If $TrophyAoC = 0 then UpdateStats() ; noyax add condition to prevent loop in trophy push @AgeOfClash
+	
 EndFunc   ;==>Collect
