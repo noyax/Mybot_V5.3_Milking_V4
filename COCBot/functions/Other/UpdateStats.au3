@@ -29,6 +29,7 @@ Global $iOldGoldFromMines, $iOldElixirFromCollectors, $iOldDElixirFromDrills ; n
 Global $iOldAttackedCount, $iOldAttackedVillageCount[$iModeCount+1] ; number of attack villages for DB, LB, TB, TS
 Global $iOldTotalGoldGain[$iModeCount+1], $iOldTotalElixirGain[$iModeCount+1], $iOldTotalDarkGain[$iModeCount+1], $iOldTotalTrophyGain[$iModeCount+1] ; total resource gains for DB, LB, TB, TS
 Global $iOldNbrOfDetectedMines[$iModeCount+1], $iOldNbrOfDetectedCollectors[$iModeCount+1], $iOldNbrOfDetectedDrills[$iModeCount+1] ; number of mines, collectors, drills detected for DB, LB, TB
+
 ; Noyax by ageofclash -- start
 Func ToggleTrophyPause()
    SetRedrawBotWindow(True)
@@ -53,17 +54,20 @@ Func UpdateStats()
 		SetLog("It's time to get a pause ... ehy, out of there, please attack me and push me up! :) ", $COLOR_RED)
 		; take a rest
 		Setlog("Prepare base before push trophy break..", $COLOR_BLUE)
+		Global $TrophyAoC = 1
+		Setlog("Prepare base before push trophy break..", $COLOR_BLUE)
 		$bDisableBreakCheck = True ; Set flag to stop checking for attackdisable messages, stop recursion
 		CheckBaseQuick() ; check and restock base before exit.
 		$bDisableBreakCheck = False ; reset break check flag to normal
-		 SetLog("wait " & $iTrophiesPause & " minute(s)", $COLOR_RED)
-		 ToggleTrophyPause ()
-		 CloseCoC()
-		 PushMsg("PushBreak", "Push")
-         _SleepStatus($iTrophiesPause * 60 * 1000)
-;         OpenCoC()
-		 ToggleTrophyPause ()
-		 SetLog("let's kick some ass again :)", $COLOR_RED)
+		$TrophyAoC = 0
+		SetLog("wait " & $iTrophiesPause & " minute(s)", $COLOR_RED)
+		ToggleTrophyPause ()
+		CloseCoC(False)
+		PushMsg("PushBreak", "Push")
+        _SleepStatus($iTrophiesPause * 60 * 1000)
+        OpenCoC()
+		ToggleTrophyPause ()
+		SetLog("let's kick some ass again :)", $COLOR_RED)
 	EndIf
 ; Noyax by ageofclash -- end	If $FirstRun = 1 Then
 	If $FirstRun = 1 Then

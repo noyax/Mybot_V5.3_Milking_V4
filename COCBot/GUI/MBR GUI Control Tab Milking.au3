@@ -62,6 +62,7 @@ Global $PixelRedArea2[0]
 Global $PixelRedAreaFurther2[0]
 Global $TestLoots = False
 Global $iMinGoldMilk, $iMinElixirMilk, $iMinGoldPlusElixirMilk, $iCmbMeetGEMilk, $lblTSMinGPEMilk; Minimum Resources conditions
+Global $TrophyAoC = 0
 
 
 ; SmartZap Totals - Added by LunaEclipse
