@@ -223,6 +223,7 @@ Func runBot() ;Bot that runs everything in order
 				If $Restart = True Then ContinueLoop
 			If checkAndroidTimeLag() = True Then ContinueLoop
 ; Noyax by ageofclash -- start
+			SetLog ("Current number of trophies = " & $iTrophyCurrent & " (bottom line = " & $iTrophiesBottomLevel & ")", $COLOR_GREEN)
 			if $iTrophyCurrent < ($iTrophiesBottomLevel*1) then
 				SetLog("It's time to get a pause ... ehy, out of there, please attack me and push me up! :) ", $COLOR_RED)
 				; take a rest
@@ -240,6 +241,7 @@ Func runBot() ;Bot that runs everything in order
 				ToggleTrophyPause ()
 				SetLog("let's kick some ass again :)", $COLOR_RED)
 			EndIf
+; Noyax by ageofclash -- end
 			BoostBarracks()
 				If $Restart = True Then ContinueLoop
 			BoostSpellFactory()
