@@ -1,3 +1,6 @@
+v4.15
+- fix cause of loop when collect before close to trophy push
+
 v4.14
 - close android instance in function added by @AgeOfClash
 - send push message when pause
