@@ -61,7 +61,7 @@ Func UpdateStats()
 		 CloseCoC()
 		 PushMsg("PushBreak", "Push")
          _SleepStatus($iTrophiesPause * 60 * 1000)
-         OpenCoC()
+;         OpenCoC()
 		 ToggleTrophyPause ()
 		 SetLog("let's kick some ass again :)", $COLOR_RED)
 	EndIf
