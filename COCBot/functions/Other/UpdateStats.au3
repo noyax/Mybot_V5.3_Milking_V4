@@ -55,10 +55,8 @@ Func UpdateStats()
 		; take a rest
 		Setlog("Prepare base before push trophy break..", $COLOR_BLUE)
 		Global $TrophyAoC = 1
-		Setlog("Prepare base before push trophy break..", $COLOR_BLUE)
-		$bDisableBreakCheck = True ; Set flag to stop checking for attackdisable messages, stop recursion
-		CheckBaseQuick() ; check and restock base before exit.
-		$bDisableBreakCheck = False ; reset break check flag to normal
+		Train()
+		Collect() ; Empty Collectors
 		$TrophyAoC = 0
 		SetLog("wait " & $iTrophiesPause & " minute(s)", $COLOR_RED)
 		ToggleTrophyPause ()

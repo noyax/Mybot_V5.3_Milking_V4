@@ -156,7 +156,7 @@ Func Train()
 	checkAttackDisable($iTaBChkIdle) ; Check for Take-A-Break after opening train page
 
 ; noyax top, don't waste time before attackink in milking mode
-	If $fullArmy= True And $MilkAtt = 1 And _DateAdd( 'n', $TempoTrain, $skipStartTime ) > _NowCalc() then
+	If $fullArmy= True And $MilkAtt = 1 And $TrophyAoC = 0 And _DateAdd( 'n', $TempoTrain, $skipStartTime ) > _NowCalc() then
 ;		If $Musttrain = 0 Then
 			setlog("Don't waste time, go to attack", $COLOR_PURPLE)
 			return
@@ -1158,6 +1158,7 @@ Func Train()
 		$iDarkTotal -= $tempDElixirSpent
 	EndIf
 
-	UpdateStats()
+ ;noyax UpdateStats()
+	If $TrophyAoC = 0 then UpdateStats() ; noyax add condition to prevent loop in trophy push @AgeOfClash
 
 EndFunc   ;==>Train
