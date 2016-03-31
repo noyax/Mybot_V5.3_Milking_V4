@@ -436,3 +436,18 @@ Func cmbTSGoldElixirMilk()
 	EndIf
 EndFunc   ;==>cmbTSGoldElixir
 
+; Noyax by ageofclash -- start
+Func ToggleTrophyPause()
+   SetRedrawBotWindow(True)
+   Local $BlockInputPausePrev
+	$TPaused = NOT $TPaused
+	If $TPaused and $Runstate = True Then
+			$iTimePassed += Int(TimerDiff($sTimer))
+			AdlibUnRegister("SetTime")
+	ElseIf $TPaused = False And $Runstate = True Then
+			$sTimer = TimerInit()
+			AdlibRegister("SetTime", 1000)
+		ZoomOut()
+	EndIf
+EndFunc
+; Noyax by ageofclash -- end
