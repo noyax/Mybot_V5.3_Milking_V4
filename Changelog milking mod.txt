@@ -1,3 +1,6 @@
+V4.17
+-
+
 v4.16
 - adapt mod to V5.3.2 official Mybot
 - deplace function trophy push in Mybot.run.au3
