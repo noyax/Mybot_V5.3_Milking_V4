@@ -30,44 +30,7 @@ Global $iOldAttackedCount, $iOldAttackedVillageCount[$iModeCount+1] ; number of 
 Global $iOldTotalGoldGain[$iModeCount+1], $iOldTotalElixirGain[$iModeCount+1], $iOldTotalDarkGain[$iModeCount+1], $iOldTotalTrophyGain[$iModeCount+1] ; total resource gains for DB, LB, TB, TS
 Global $iOldNbrOfDetectedMines[$iModeCount+1], $iOldNbrOfDetectedCollectors[$iModeCount+1], $iOldNbrOfDetectedDrills[$iModeCount+1] ; number of mines, collectors, drills detected for DB, LB, TB
 
-; Noyax by ageofclash -- start
-Func ToggleTrophyPause()
-   SetRedrawBotWindow(True)
-   Local $BlockInputPausePrev
-	$TPaused = NOT $TPaused
-	If $TPaused and $Runstate = True Then
-			$iTimePassed += Int(TimerDiff($sTimer))
-			AdlibUnRegister("SetTime")
-	ElseIf $TPaused = False And $Runstate = True Then
-			$sTimer = TimerInit()
-			AdlibRegister("SetTime", 1000)
-		ZoomOut()
-	EndIf
-EndFunc
-; Noyax by ageofclash -- end
-
-
 Func UpdateStats()
-; Noyax by ageofclash -- start
-;	SetLog ("Current number of trophies = " & $iTrophyCurrent & " (bottom line = " & $iTrophiesBottomLevel & ")", $COLOR_GREEN)
-	if $iTrophyCurrent < ($iTrophiesBottomLevel*1) then
-		SetLog("It's time to get a pause ... ehy, out of there, please attack me and push me up! :) ", $COLOR_RED)
-		; take a rest
-		Setlog("Prepare base before push trophy break..", $COLOR_BLUE)
-		Global $TrophyAoC = 1
-		Train()
-		Collect() ; Empty Collectors
-		$TrophyAoC = 0
-		SetLog("wait " & $iTrophiesPause & " minute(s)", $COLOR_RED)
-		ToggleTrophyPause ()
-		CloseCoC(False)
-		PushMsg("PushBreak", "Push")
-        _SleepStatus($iTrophiesPause * 60 * 1000)
-        OpenCoC()
-		ToggleTrophyPause ()
-		SetLog("let's kick some ass again :)", $COLOR_RED)
-	EndIf
-; Noyax by ageofclash -- end	If $FirstRun = 1 Then
 	If $FirstRun = 1 Then
 		GUICtrlSetState($lblResultStatsTemp, $GUI_HIDE)
 		GUICtrlSetState($lblVillageReportTemp, $GUI_HIDE)

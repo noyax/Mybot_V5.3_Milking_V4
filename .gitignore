@@ -5,6 +5,8 @@
 *.ini
 *.log
 *.orig
+*.png
+*.jpg
 
 # Global Folders
 [Pp]rofiles/

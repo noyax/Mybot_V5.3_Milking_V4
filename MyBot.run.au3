@@ -10,6 +10,7 @@
 ; Example .......: No
 ; ===============================================================================================================================
 
+
 #RequireAdmin
 #AutoIt3Wrapper_UseX64=7n
 #include <WindowsConstants.au3>
@@ -20,11 +21,11 @@
 #pragma compile(ProductName, My Bot)
 
 #pragma compile(ProductVersion, 5.3)
-#pragma compile(FileVersion, 5.3.1)
+#pragma compile(FileVersion, 5.3.2)
 #pragma compile(LegalCopyright, © https://mybot.run)
 #pragma compile(Out, MyBot.run.exe)  ; Required
 
-Local $MilkVer = "V4.15" ;Noyax
+Local $MilkVer = "V4.16" ;Noyax
 
 If @AutoItX64 = 1 Then
 	MsgBox(0, "", "Don't Run/Compile the Script as (x64)! try to Run/Compile the Script as (x86) to get the bot to work." & @CRLF & _
@@ -39,7 +40,7 @@ EndIf
 ;~ ProcessSetPriority(@AutoItPID, $PROCESS_ABOVENORMAL)
 #include "COCBot\MBR Global Variables.au3"
 
-$sBotVersion = "v5.3.1" ;~ Don't add more here, but below. Version can't be longer than vX.y.z because it it also use on Checkversion()
+$sBotVersion = "v5.3.2" ;~ Don't add more here, but below. Version can't be longer than vX.y.z because it it also use on Checkversion()
 $sBotTitle = "My Bot " & $sBotVersion & " " ;~ Don't use any non file name supported characters like \ / : * ? " < > |
 
 Opt("WinTitleMatchMode", 3) ; Window Title exact match mode
@@ -162,7 +163,6 @@ WEnd
 
 BotClose()
 
-
 Func runBot() ;Bot that runs everything in order
 	$TotalTrainedTroops = 0
 	;noyax add Ancient begin skip check
@@ -222,6 +222,27 @@ Func runBot() ;Bot that runs everything in order
 				If _Sleep($iDelayRunBot3) Then Return
 				If $Restart = True Then ContinueLoop
 			If checkAndroidTimeLag() = True Then ContinueLoop
+; Noyax by ageofclash -- start
+			SetLog ("Current number of trophies = " & $iTrophyCurrent & " (bottom line = " & $iTrophiesBottomLevel & ")", $COLOR_GREEN)
+			if $iTrophyCurrent < ($iTrophiesBottomLevel*1) then
+				SetLog("It's time to get a pause ... ehy, out of there, please attack me and push me up! :) ", $COLOR_RED)
+				; take a rest
+				Setlog("Prepare base before push trophy break..", $COLOR_BLUE)
+				$TrophyAoC = 1
+				Train()
+				Collect() ; Empty Collectors
+				BreakPersonalShield()  ; break personal Shield and Personal Guard
+				$TrophyAoC = 0
+				SetLog("wait " & $iTrophiesPause & " minute(s)", $COLOR_RED)
+				ToggleTrophyPause ()
+				CloseCoC(False)
+				PushMsg("PushBreak", "Push")
+				_SleepStatus($iTrophiesPause * 60 * 1000)
+				OpenCoC()
+				ToggleTrophyPause ()
+				SetLog("let's kick some ass again :)", $COLOR_RED)
+			EndIf
+; Noyax by ageofclash -- end
 			BoostBarracks()
 				If $Restart = True Then ContinueLoop
 			BoostSpellFactory()
