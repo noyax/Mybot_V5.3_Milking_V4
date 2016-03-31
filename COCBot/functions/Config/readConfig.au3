@@ -673,6 +673,6 @@ Func readConfig() ;Reads config and sets it to the variables
 		Return False
 	EndIf
 
-	readconfigMilk()
+	readconfigMilk(); Noyax
 
 EndFunc   ;==>readConfig
