@@ -231,7 +231,13 @@ Func CloseBattle()
 			If _Sleep($iDelayalgorithm_AllTroops2) Then Return
 		Next
 
-		If IsAttackPage() Then ClickP($aSurrenderButton, 1, 0, "#0030") ;Click Surrender
+;Noyax by @LKhjks top
+		If IsAttackPage() Then
+			SelectDropTroop($King)
+			SelectDropTroop($Queen)
+			ClickP($aSurrenderButton, 1, , "#0030") ;Click Surrender
+		EndIf
+;Noyax by @LKhjks bottom
 		If _Sleep($iDelayalgorithm_AllTroops3) Then Return
 		If IsEndBattlePage() Then
 		   ClickP($aConfirmSurrender, 1, 0, "#0031") ;Click Confirm
