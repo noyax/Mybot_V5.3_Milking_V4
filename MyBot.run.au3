@@ -231,6 +231,7 @@ Func runBot() ;Bot that runs everything in order
 				$TrophyAoC = 1
 				Train()
 				Collect() ; Empty Collectors
+				BreakPersonalShield()  ; break personal Shield and Personal Guard
 				$TrophyAoC = 0
 				SetLog("wait " & $iTrophiesPause & " minute(s)", $COLOR_RED)
 				ToggleTrophyPause ()
