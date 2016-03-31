@@ -235,7 +235,7 @@ Func CloseBattle()
 		If IsAttackPage() Then
 			SelectDropTroop($King)
 			SelectDropTroop($Queen)
-			ClickP($aSurrenderButton, 1, , "#0030") ;Click Surrender
+			ClickP($aSurrenderButton, 1, 0, "#0030") ;Click Surrender
 		EndIf
 ;Noyax by @LKhjks bottom
 		If _Sleep($iDelayalgorithm_AllTroops3) Then Return
