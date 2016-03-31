@@ -10,6 +10,7 @@
 ; Example .......: No
 ; ===============================================================================================================================
 
+
 #RequireAdmin
 #AutoIt3Wrapper_UseX64=7n
 #include <WindowsConstants.au3>
@@ -20,7 +21,7 @@
 #pragma compile(ProductName, My Bot)
 
 #pragma compile(ProductVersion, 5.3)
-#pragma compile(FileVersion, 5.3.1)
+#pragma compile(FileVersion, 5.3.2)
 #pragma compile(LegalCopyright, © https://mybot.run)
 #pragma compile(Out, MyBot.run.exe)  ; Required
 
@@ -39,7 +40,7 @@ EndIf
 ;~ ProcessSetPriority(@AutoItPID, $PROCESS_ABOVENORMAL)
 #include "COCBot\MBR Global Variables.au3"
 
-$sBotVersion = "v5.3.1" ;~ Don't add more here, but below. Version can't be longer than vX.y.z because it it also use on Checkversion()
+$sBotVersion = "v5.3.2" ;~ Don't add more here, but below. Version can't be longer than vX.y.z because it it also use on Checkversion()
 $sBotTitle = "My Bot " & $sBotVersion & " " ;~ Don't use any non file name supported characters like \ / : * ? " < > |
 
 Opt("WinTitleMatchMode", 3) ; Window Title exact match mode
@@ -161,7 +162,6 @@ While 1
 WEnd
 
 BotClose()
-
 
 Func runBot() ;Bot that runs everything in order
 	$TotalTrainedTroops = 0

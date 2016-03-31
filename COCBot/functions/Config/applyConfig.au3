@@ -1716,7 +1716,7 @@ Func applyConfig($bRedrawAtExit = True) ;Applies the data from config to the con
 	EndIf
 	chkUseAttackABCSV()
 
-	applyconfigMilk()
+	applyconfigMilk();Noyax
 	
 
 	; Reenabling window redraw

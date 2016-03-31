@@ -177,5 +177,4 @@ Func Collect()
 	EndIf
 
 	UpdateStats()
-	
 EndFunc   ;==>Collect

@@ -1158,6 +1158,6 @@ Func Train()
 		$iDarkTotal -= $tempDElixirSpent
 	EndIf
 
- 	UpdateStats()
-	
+	UpdateStats()
+
 EndFunc   ;==>Train
