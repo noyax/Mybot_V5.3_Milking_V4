@@ -4,6 +4,7 @@ v4.16
 - break shield if exist when come back after trophy push
 - fix telegram notifications (?), thanks to @Araboy
 - Add translation in trophy push
+- activate king and queen power when leave battle, ad by @LKhjks
 
 v4.15
 - fix cause of loop when collect before close to trophy push
