@@ -472,7 +472,16 @@ Func readConfig() ;Reads config and sets it to the variables
 		$iPoisonSpellComp = Int(IniRead($config, "Spells", "PoisonSpell", "0"))
 		$iHasteSpellComp = Int(IniRead($config, "Spells", "HasteSpell", "0"))
 		$iEarthSpellComp = Int(IniRead($config, "Spells", "EarthSpell", "0"))
-		$iTotalCountSpell = Int(IniRead($config, "Spells", "SpellFactory", "0"))
+		$iTotalCountSpell = Int(IniRead($config, "Spells", "SpellFactory", "0"))		
+		$iLightningSpellBrewInAdvance = Int(IniRead($config, "Spells", "BrewInAdvanceLightningSpell", "0"))
+		$iHealSpellBrewInAdvance = Int(IniRead($config, "Spells", "BrewInAdvanceHealSpell", "0"))
+		$iRageSpellBrewInAdvance = Int(IniRead($config, "Spells", "BrewInAdvanceRageSpell", "0"))		
+		$iJumpSpellBrewInAdvance = Int(IniRead($config, "Spells", "BrewInAdvanceJumpSpell", "0"))	
+		$iFreezeSpellBrewInAdvance = Int(IniRead($config, "Spells", "BrewInAdvanceFreezeSpell", "0"))	
+		$iPoisonSpellBrewInAdvance = Int(IniRead($config, "Spells", "BrewInAdvancePoisonSpell", "0"))	 
+		$iEarthSpellBrewInAdvance = Int(IniRead($config, "Spells", "BrewInAdvanceEarthSpell", "0"))	 
+		$iHasteSpellBrewInAdvance = Int(IniRead($config, "Spells", "BrewInAdvanceHasteSpell", "0"))	
+		
 
 		;Misc Settings--------------------------------------------------------------------------
 
