@@ -40,7 +40,7 @@ Func BrewSpells()
 					Local $iLightningSpell = $iLightningSpellComp - ($CurLightningSpell + $iTempLightningSpell)
 					If $debugSetlog = 1 Then SetLog("Making Lightning Spell: " & $iLightningSpell)
 					If _sleep($iDelayTrain2) Then Return
-					If $iTempLightningSpell = 0 Then
+					If $iLightningSpell > 0 Then
 						If _ColorCheck(_GetPixelColor(239 + 107 * 0, 375 + $midOffsetY, True), Hex(0xFFFFFF, 6), 20) = False Then ; White into number 0
 							setlog("Not enough Elixir to create Spell", $COLOR_RED)
 							Return
@@ -48,10 +48,8 @@ Func BrewSpells()
 							setlog("Spell Factory Full", $COLOR_RED)
 							Return
 						Else
-							If $iLightningSpell > 0 Then
-								GemClick(220 + 107 * 0, 354 + $midOffsetY, $iLightningSpell, $iDelayTrain7, "#0290")
-								SetLog("Created " & $iLightningSpell & " Lightning Spell(s)", $COLOR_BLUE)
-							EndIf
+							GemClick(220 + 107 * 0, 354 + $midOffsetY, $iLightningSpell, $iDelayTrain7, "#0290")
+							SetLog("Created " & $iLightningSpell & " Lightning Spell(s)", $COLOR_BLUE)
 						EndIf
 					EndIf
 				EndIf
@@ -60,7 +58,7 @@ Func BrewSpells()
 					Local $iHealSpell = $iHealSpellComp - ($CurHealSpell + $iTempHealSpell)
 					If $debugSetlog = 1 Then SetLog("Making Heal Spell: " & $iHealSpell)
 					If _sleep($iDelayTrain2) Then Return
-					If $iTempHealSpell = 0 Then
+					If $iHealSpell > 0 Then
 						If _ColorCheck(_GetPixelColor(239 + 107 * 1, 375 + $midOffsetY, True), Hex(0xFFFFFF, 6), 20) = False Then
 							setlog("Not enough Elixir to create Spell", $COLOR_RED)
 							Return
@@ -68,10 +66,8 @@ Func BrewSpells()
 							setlog("Spell Factory Full", $COLOR_RED)
 							Return
 						Else
-							If $iHealSpell > 0 Then
-								GemClick(220 + 107 * 1, 354 + $midOffsetY, $iHealSpell, $iDelayTrain7, "#0290")
-								SetLog("Created " & $iHealSpell & " Heal Spell(s)", $COLOR_BLUE)
-							EndIf
+							GemClick(220 + 107 * 1, 354 + $midOffsetY, $iHealSpell, $iDelayTrain7, "#0290")
+							SetLog("Created " & $iHealSpell & " Heal Spell(s)", $COLOR_BLUE)
 						EndIf
 					EndIf
 				EndIf
@@ -80,7 +76,7 @@ Func BrewSpells()
 					Local $iRageSpell = $iRageSpellComp - ($CurRageSpell + $iTempRageSpell)
 					If $debugSetlog = 1 Then SetLog("Making Rage Spell: " & $iRageSpell)
 					If _sleep($iDelayTrain2) Then Return
-					If $iTempRageSpell = 0 Then
+					If $iRageSpell > 0 Then
 						If _ColorCheck(_GetPixelColor(220 + 107 * 2, 375 + $midOffsetY, True), Hex(0xFFFFFF, 6), 20) = False Then
 							setlog("Not enough Elixir to create Spell", $COLOR_RED)
 							Return
@@ -88,10 +84,8 @@ Func BrewSpells()
 							setlog("Spell Factory Full", $COLOR_RED)
 							Return
 						Else
-							If $iRageSpell > 0 Then
-								GemClick(220 + 107 * 2, 354 + $midOffsetY, $iRageSpell, $iDelayTrain7, "#0290")
-								SetLog("Created " & $iRageSpell & " Rage Spell(s)", $COLOR_BLUE)
-							EndIf
+							GemClick(220 + 107 * 2, 354 + $midOffsetY, $iRageSpell, $iDelayTrain7, "#0290")
+							SetLog("Created " & $iRageSpell & " Rage Spell(s)", $COLOR_BLUE)
 						EndIf
 					EndIf
 				EndIf
@@ -100,7 +94,7 @@ Func BrewSpells()
 					Local $iJumpSpell = $iJumpSpellComp - ($CurJumpSpell + $iTempJumpSpell)
 					If $debugSetlog = 1 Then SetLog("Making Jump Spell: " & $iJumpSpell)
 					If _sleep($iDelayTrain2) Then Return
-					If $iTempJumpSpell = 0 Then
+					If $iJumpSpell > 0 Then
 						If _ColorCheck(_GetPixelColor(239 + 107 * 3, 375 + $midOffsetY, True), Hex(0xFFFFFF, 6), 20) = False Then ; White into number 0
 							setlog("Not enough Elixir to create Spell", $COLOR_RED)
 							Return
@@ -108,10 +102,8 @@ Func BrewSpells()
 							setlog("Spell Factory Full", $COLOR_RED)
 							Return
 						Else
-							If $iJumpSpell > 0 Then
-								GemClick(220 + 107 * 3, 354 + $midOffsetY, $iJumpSpell, $iDelayTrain7, "#0290")
-								SetLog("Created " & $iJumpSpell & " Jump Spell(s)", $COLOR_BLUE)
-							EndIf
+							GemClick(220 + 107 * 3, 354 + $midOffsetY, $iJumpSpell, $iDelayTrain7, "#0290")
+							SetLog("Created " & $iJumpSpell & " Jump Spell(s)", $COLOR_BLUE)
 						EndIf
 					EndIf
 				EndIf
@@ -120,7 +112,7 @@ Func BrewSpells()
 					Local $iFreezeSpell = $iFreezeSpellComp - ($CurFreezeSpell + $iTempFreezeSpell)
 					If $debugSetlog = 1 Then SetLog("Making Freeze Spell: " & $iFreezeSpell)
 					If _sleep($iDelayTrain2) Then Return
-					If $iTempFreezeSpell = 0 Then
+					If $iFreezeSpell > 0 Then
 						If _ColorCheck(_GetPixelColor(239 + 107 * 4, 375 + $midOffsetY, True), Hex(0xFFFFFF, 6), 20) = False Then ; White into number 0
 							setlog("Not enough Elixir to create Spell", $COLOR_RED)
 							Return
@@ -128,10 +120,8 @@ Func BrewSpells()
 							setlog("Spell Factory Full", $COLOR_RED)
 							Return
 						Else
-							If $iFreezeSpell > 0 Then
-								GemClick(220 + 107 * 4, 354 + $midOffsetY, $iFreezeSpell, $iDelayTrain7, "#0290")
-								SetLog("Created " & $iFreezeSpell & " Freeze Spell(s)", $COLOR_BLUE)
-							EndIf
+							GemClick(220 + 107 * 4, 354 + $midOffsetY, $iFreezeSpell, $iDelayTrain7, "#0290")
+							SetLog("Created " & $iFreezeSpell & " Freeze Spell(s)", $COLOR_BLUE)
 						EndIf
 					EndIf
 				EndIf
@@ -155,7 +145,7 @@ Func BrewSpells()
 					Local $iPoisonSpell = $iPoisonSpellComp - ($CurPoisonSpell + $iTempPoisonSpell)
 					If $debugSetlog = 1 Then SetLog("Making Poision Spell: " & $iPoisonSpell)
 					If _sleep($iDelayTrain2) Then Return
-					If $iTempPoisonSpell = 0 Then
+					If $iPoisonSpell > 0 Then
 						If _sleep($iDelayTrain2) Then Return
 						If _ColorCheck(_GetPixelColor(239, 375 + $midOffsetY, True), Hex(0xFFFFFF, 6), 20) = False Then
 							setlog("Not enough Elixir to create Spell", $COLOR_RED)
@@ -164,10 +154,8 @@ Func BrewSpells()
 							setlog("Spell Factory Full", $COLOR_RED)
 							Return
 						Else
-							If $iPoisonSpell > 0 Then
-								GemClick(222, 354 + $midOffsetY, $iPoisonSpell, $iDelayTrain7, "#0290")
-								SetLog("Created " & $iPoisonSpell & " Poison Spell(s)", $COLOR_BLUE)
-							EndIf
+							GemClick(222, 354 + $midOffsetY, $iPoisonSpell, $iDelayTrain7, "#0290")
+							SetLog("Created " & $iPoisonSpell & " Poison Spell(s)", $COLOR_BLUE)
 						EndIf
 					EndIf
 				EndIf
@@ -177,7 +165,7 @@ Func BrewSpells()
 					Local $iEarthSpell = $iEarthSpellComp - ($CurEarthSpell + $iTempEarthSpell)
 					If $debugSetlog = 1 Then SetLog("Making EarthQuake Spell: " & $iEarthSpell)
 					If _sleep($iDelayTrain2) Then Return
-					If $iTempEarthSpell = 0 Then
+					If $iEarthSpell > 0 Then
 						If _sleep($iDelayTrain2) Then Return
 						If _ColorCheck(_GetPixelColor(346, 375 + $midOffsetY, True), Hex(0xFFFFFF, 6), 20) = False Then ; black pixel in number 5
 							setlog("Not enough Elixir to create Spell", $COLOR_RED)
@@ -186,10 +174,8 @@ Func BrewSpells()
 							setlog("Spell Factory Full", $COLOR_RED)
 							Return
 						Else
-							If $iEarthSpell > 0 Then
-								GemClick(329, 354 + $midOffsetY, $iEarthSpell, $iDelayTrain7, "#0290")
-								SetLog("Created " & $iEarthSpell & " EarthQuake Spell(s)", $COLOR_BLUE)
-							EndIf
+							GemClick(329, 354 + $midOffsetY, $iEarthSpell, $iDelayTrain7, "#0290")
+							SetLog("Created " & $iEarthSpell & " EarthQuake Spell(s)", $COLOR_BLUE)
 						EndIf
 					EndIf
 				EndIf
@@ -199,7 +185,7 @@ Func BrewSpells()
 					Local $iHasteSpell = $iHasteSpellComp - ($CurHasteSpell + $iTempHasteSpell)
 					If $debugSetlog = 1 Then SetLog("Making Haste Spell: " & $iHasteSpell)
 					If _sleep($iDelayTrain2) Then Return
-					If $iTempHasteSpell = 0 Then
+					If $iHasteSpell > 0 Then
 						If _sleep($iDelayTrain2) Then Return
 						If _ColorCheck(_GetPixelColor(453, 375 + $midOffsetY, True), Hex(0xFFFFFF, 6), 20) = False Then ; black pixel in number 5
 							setlog("Not enough Elixir to create Spell", $COLOR_RED)
@@ -208,10 +194,8 @@ Func BrewSpells()
 							setlog("Spell Factory Full", $COLOR_RED)
 							Return
 						Else
-							If $iHasteSpell > 0 Then
-								GemClick(430, 354 + $midOffsetY, $iHasteSpell, $iDelayTrain7, "#0290")
-								SetLog("Created " & $iHasteSpell & " Haste Spell(s)", $COLOR_BLUE)
-							EndIf
+							GemClick(430, 354 + $midOffsetY, $iHasteSpell, $iDelayTrain7, "#0290")
+							SetLog("Created " & $iHasteSpell & " Haste Spell(s)", $COLOR_BLUE)
 						EndIf
 					EndIf
 				EndIf
@@ -236,7 +220,7 @@ Func BrewSpells()
 					Local $iLightningSpell = $iLightningSpellComp * 2 - ($CurLightningSpell + $iTempLightningSpell)
 					If $debugSetlog = 1 Then SetLog("Making in advance Lightning Spell: " & $iLightningSpell)
 					If _sleep($iDelayTrain2) Then Return
-					If $iTempLightningSpell = 0 Then
+					If $iLightningSpell > 0 Then
 						If _ColorCheck(_GetPixelColor(239 + 107 * 0, 375 + $midOffsetY, True), Hex(0xFFFFFF, 6), 20) = False Then ; White into number 0
 							setlog("Not enough Elixir to create Spell", $COLOR_RED)
 							Return
@@ -244,10 +228,8 @@ Func BrewSpells()
 							setlog("Spell Factory Full", $COLOR_RED)
 							Return
 						Else
-							If $iLightningSpell > 0 Then
-								GemClick(220 + 107 * 0, 354 + $midOffsetY, $iLightningSpell, $iDelayTrain7, "#0290")
-								SetLog("Created " & $iLightningSpell & " Lightning Spell(s)", $COLOR_BLUE)
-							EndIf
+							GemClick(220 + 107 * 0, 354 + $midOffsetY, $iLightningSpell, $iDelayTrain7, "#0290")
+							SetLog("Created " & $iLightningSpell & " Lightning Spell(s)", $COLOR_BLUE)
 						EndIf
 					EndIf
 				EndIf
@@ -256,7 +238,7 @@ Func BrewSpells()
 					Local $iHealSpell = $iHealSpellComp * 2 - ($CurHealSpell + $iTempHealSpell)
 					If $debugSetlog = 1 Then SetLog("Making in advance Heal Spell: " & $iHealSpell)
 					If _sleep($iDelayTrain2) Then Return
-					If $iTempHealSpell = 0 Then
+					If $iHealSpell > 0 Then
 						If _ColorCheck(_GetPixelColor(239 + 107 * 1, 375 + $midOffsetY, True), Hex(0xFFFFFF, 6), 20) = False Then
 							setlog("Not enough Elixir to create Spell", $COLOR_RED)
 							Return
@@ -264,10 +246,8 @@ Func BrewSpells()
 							setlog("Spell Factory Full", $COLOR_RED)
 							Return
 						Else
-							If $iHealSpell > 0 Then
-								GemClick(220 + 107 * 1, 354 + $midOffsetY, $iHealSpell, $iDelayTrain7, "#0290")
-								SetLog("Created " & $iHealSpell & " Heal Spell(s)", $COLOR_BLUE)
-							EndIf
+							GemClick(220 + 107 * 1, 354 + $midOffsetY, $iHealSpell, $iDelayTrain7, "#0290")
+							SetLog("Created " & $iHealSpell & " Heal Spell(s)", $COLOR_BLUE)
 						EndIf
 					EndIf
 				EndIf
@@ -276,7 +256,7 @@ Func BrewSpells()
 					Local $iRageSpell = $iRageSpellComp * 2 - ($CurRageSpell + $iTempRageSpell)
 					If $debugSetlog = 1 Then SetLog("Making in advance Rage Spell: " & $iRageSpell)
 					If _sleep($iDelayTrain2) Then Return
-					If $iTempRageSpell = 0 Then
+					If $iRageSpell > 0 Then
 						If _ColorCheck(_GetPixelColor(220 + 107 * 2, 375 + $midOffsetY, True), Hex(0xFFFFFF, 6), 20) = False Then
 							setlog("Not enough Elixir to create Spell", $COLOR_RED)
 							Return
@@ -284,10 +264,8 @@ Func BrewSpells()
 							setlog("Spell Factory Full", $COLOR_RED)
 							Return
 						Else
-							If $iRageSpell > 0 Then
-								GemClick(220 + 107 * 2, 354 + $midOffsetY, $iRageSpell, $iDelayTrain7, "#0290")
-								SetLog("Created " & $iRageSpell & " Rage Spell(s)", $COLOR_BLUE)
-							EndIf
+							GemClick(220 + 107 * 2, 354 + $midOffsetY, $iRageSpell, $iDelayTrain7, "#0290")
+							SetLog("Created " & $iRageSpell & " Rage Spell(s)", $COLOR_BLUE)
 						EndIf
 					EndIf
 				EndIf
@@ -296,7 +274,7 @@ Func BrewSpells()
 					Local $iJumpSpell = $iJumpSpellComp * 2 - ($CurJumpSpell + $iTempJumpSpell)
 					If $debugSetlog = 1 Then SetLog("Making in advance Jump Spell: " & $iJumpSpell)
 					If _sleep($iDelayTrain2) Then Return
-					If $iTempJumpSpell = 0 Then
+					If $iJumpSpell > 0 Then
 						If _ColorCheck(_GetPixelColor(239 + 107 * 3, 375 + $midOffsetY, True), Hex(0xFFFFFF, 6), 20) = False Then ; White into number 0
 							setlog("Not enough Elixir to create Spell", $COLOR_RED)
 							Return
@@ -304,10 +282,8 @@ Func BrewSpells()
 							setlog("Spell Factory Full", $COLOR_RED)
 							Return
 						Else
-							If $iJumpSpell > 0 Then
-								GemClick(220 + 107 * 3, 354 + $midOffsetY, $iJumpSpell, $iDelayTrain7, "#0290")
-								SetLog("Created " & $iJumpSpell & " Jump Spell(s)", $COLOR_BLUE)
-							EndIf
+							GemClick(220 + 107 * 3, 354 + $midOffsetY, $iJumpSpell, $iDelayTrain7, "#0290")
+							SetLog("Created " & $iJumpSpell & " Jump Spell(s)", $COLOR_BLUE)
 						EndIf
 					EndIf
 				EndIf
@@ -316,7 +292,7 @@ Func BrewSpells()
 					Local $iFreezeSpell = $iFreezeSpellComp * 2 - ($CurFreezeSpell + $iTempFreezeSpell)
 					If $debugSetlog = 1 Then SetLog("Making in advance Freeze Spell: " & $iFreezeSpell)
 					If _sleep($iDelayTrain2) Then Return
-					If $iTempFreezeSpell = 0 Then
+					If $iFreezeSpell > 0 Then
 						If _ColorCheck(_GetPixelColor(239 + 107 * 4, 375 + $midOffsetY, True), Hex(0xFFFFFF, 6), 20) = False Then ; White into number 0
 							setlog("Not enough Elixir to create Spell", $COLOR_RED)
 							Return
@@ -324,10 +300,8 @@ Func BrewSpells()
 							setlog("Spell Factory Full", $COLOR_RED)
 							Return
 						Else
-							If $iFreezeSpell > 0 Then
-								GemClick(220 + 107 * 4, 354 + $midOffsetY, $iFreezeSpell, $iDelayTrain7, "#0290")
-								SetLog("Created " & $iFreezeSpell & " Freeze Spell(s)", $COLOR_BLUE)
-							EndIf
+							GemClick(220 + 107 * 4, 354 + $midOffsetY, $iFreezeSpell, $iDelayTrain7, "#0290")
+							SetLog("Created " & $iFreezeSpell & " Freeze Spell(s)", $COLOR_BLUE)
 						EndIf
 					EndIf
 				EndIf
@@ -349,7 +323,7 @@ Func BrewSpells()
 					Local $iPoisonSpell = $iPoisonSpellComp * 2 - ($CurPoisonSpell + $iTempPoisonSpell)
 					If $debugSetlog = 1 Then SetLog("Making in advance Poision Spell: " & $iPoisonSpell)
 					If _sleep($iDelayTrain2) Then Return
-					If $iTempPoisonSpell = 0 Then
+					If $iPoisonSpell > 0 Then
 						If _sleep($iDelayTrain2) Then Return
 						If _ColorCheck(_GetPixelColor(239, 375 + $midOffsetY, True), Hex(0xFFFFFF, 6), 20) = False Then
 							setlog("Not enough Elixir to create Spell", $COLOR_RED)
@@ -358,10 +332,8 @@ Func BrewSpells()
 							setlog("Spell Factory Full", $COLOR_RED)
 							Return
 						Else
-							If $iPoisonSpell > 0 Then
-								GemClick(222, 354 + $midOffsetY, $iPoisonSpell, $iDelayTrain7, "#0290")
-								SetLog("Created " & $iPoisonSpell & " Poison Spell(s)", $COLOR_BLUE)
-							EndIf
+							GemClick(222, 354 + $midOffsetY, $iPoisonSpell, $iDelayTrain7, "#0290")
+							SetLog("Created " & $iPoisonSpell & " Poison Spell(s)", $COLOR_BLUE)
 						EndIf
 					EndIf
 				EndIf
@@ -371,7 +343,7 @@ Func BrewSpells()
 					Local $iEarthSpell = $iEarthSpellComp * 2 - ($CurEarthSpell + $iTempEarthSpell)
 					If $debugSetlog = 1 Then SetLog("Making in advance EarthQuake Spell: " & $iEarthSpell)
 					If _sleep($iDelayTrain2) Then Return
-					If $iTempEarthSpell = 0 Then
+					If $iEarthSpell > 0 Then
 						If _sleep($iDelayTrain2) Then Return
 						If _ColorCheck(_GetPixelColor(346, 375 + $midOffsetY, True), Hex(0xFFFFFF, 6), 20) = False Then ; black pixel in number 5
 							setlog("Not enough Elixir to create Spell", $COLOR_RED)
@@ -380,10 +352,8 @@ Func BrewSpells()
 							setlog("Spell Factory Full", $COLOR_RED)
 							Return
 						Else
-							If $iEarthSpell > 0 Then
-								GemClick(329, 354 + $midOffsetY, $iEarthSpell, $iDelayTrain7, "#0290")
-								SetLog("Created " & $iEarthSpell & " EarthQuake Spell(s)", $COLOR_BLUE)
-							EndIf
+							GemClick(329, 354 + $midOffsetY, $iEarthSpell, $iDelayTrain7, "#0290")
+							SetLog("Created " & $iEarthSpell & " EarthQuake Spell(s)", $COLOR_BLUE)
 						EndIf
 					EndIf
 				EndIf
@@ -393,7 +363,7 @@ Func BrewSpells()
 					Local $iHasteSpell = $iHasteSpellComp * 2 - ($CurHasteSpell + $iTempHasteSpell)
 					If $debugSetlog = 1 Then SetLog("Making in advance Haste Spell: " & $iHasteSpell)
 					If _sleep($iDelayTrain2) Then Return
-					If $iTempHasteSpell = 0 Then
+					If $iHasteSpell > 0 Then
 						If _sleep($iDelayTrain2) Then Return
 						If _ColorCheck(_GetPixelColor(453, 375 + $midOffsetY, True), Hex(0xFFFFFF, 6), 20) = False Then ; black pixel in number 5
 							setlog("Not enough Elixir to create Spell", $COLOR_RED)
@@ -402,10 +372,8 @@ Func BrewSpells()
 							setlog("Spell Factory Full", $COLOR_RED)
 							Return
 						Else
-							If $iHasteSpell > 0 Then
-								GemClick(430, 354 + $midOffsetY, $iHasteSpell, $iDelayTrain7, "#0290")
-								SetLog("Created " & $iHasteSpell & " Haste Spell(s)", $COLOR_BLUE)
-							EndIf
+							GemClick(430, 354 + $midOffsetY, $iHasteSpell, $iDelayTrain7, "#0290")
+							SetLog("Created " & $iHasteSpell & " Haste Spell(s)", $COLOR_BLUE)
 						EndIf
 					EndIf
 				EndIf
