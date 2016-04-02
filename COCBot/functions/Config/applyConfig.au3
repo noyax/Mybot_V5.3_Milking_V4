@@ -1019,6 +1019,55 @@ Func applyConfig($bRedrawAtExit = True) ;Applies the data from config to the con
 	GUICtrlSetData($txtNumEarthSpell, $iEarthSpellComp)
 	GUICtrlSetData($txtNumHasteSpell, $iHasteSpellComp)
 	GUICtrlSetData($txtTotalCountSpell, $iTotalCountSpell)
+	
+	If $iLightningSpellBrewInAdvance = 1 Then
+		GUICtrlSetState($chkBrewInAdvanceLightningSpell, $GUI_CHECKED)
+	ElseIf $iLastAttack = 0 Then
+		GUICtrlSetState($chkBrewInAdvanceLightningSpell, $GUI_UNCHECKED)
+	EndIf	
+	
+	If $iHealSpellBrewInAdvance = 1 Then
+		GUICtrlSetState($chkBrewInAdvanceHealSpell, $GUI_CHECKED)
+	ElseIf $iLastAttack = 0 Then
+		GUICtrlSetState($chkBrewInAdvanceHealSpell, $GUI_UNCHECKED)
+	EndIf
+	
+	If $iRageSpellBrewInAdvance = 1 Then
+		GUICtrlSetState($chkBrewInAdvanceRageSpell, $GUI_CHECKED)
+	ElseIf $iLastAttack = 0 Then
+		GUICtrlSetState($chkBrewInAdvanceRageSpell, $GUI_UNCHECKED)
+	EndIf	
+	
+	If $iJumpSpellBrewInAdvance = 1 Then
+		GUICtrlSetState($chkBrewInAdvanceJumpSpell, $GUI_CHECKED)
+	ElseIf $iLastAttack = 0 Then
+		GUICtrlSetState($chkBrewInAdvanceJumpSpell, $GUI_UNCHECKED)
+	EndIf
+
+	If $iFreezeSpellBrewInAdvance = 1 Then
+		GUICtrlSetState($chkBrewInAdvanceFreezeSpell, $GUI_CHECKED)
+	ElseIf $iLastAttack = 0 Then
+		GUICtrlSetState($chkBrewInAdvanceFreezeSpell, $GUI_UNCHECKED)
+	EndIf	
+	
+	If $iPoisonSpellBrewInAdvance = 1 Then
+		GUICtrlSetState($chkBrewInAdvancePoisonSpell, $GUI_CHECKED)
+	ElseIf $iLastAttack = 0 Then
+		GUICtrlSetState($chkBrewInAdvancePoisonSpell, $GUI_UNCHECKED)
+	EndIf	
+
+	If $iEarthSpellBrewInAdvance = 1 Then
+		GUICtrlSetState($chkBrewInAdvanceEarthSpell, $GUI_CHECKED)
+	ElseIf $iLastAttack = 0 Then
+		GUICtrlSetState($chkBrewInAdvanceEarthSpell, $GUI_UNCHECKED)
+	EndIf	
+
+	If $iHasteSpellBrewInAdvance = 1 Then
+		GUICtrlSetState($chkBrewInAdvanceHasteSpell, $GUI_CHECKED)
+	ElseIf $iLastAttack = 0 Then
+		GUICtrlSetState($chkBrewInAdvanceHasteSpell, $GUI_UNCHECKED)
+	EndIf		
+	
 	lblTotalCountSpell()
 	btnHideElixir()
 

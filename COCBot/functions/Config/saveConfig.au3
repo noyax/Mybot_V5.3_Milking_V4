@@ -926,6 +926,54 @@ Func saveConfig() ;Saves the controls settings to the config
 	IniWrite($config, "Spells", "EarthSpell", GUICtrlRead($txtNumEarthSpell))
 	IniWrite($config, "Spells", "HasteSpell", GUICtrlRead($txtNumHasteSpell))
 	IniWrite($config, "Spells", "SpellFactory", GUICtrlRead($txtTotalCountSpell))
+	
+	If GUICtrlRead($chkBrewInAdvanceLightningSpell) = $GUI_CHECKED Then
+		IniWrite($config, "Spells", "BrewInAdvanceLightningSpell", 1)
+	Else
+		IniWrite($config, "Spells", "BrewInAdvanceLightningSpell", 0)
+	EndIf	
+	
+	If GUICtrlRead($chkBrewInAdvanceHealSpell) = $GUI_CHECKED Then
+		IniWrite($config, "Spells", "BrewInAdvanceHealSpell", 1)
+	Else
+		IniWrite($config, "Spells", "BrewInAdvanceHealSpell", 0)
+	EndIf
+
+	If GUICtrlRead($chkBrewInAdvanceRageSpell) = $GUI_CHECKED Then
+		IniWrite($config, "Spells", "BrewInAdvanceRageSpell", 1)
+	Else
+		IniWrite($config, "Spells", "BrewInAdvanceRageSpell", 0)
+	EndIf
+
+	If GUICtrlRead($chkBrewInAdvanceJumpSpell) = $GUI_CHECKED Then
+		IniWrite($config, "Spells", "BrewInAdvanceJumpSpell", 1)
+	Else
+		IniWrite($config, "Spells", "BrewInAdvanceJumpSpell", 0)
+	EndIf	
+	
+	If GUICtrlRead($chkBrewInAdvanceFreezeSpell) = $GUI_CHECKED Then
+		IniWrite($config, "Spells", "BrewInAdvanceFreezeSpell", 1)
+	Else
+		IniWrite($config, "Spells", "BrewInAdvanceFreezeSpell", 0)
+	EndIf	
+
+	If GUICtrlRead($chkBrewInAdvancePoisonSpell) = $GUI_CHECKED Then
+		IniWrite($config, "Spells", "BrewInAdvancePoisonSpell", 1)
+	Else
+		IniWrite($config, "Spells", "BrewInAdvancePoisonSpell", 0)
+	EndIf	
+	
+	If GUICtrlRead($chkBrewInAdvanceEarthSpell) = $GUI_CHECKED Then
+		IniWrite($config, "Spells", "BrewInAdvanceEarthSpell", 1)
+	Else
+		IniWrite($config, "Spells", "BrewInAdvanceEarthSpell", 0)
+	EndIf
+
+	If GUICtrlRead($chkBrewInAdvanceHasteSpell) = $GUI_CHECKED Then
+		IniWrite($config, "Spells", "BrewInAdvanceHasteSpell", 1)
+	Else
+		IniWrite($config, "Spells", "BrewInAdvanceHasteSpell", 0)
+	EndIf		
 
 	;Misc Settings--------------------------------------------------------------------------
 	If $ichkWalls = 1 Then
