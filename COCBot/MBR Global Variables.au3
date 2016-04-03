@@ -647,7 +647,6 @@ Global $ArmyComp
 ;Spell Settings
 Global $DonPois = 0, $DonEart = 0, $DonHast = 0
 Global $iLightningSpellComp = 0, $iHealSpellComp = 0, $iRageSpellComp = 0, $iJumpSpellComp = 0, $iFreezeSpellComp = 0, $iPoisonSpellComp = 0, $iEarthSpellComp = 0, $iHasteSpellComp = 0
-Global $iLightningSpellBrewInAdvance = 0, $iHealSpellBrewInAdvance = 0, $iRageSpellBrewInAdvance = 0, $iJumpSpellBrewInAdvance = 0, $iFreezeSpellBrewInAdvance = 0, $iPoisonSpellBrewInAdvance = 0, $iEarthSpellBrewInAdvance = 0, $iHasteSpellBrewInAdvance = 0
 Global $CurLightningSpell = 0, $CurHealSpell = 0, $CurRageSpell = 0, $CurJumpSpell = 0, $CurFreezeSpell = 0, $CurPoisonSpell = 0, $CurHasteSpell = 0, $CurEarthSpell = 0
 Global $iTotalCountSpell = 0
 Global $TotalSFactory = 0
