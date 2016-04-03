@@ -272,8 +272,8 @@ Func runBot() ;Bot that runs everything in order
 ;				$Musttrain = 1
 				$retourdeguerre = 0
 	;Ancient end skip check
-				If _DateAdd( 'n', $TempoTrain, $skipStartTime ) < _NowCalc() then
-					SetLog("It's time to get a pause ... eyh, out of there, please attack me and push me up! :) ", $COLOR_RED)
+				If _DateAdd( 'n', $TempoTrain, $skipStartTime ) < _NowCalc() and $CurCamp < $txtchkHysterGobs then
+					SetLog("It's time to get a pause for training... eyh, out of there, please attack me and push me up! :) ", $COLOR_RED)
 					; take a rest
 					Setlog("Prepare base before push trophy break..", $COLOR_BLUE)
 					$TrophyAoC = 1
