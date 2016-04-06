@@ -1019,6 +1019,8 @@ Func applyConfig($bRedrawAtExit = True) ;Applies the data from config to the con
 	GUICtrlSetData($txtNumEarthSpell, $iEarthSpellComp)
 	GUICtrlSetData($txtNumHasteSpell, $iHasteSpellComp)
 	GUICtrlSetData($txtTotalCountSpell, $iTotalCountSpell)
+	
+	
 	lblTotalCountSpell()
 	btnHideElixir()
 

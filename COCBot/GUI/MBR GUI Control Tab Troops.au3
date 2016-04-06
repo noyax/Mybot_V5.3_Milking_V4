@@ -659,7 +659,8 @@ Func btnHideElixir()
 
 	GUICtrlSetState($btnElixirSpell, $GUI_SHOW)
 	GUICtrlSetState($btnDarkElixirSpell, $GUI_HIDE)
-	For $i = $lblLightningIcon To $lblFreezeS
+; Noyax	For $i = $lblLightningIcon To $lblFreezeS
+	For $i = $lblLightningIcon To $chkBrewInAdvanceFreezeSpell ; Noyax
 		GUICtrlSetState($i, $GUI_HIDE)
 	Next
 	For $i = $grpDarkSpells To $txtTotalCountSpell
@@ -672,7 +673,8 @@ Func btnHideDarkElixir()
 
 	GUICtrlSetState($btnDarkElixirSpell, $GUI_SHOW)
 	GUICtrlSetState($btnElixirSpell, $GUI_HIDE)
-	For $i = $lblLightningIcon To $lblFreezeS
+; Noyax	For $i = $lblLightningIcon To $lblFreezeS
+	For $i = $lblLightningIcon To $chkBrewInAdvanceFreezeSpell ; Noyax
 		GUICtrlSetState($i, $GUI_SHOW)
 	Next
 	For $i = $grpDarkSpells To $txtTotalCountSpell
