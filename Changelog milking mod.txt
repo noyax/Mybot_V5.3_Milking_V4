@@ -1,6 +1,6 @@
 V4.17
 - add checkbox to brew spell in advance, idea and code by @MereDoku
-- 
+- add 15 min pause while troops are cooking
 
 v4.16
 - adapt mod to V5.3.2 official Mybot

@@ -282,12 +282,12 @@ Func runBot() ;Bot that runs everything in order
 					BreakPersonalShield()  ; break personal Shield and Personal Guard
 					$TrophyAoC = 0
 					SetLog("wait " & $iTrophiesPause & " minute(s)", $COLOR_RED)
-					ToggleTrophyPause ()
+;					ToggleTrophyPause ()
 					CloseCoC(False)
 					PushMsg("PushBreak", "Push")
-					_SleepStatus($iTrophiesPause * 60 * 1000)
+					_SleepStatus(15 * 60 * 1000)
 					OpenCoC()
-					ToggleTrophyPause ()
+;					ToggleTrophyPause ()
 					SetLog("let's kick some ass again :)", $COLOR_RED)
 				EndIf
 					$skipStartTime = _NowCalc()
