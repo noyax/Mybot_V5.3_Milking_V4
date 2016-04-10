@@ -54,7 +54,7 @@ $sTxtPoison = GetTranslated(1,59, "Poison")
 $sTxtEarth = GetTranslated(1,67, "EarthQuake")
 $sTxtHaste = GetTranslated(1,60, "Haste")
 $sTxtNone = GetTranslated(1,70, "None")
-$sTxtBrewInAdvance = GetTranslated(1,73, "Brew in advance")
+$sTxtBrewInAdvance = GetTranslated(99,32, "Brew in advance")
 
 ;~ -------------------------------------------------------------
 ;~ Troops Tab
@@ -96,70 +96,80 @@ $tabTroops = GUICtrlCreateTabItem(GetTranslated(1,1, "Troops"))
 		GUICtrlSetState(-1, $GUI_HIDE)
 		$lblLightningSpell = GUICtrlCreateLabel($sTxtLightning & ":", $x + 18, $y, -1, -1)
 		GUICtrlSetState(-1, $GUI_HIDE)
-		$txtNumLightningSpell = GUICtrlCreateInput("0", $x + 80, $y - 3, 23, -1, BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER))
+		$txtNumLightningSpell = GUICtrlCreateInput("0", $x + 80, $y - 3, 23, -1, BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER)) ; Noyax
 			GUICtrlSetTip(-1, $sTxtSetPerc3 & " " & $sTxtLightning & " " & $sTxtSetSpell)
 			GUICtrlSetLimit(-1, 2)
 			GUICtrlSetState(-1, $GUI_DISABLE)
 			GUICtrlSetState(-1, $GUI_HIDE)
 			GUICtrlSetOnEvent(-1, "lblTotalCountSpell")
-		$chkBrewInAdvanceLightningSpell = GUICtrlCreateCheckbox("", $x + 107, $y + 3, 17, 17)
-			GUICtrlSetTip(-1, $sTxtBrewInAdvance)
+; Noyax		$lblTimesLightS = GUICtrlCreateLabel("x", $x + 112, $y, -1, -1)
+;		GUICtrlSetState(-1, $GUI_HIDE)
+		$chkBrewInAdvanceLightningSpell = GUICtrlCreateCheckbox("", $x + 107, $y + 3, 17, 17) ; Noyax
+			GUICtrlSetTip(-1, $sTxtBrewInAdvance) ; Noyax
 
 		$y +=25
 		GUICtrlCreateIcon ($pIconLib, $eIcnHealSpell, $x - 10, $y - 5, 24, 24)
 		GUICtrlSetState(-1, $GUI_HIDE)
 		$lblHealSpell = GUICtrlCreateLabel($sTxtHeal & ":", $x + 18, $y, -1, -1)
 		GUICtrlSetState(-1, $GUI_HIDE)
-		$txtNumHealSpell = GUICtrlCreateInput("0", $x + 80, $y - 3, 23, 21, BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER))
+		$txtNumHealSpell = GUICtrlCreateInput("0", $x + 80, $y - 3, 23, 21, BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER)) ; Noyax
 			GUICtrlSetTip(-1, $sTxtSetPerc3 & " " & $sTxtHeal & " " & $sTxtSetSpell)
 			GUICtrlSetLimit(-1, 2)
 			GUICtrlSetState(-1, $GUI_DISABLE)
 			GUICtrlSetState(-1, $GUI_HIDE)
 			GUICtrlSetOnEvent(-1, "lblTotalCountSpell")
-		$chkBrewInAdvanceHealSpell = GUICtrlCreateCheckbox("", $x + 107, $y + 3, 17, 17)
-			GUICtrlSetTip(-1, $sTxtBrewInAdvance)
+; Noyax		$lblTimesHealS = GUICtrlCreateLabel("x", $x + 112, $y, -1, -1)
+;		GUICtrlSetState(-1, $GUI_HIDE)
+		$chkBrewInAdvanceHealSpell = GUICtrlCreateCheckbox("", $x + 107, $y + 3, 17, 17) ; Noyax
+			GUICtrlSetTip(-1, $sTxtBrewInAdvance) ; Noyax
 		
 		$y +=25
 		GUICtrlCreateIcon ($pIconLib, $eIcnRageSpell, $x - 10, $y - 5, 24, 24)
 		GUICtrlSetState(-1, $GUI_HIDE)
 		$lblRageSpell = GUICtrlCreateLabel($sTxtRage & ":", $x + 18, $y, -1, -1)
 		GUICtrlSetState(-1, $GUI_HIDE)
-		$txtNumRageSpell = GUICtrlCreateInput("0", $x + 80, $y - 3, 23, 21, BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER))
+		$txtNumRageSpell = GUICtrlCreateInput("0", $x + 80, $y - 3, 23, 21, BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER)) ; Noyax
 			GUICtrlSetTip(-1, $sTxtSetPerc3 & " " & $sTxtRage & " " & $sTxtSetSpell)
 			GUICtrlSetLimit(-1, 2)
 			GUICtrlSetState(-1, $GUI_DISABLE)
 			GUICtrlSetState(-1, $GUI_HIDE)
 			GUICtrlSetOnEvent(-1, "lblTotalCountSpell")
-		$chkBrewInAdvanceRageSpell = GUICtrlCreateCheckbox("", $x + 107, $y + 3, 17, 17)
-			GUICtrlSetTip(-1, $sTxtBrewInAdvance)
+; Noyax		$lblTimesRageS = GUICtrlCreateLabel("x", $x + 112, $y, -1, -1)
+;		GUICtrlSetState(-1, $GUI_HIDE)
+		$chkBrewInAdvanceRageSpell = GUICtrlCreateCheckbox("", $x + 107, $y + 3, 17, 17) ; Noyax
+			GUICtrlSetTip(-1, $sTxtBrewInAdvance) ; Noyax
 		
 		$y +=25
 		GUICtrlCreateIcon ($pIconLib, $eIcnJumpSpell, $x - 10, $y - 5, 24, 24)
 		GUICtrlSetState(-1, $GUI_HIDE)
 		$lblJumpSpell = GUICtrlCreateLabel($sTxtJump &":", $x + 18, $y, -1, -1)
 		GUICtrlSetState(-1, $GUI_HIDE)
-		$txtNumJumpSpell = GUICtrlCreateInput("0", $x + 80, $y - 3, 23, 21, BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER))
+		$txtNumJumpSpell = GUICtrlCreateInput("0", $x + 80, $y - 3, 23, 21, BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER)) ; Noyax
 			GUICtrlSetTip(-1, $sTxtSetPerc3 & " " & $sTxtJump & " " & $sTxtSetSpell)
 			GUICtrlSetLimit(-1, 2)
 			GUICtrlSetState(-1, $GUI_DISABLE)
 			GUICtrlSetState(-1, $GUI_HIDE)
 			GUICtrlSetOnEvent(-1, "lblTotalCountSpell")
-		$chkBrewInAdvanceJumpSpell = GUICtrlCreateCheckbox("", $x + 107, $y + 3, 17, 17)
-			GUICtrlSetTip(-1, $sTxtBrewInAdvance)
+; Noyax		$lblTimesJumpS = GUICtrlCreateLabel("x", $x + 112, $y, -1, -1)
+;		GUICtrlSetState(-1, $GUI_HIDE)
+		$chkBrewInAdvanceJumpSpell = GUICtrlCreateCheckbox("", $x + 107, $y + 3, 17, 17) ; Noyax
+			GUICtrlSetTip(-1, $sTxtBrewInAdvance) ; Noyax
 		
 		$y +=25
 		GUICtrlCreateIcon ($pIconLib, $eIcnFreezeSpell, $x - 10, $y - 5, 24, 24)
 		GUICtrlSetState(-1, $GUI_HIDE)
 		$lblFreezeSpell = GUICtrlCreateLabel($sTxtFreeze & ":", $x + 18, $y, -1, -1)
 		GUICtrlSetState(-1, $GUI_HIDE)
-		$txtNumFreezeSpell = GUICtrlCreateInput("0", $x + 80, $y - 3, 23, 21, BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER))
+		$txtNumFreezeSpell = GUICtrlCreateInput("0", $x + 80, $y - 3, 23, 21, BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER)) ; Noyax
 			GUICtrlSetTip(-1, $sTxtSetPerc3 & " " & $sTxtFreeze & " " & $sTxtSetSpell)
 			GUICtrlSetLimit(-1, 2)
 			GUICtrlSetState(-1, $GUI_DISABLE)
 			GUICtrlSetState(-1, $GUI_HIDE)
 			GUICtrlSetOnEvent(-1, "lblTotalCountSpell")
-		$chkBrewInAdvanceFreezeSpell = GUICtrlCreateCheckbox("", $x + 107, $y + 3, 17, 17)
-			GUICtrlSetTip(-1, $sTxtBrewInAdvance)
+; Noyax		$lblFreezeS = GUICtrlCreateLabel("x", $x + 112, $y, -1, -1)
+;		GUICtrlSetState(-1, $GUI_HIDE)
+		$chkBrewInAdvanceFreezeSpell = GUICtrlCreateCheckbox("", $x + 107, $y + 3, 17, 17) ; Noyax
+			GUICtrlSetTip(-1, $sTxtBrewInAdvance) ; Noyax
 	GUICtrlCreateGroup("", -99, -99, 1, 1)
 
 		$y +=25
@@ -176,35 +186,38 @@ $tabTroops = GUICtrlCreateTabItem(GetTranslated(1,1, "Troops"))
 	$grpDarkSpells = GUICtrlCreateGroup(GetTranslated(1,54, "Spells"), $x - 20, $y - 20, 145, 175)
 		$lblPoisonIcon = GUICtrlCreateIcon ($pIconLib, $eIcnPoisonSpell, $x - 10, $y - 5, 24, 24)
 		$lblPoisonSpell = GUICtrlCreateLabel($sTxtPoison & ":", $x + 18, $y, -1, -1)
-		$txtNumPoisonSpell = GUICtrlCreateInput("0", $x + 80, $y - 3, 23, 21, BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER))
+		$txtNumPoisonSpell = GUICtrlCreateInput("0", $x + 80, $y - 3, 23, 21, BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER)) ; Noyax
 			GUICtrlSetTip(-1, $sTxtSetPerc3 & " " & $sTxtPoison & " " & $sTxtSetSpell)
 			GUICtrlSetLimit(-1, 2)
 			GUICtrlSetState(-1, $GUI_DISABLE)
 			GUICtrlSetOnEvent(-1, "lblTotalCountSpell")
-		$chkBrewInAdvancePoisonSpell = GUICtrlCreateCheckbox("", $x + 107, $y + 3, 17, 17)
-			GUICtrlSetTip(-1, $sTxtBrewInAdvance)
+; Noyax		$lblTimesPoisonS = GUICtrlCreateLabel("x", $x + 112, $y, -1, -1)
+		$chkBrewInAdvancePoisonSpell = GUICtrlCreateCheckbox("", $x + 107, $y + 3, 17, 17) ; Noyax
+			GUICtrlSetTip(-1, $sTxtBrewInAdvance); Noyax
 				
 		$y +=25
 		GUICtrlCreateIcon ($pIconLib, $eIcnEarthquakeSpell, $x - 10, $y - 5, 24, 24)
 		$lblEarthquakeSpell = GUICtrlCreateLabel($sTxtEarth & ":", $x + 18, $y, -1, -1)
-		$txtNumEarthSpell = GUICtrlCreateInput("0", $x + 80, $y - 3, 23, 21, BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER))
+		$txtNumEarthSpell = GUICtrlCreateInput("0", $x + 80, $y - 3, 23, 21, BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER)) ; Noyax
 			GUICtrlSetTip(-1, $sTxtSetPerc3 & " " & $sTxtEarth & " " & $sTxtSetSpell)
 			GUICtrlSetLimit(-1, 2)
 			GUICtrlSetState(-1, $GUI_DISABLE)
 			GUICtrlSetOnEvent(-1, "lblTotalCountSpell")
-		$chkBrewInAdvanceEarthSpell = GUICtrlCreateCheckbox("", $x + 107, $y + 3, 17, 17)
-			GUICtrlSetTip(-1, $sTxtBrewInAdvance)
+; Noyax		$lblTimesEarthquakeS = GUICtrlCreateLabel("x", $x + 112, $y, -1, -1)
+		$chkBrewInAdvanceEarthSpell = GUICtrlCreateCheckbox("", $x + 107, $y + 3, 17, 17) ; Noyax
+			GUICtrlSetTip(-1, $sTxtBrewInAdvance); Noyax
 		
 		$y +=25
 		GUICtrlCreateIcon ($pIconLib, $eIcnHasteSpell, $x - 10, $y - 5, 24, 24)
 		$lblHasteSpell = GUICtrlCreateLabel($sTxtHaste & ":", $x + 18, $y, -1, -1)
-		$txtNumHasteSpell = GUICtrlCreateInput("0", $x + 80, $y - 3, 23, 21, BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER))
+		$txtNumHasteSpell = GUICtrlCreateInput("0", $x + 80, $y - 3, 23, 21, BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER)) ; Noyax
 			GUICtrlSetTip(-1, $sTxtSetPerc3 & " " & $sTxtHaste & " " & $sTxtSetSpell)
 			GUICtrlSetLimit(-1, 2)
 			GUICtrlSetState(-1, $GUI_DISABLE)
 			GUICtrlSetOnEvent(-1, "lblTotalCountSpell")
-		$chkBrewInAdvanceHasteSpell = GUICtrlCreateCheckbox("", $x + 107, $y + 3, 17, 17)
-			GUICtrlSetTip(-1, $sTxtBrewInAdvance)
+; Noyax		$lblTimesHasteS = GUICtrlCreateLabel("x", $x + 112, $y, -1, -1)
+		$chkBrewInAdvanceHasteSpell = GUICtrlCreateCheckbox("", $x + 107, $y + 3, 17, 17); Noyax
+			GUICtrlSetTip(-1, $sTxtBrewInAdvance); Noyax
 		
 		$y +=25
 		$lblTotal = GUICtrlCreateLabel(GetTranslated(1,61, "Spells Capacity") & ":", $x - 20 , $y + 4, -1, -1, $SS_RIGHT)

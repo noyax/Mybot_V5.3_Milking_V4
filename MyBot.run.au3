@@ -264,15 +264,33 @@ Func runBot() ;Bot that runs everything in order
 ;				If $debugsetlog = 1 Then Setlog("don't waste time with many functions before attacking")
 ;			Else
 	;Ancient begin skip check
-			setlog("_DateAdd( 'n',15, $skipStartTime ) = " & _DateAdd( 'n',15, $skipStartTime ))
+			setlog("_DateAdd( 'n',"&$TempoTrain&", $skipStartTime ) = " & _DateAdd( 'n',$TempoTrain, $skipStartTime ))
 			If $fullArmy = True And $MilkAtt = 1 And  _DateAdd( 'n', $TempoTrain, $skipStartTime ) > _NowCalc() Then
 				If $debugsetlog = 1 Then Setlog("don't waste time with many functions before attacking")
 ;				$Musttrain = 0
 			Else
 ;				$Musttrain = 1
 				$retourdeguerre = 0
-				$skipStartTime = _NowCalc()
 	;Ancient end skip check
+				If $CurCamp < $HysterGobs then
+					SetLog("It's time to get a pause for training... eyh, out of there, please attack me and push me up! :) ", $COLOR_RED)
+					; take a rest
+					Setlog("Prepare base before push trophy break..", $COLOR_BLUE)
+					$TrophyAoC = 1
+					Train()
+					Collect() ; Empty Collectors
+					BreakPersonalShield()  ; break personal Shield and Personal Guard
+					$TrophyAoC = 0
+					SetLog("wait " & $iTrophiesPause & " minute(s)", $COLOR_RED)
+;					ToggleTrophyPause ()
+					CloseCoC(False)
+					PushMsg("PushBreak", "Push")
+					_SleepStatus(15 * 60 * 1000)
+					OpenCoC()
+;					ToggleTrophyPause ()
+					SetLog("let's kick some ass again :)", $COLOR_RED)
+				EndIf
+					$skipStartTime = _NowCalc()
 ;Noyax bottom
 			Collect()
 				If _Sleep($iDelayRunBot1) Then Return
