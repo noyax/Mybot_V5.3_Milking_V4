@@ -281,11 +281,13 @@ Func runBot() ;Bot that runs everything in order
 					Collect() ; Empty Collectors
 					BreakPersonalShield()  ; break personal Shield and Personal Guard
 					$TrophyAoC = 0
-					SetLog("wait " & $iTrophiesPause & " minute(s)", $COLOR_RED)
+					;calculation of the time to wait
+					Local $iTimeToFillCamps = Get_Time_To_Fill_Camps($CurCamp, $NbTrpMilk)
+					SetLog("wait " & $iTimeToFillCamps & " seconds", $COLOR_RED)
 ;					ToggleTrophyPause ()
 					CloseCoC(False)
 					PushMsg("PushBreak", "Push")
-					_SleepStatus(15 * 60 * 1000)
+					_SleepStatus($iTimeToFillCamps * 1000)
 					OpenCoC()
 ;					ToggleTrophyPause ()
 					SetLog("let's kick some ass again :)", $COLOR_RED)
