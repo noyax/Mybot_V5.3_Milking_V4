@@ -92,7 +92,7 @@ Func ParseAttackCSVMILK($value1 = "M", $value2 = 1, $value3 = 6, $value4 = "gobl
 	EndIf
 
 	; If drop troop near elixir collector
-	If ($value1 = "E" And $searchElixir > 150000) Then
+	If ($value1 = "E") Then
 		SetLog("Get Location of Elixir Collectors...")
 		If (IsArray($PixelElixir) And (UBound($PixelElixir) > 0)) Then
 			For $i = 0 To UBound($PixelElixir) - 1
