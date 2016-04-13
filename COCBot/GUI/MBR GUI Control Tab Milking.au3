@@ -31,7 +31,7 @@ Global $skipStartTime ;noyax add Ancient used to prevent infinate skips
 Global $configMilk = $sProfilePath & "\" & $sCurrProfile & "\configMilk.ini"
 Global $MilkAttackNearGoldMine, $MilkAttackNearElixirCollector, $MilkAttackNearDarkElixirDrill
 ;ZAP DE
-Global $bGoldChangeCheck = True
+Global $gbGoldElixirChangeEBO = True
 Global $ichkSmartLightSpell
 global $ichkTrainLightSpell
 Global $iDrills[4][4] = [[-1, -1, -1, -1], [-1, -1, -1, -1], [-1, -1, -1, -1], [-1, -1, -1, -1]] ; [LocX, LocY, BldgLvl, Quantity=filled by other functions]

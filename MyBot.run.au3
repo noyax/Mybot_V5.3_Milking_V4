@@ -534,10 +534,10 @@ Func AttackMain() ;Main control for attack functions
 	;checkDarkElix()
 	;DEAttack()
 	;	If $Restart = True Then Return
-	$bGoldChangeCheck = True ; noyax
+	$gbGoldElixirChangeEBO = True ; noyax
 	Attack()
 		If $Restart = True Then Return
-	ReturnHome($TakeLootSnapShot, $bGoldChangeCheck)
+	ReturnHome($TakeLootSnapShot)
 	$retourdeguerre = 1 ;Noyax
 		If _Sleep($iDelayAttackMain2) Then Return
 	Return True

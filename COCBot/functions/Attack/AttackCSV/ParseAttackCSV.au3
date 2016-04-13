@@ -92,7 +92,7 @@ Func ParseAttackCSV($debug = False)
 						$itxtMinDE = $value2
 						$ichkSmartZap = 1
 						;Noyax 
-						$bGoldChangeCheck = False
+						$gbGoldElixirChangeEBO = False
 						SetLog("Checking if the battle has finished", $COLOR_BLUE)
 						While GoldElixirChangeEBO()
 							CheckHeroesHealth()
