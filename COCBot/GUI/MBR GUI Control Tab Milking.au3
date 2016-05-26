@@ -31,6 +31,7 @@ Global $skipStartTime ;noyax add Ancient used to prevent infinate skips
 Global $configMilk = $sProfilePath & "\" & $sCurrProfile & "\configMilk.ini"
 Global $MilkAttackNearGoldMine, $MilkAttackNearElixirCollector, $MilkAttackNearDarkElixirDrill
 ;ZAP DE
+Global $gbGoldElixirChangeEBO = True
 Global $ichkSmartLightSpell
 global $ichkTrainLightSpell
 Global $iDrills[4][4] = [[-1, -1, -1, -1], [-1, -1, -1, -1], [-1, -1, -1, -1], [-1, -1, -1, -1]] ; [LocX, LocY, BldgLvl, Quantity=filled by other functions]
@@ -743,3 +744,210 @@ Func Brew_in_advance()
 		EndIf		
 		
 EndFunc ; brew_in_advance
+
+; Get_Training_Time made by @MereDoku
+; Return the training time of a specific troop in seconds
+Func Get_Training_Time($eTroopType)
+	Local $unitaryTrainingTimeInSeconds = 0
+	
+	Select
+		case $eTroopType = $eBarb
+			$unitaryTrainingTimeInSeconds = 20
+		case $eTroopType = $eArch
+			$unitaryTrainingTimeInSeconds = 25	
+		case $eTroopType = $eGobl
+			$unitaryTrainingTimeInSeconds = 30				
+		case $eTroopType = $eGiant
+			$unitaryTrainingTimeInSeconds = 2*60				
+		case $eTroopType = $eWall
+			$unitaryTrainingTimeInSeconds = 2*60	
+		case $eTroopType = $eBall
+			$unitaryTrainingTimeInSeconds = 8*60	
+		case $eTroopType = $eWiza
+			$unitaryTrainingTimeInSeconds = 8*60		
+		case $eTroopType = $eHeal
+			$unitaryTrainingTimeInSeconds = 15*60	
+		case $eTroopType = $eDrag
+			$unitaryTrainingTimeInSeconds = 30*60	
+		case $eTroopType = $ePekk
+			$unitaryTrainingTimeInSeconds = 45*60	
+		case $eTroopType = $eMini
+			$unitaryTrainingTimeInSeconds = 45	
+		case $eTroopType = $eHogs
+			$unitaryTrainingTimeInSeconds = 2*60	
+		case $eTroopType = $eValk
+			$unitaryTrainingTimeInSeconds = 8*60	
+		case $eTroopType = $eGole
+			$unitaryTrainingTimeInSeconds = 45*60		
+		case $eTroopType = $eWitc
+			$unitaryTrainingTimeInSeconds = 20*60	
+		case $eTroopType = $eLava
+			$unitaryTrainingTimeInSeconds = 45*60	
+		case $eTroopType = $eLSpell
+			$unitaryTrainingTimeInSeconds = 20*60	
+		case $eTroopType = $eHSpell
+			$unitaryTrainingTimeInSeconds = 20*60
+		case $eTroopType = $eRSpell
+			$unitaryTrainingTimeInSeconds = 20*60
+		case $eTroopType = $eJSpell
+			$unitaryTrainingTimeInSeconds = 20*60
+		case $eTroopType = $eFSpell
+			$unitaryTrainingTimeInSeconds = 20*60	
+		case $eTroopType = $ePSpell
+			$unitaryTrainingTimeInSeconds = 10*60	
+		case $eTroopType = $eESpell
+			$unitaryTrainingTimeInSeconds = 10*60	
+		case $eTroopType = $eHaSpell
+			$unitaryTrainingTimeInSeconds = 10*60				
+	EndSelect	
+	
+	Return $unitaryTrainingTimeInSeconds
+EndFunc ; Get_Training_Time
+
+; Get_Housing_Space made by @MereDoku
+; Return the housing space of a specific troop
+Func Get_Housing_Space($eTroopType)
+	Local $unitaryHousingSpace = 0
+	
+	Select
+		case $eTroopType = $eBarb
+			$unitaryHousingSpace = 1
+		case $eTroopType = $eArch
+			$unitaryHousingSpace = 1
+		case $eTroopType = $eGobl
+			$unitaryHousingSpace = 1			
+		case $eTroopType = $eGiant
+			$unitaryHousingSpace = 5					
+		case $eTroopType = $eWall
+			$unitaryHousingSpace = 2	
+		case $eTroopType = $eBall
+			$unitaryHousingSpace = 5	
+		case $eTroopType = $eWiza
+			$unitaryHousingSpace = 4		
+		case $eTroopType = $eHeal
+			$unitaryHousingSpace = 14	
+		case $eTroopType = $eDrag
+			$unitaryHousingSpace = 20	
+		case $eTroopType = $ePekk
+			$unitaryHousingSpace = 25	
+		case $eTroopType = $eMini
+			$unitaryHousingSpace = 2	
+		case $eTroopType = $eHogs
+			$unitaryHousingSpace = 5	
+		case $eTroopType = $eValk
+			$unitaryHousingSpace = 8	
+		case $eTroopType = $eGole
+			$unitaryHousingSpace = 30		
+		case $eTroopType = $eWitc
+			$unitaryHousingSpace = 12	
+		case $eTroopType = $eLava
+			$unitaryHousingSpace = 30	
+		case $eTroopType = $eLSpell
+			$unitaryHousingSpace = 2	
+		case $eTroopType = $eHSpell
+			$unitaryHousingSpace = 2
+		case $eTroopType = $eRSpell
+			$unitaryHousingSpace = 2
+		case $eTroopType = $eJSpell
+			$unitaryHousingSpace = 2
+		case $eTroopType = $eFSpell
+			$unitaryHousingSpace = 2	
+		case $eTroopType = $ePSpell
+			$unitaryHousingSpace = 1	
+		case $eTroopType = $eESpell
+			$unitaryHousingSpace = 1	
+		case $eTroopType = $eHaSpell
+			$unitaryHousingSpace = 1				
+	EndSelect	
+	
+	Return $unitaryHousingSpace
+EndFunc ; Get_Housing_Space
+
+
+; Get_Time_To_Fill_Camps made by @MereDoku
+; Notice : this is working only if you use barrack mode
+; Return the time in seconds to fill the camps with a wanted housing space
+Func Get_Time_To_Fill_Camps($currentunitaryHousingSpace, $wantedHouseSpace)
+	Local $commonDenominator
+	Local $totalHousingSpace
+	Local $timeToFillCamps
+	Local $unitaryTrainingTime1, $unitaryTrainingTime2, $unitaryTrainingTime3, $unitaryTrainingTime4, $unitaryTrainingTime5, $unitaryTrainingTime6 	
+	Local $unitaryHousingSpace1, $unitaryHousingSpace2, $unitaryHousingSpace3, $unitaryHousingSpace4, $unitaryHousingSpace5, $unitaryHousingSpace6 
+	Local $totalHousingSpace1, $totalHousingSpace2, $totalHousingSpace3, $totalHousingSpace4, $totalHousingSpace5, $totalHousingSpace6 	
+	
+	If $icmbTroopComp = 8 Then
+		;We are in barrack mode
+		
+		;1st barrack
+		$unitaryTrainingTime1 = Get_Training_Time($barrackTroop[0])
+		$unitaryHousingSpace1 = Get_Housing_Space($barrackTroop[0])
+		;2nd barrack
+		$unitaryTrainingTime2 = Get_Training_Time($barrackTroop[1])
+		$unitaryHousingSpace2 = Get_Housing_Space($barrackTroop[1])
+		;3rd barrack
+		$unitaryTrainingTime3 = Get_Training_Time($barrackTroop[2])
+		$unitaryHousingSpace3 = Get_Housing_Space($barrackTroop[2])
+		;4th barrack
+		$unitaryTrainingTime4 = Get_Training_Time($barrackTroop[3])
+		$unitaryHousingSpace4 = Get_Housing_Space($barrackTroop[3])
+			
+	Else
+		;We are not in barrack mode
+		;Calculation of the default time for milking = 4 barracks with goblins
+		
+		;1st barrack
+		$unitaryTrainingTime1 = Get_Training_Time($eGobl)
+		$unitaryHousingSpace1 = Get_Housing_Space($eGobl)
+		;2nd barrack
+		$unitaryTrainingTime2 = Get_Training_Time($eGobl)
+		$unitaryHousingSpace2 = Get_Housing_Space($eGobl)
+		;3rd barrack
+		$unitaryTrainingTime3 = Get_Training_Time($eGobl)
+		$unitaryHousingSpace3 = Get_Housing_Space($eGobl)
+		;4th barrack
+		$unitaryTrainingTime4 = Get_Training_Time($eGobl)
+		$unitaryHousingSpace4 = Get_Housing_Space($eGobl)		
+		
+	EndIf
+	
+	$commonDenominator = $unitaryTrainingTime1 * $unitaryTrainingTime2 * $unitaryTrainingTime3 * $unitaryTrainingTime4
+	;in $commonDenominator seconds I will make $totalHousingSpace1 housing space in the 1st barrack
+	$totalHousingSpace1 = $commonDenominator / $unitaryTrainingTime1 * $unitaryHousingSpace1
+	;in $commonDenominator seconds I will make $totalHousingSpace2 housing space in the 2nd barrack
+	$totalHousingSpace2 = $commonDenominator / $unitaryTrainingTime2 * $unitaryHousingSpace2
+	;in $commonDenominator seconds I will make $totalHousingSpace3 housing space in the 3rd barrack
+	$totalHousingSpace3 = $commonDenominator / $unitaryTrainingTime3 * $unitaryHousingSpace3
+	;in $commonDenominator seconds I will make $totalHousingSpace4 housing space in the 4th barrack
+	$totalHousingSpace4 = $commonDenominator / $unitaryTrainingTime4 * $unitaryHousingSpace4	
+	
+	If $icmbDarkTroopComp = 0 Then 
+		;We are in dark barrack mode
+		;1st dark barrack
+		$unitaryTrainingTime5 = Get_Training_Time($darkBarrackTroop[0])
+		$unitaryHousingSpace5 = Get_Housing_Space($darkBarrackTroop[0])
+		;2nd dark barrack
+		$unitaryTrainingTime6 = Get_Training_Time($darkBarrackTroop[1])
+		$unitaryHousingSpace6 = Get_Housing_Space($darkBarrackTroop[1])			
+
+		$commonDenominator = $commonDenominator * $unitaryTrainingTime5 * $unitaryTrainingTime6
+		;in $commonDenominator seconds I will make $totalHousingSpace5 housing space in the 1st dark barrack
+		$totalHousingSpace5 = $commonDenominator / $unitaryTrainingTime5 * $unitaryHousingSpace5
+		;in $commonDenominator seconds I will make $totalHousingSpace6 housing space in the 2nd dark barrack
+		$totalHousingSpace6 = $commonDenominator / $unitaryTrainingTime6 * $unitaryHousingSpace6
+	Else
+		;We are not in dark barrack mode
+		;Calculation of the default time for milking = no barrack 
+		$totalHousingSpace5 = 0
+		$totalHousingSpace6 = 0
+	EndIf	
+	
+
+
+	;in $commonDenominator seconds I will make $totalHousingSpace housing space for all the barrack
+	$totalHousingSpace = $totalHousingSpace1 + $totalHousingSpace2 + $totalHousingSpace3 + $totalHousingSpace4 + $totalHousingSpace5 + $totalHousingSpace6		
+	
+	$timeToFillCamps = 	$commonDenominator * ($wantedHouseSpace - $currentunitaryHousingSpace) / $totalHousingSpace
+	
+	Return Int($timeToFillCamps)
+		
+EndFunc ; Get_Time_To_Fill_Camps

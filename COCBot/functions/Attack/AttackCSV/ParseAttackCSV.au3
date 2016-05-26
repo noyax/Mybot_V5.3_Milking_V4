@@ -91,6 +91,12 @@ Func ParseAttackCSV($debug = False)
 					Case "ZAP"
 						$itxtMinDE = $value2
 						$ichkSmartZap = 1
+						;Noyax 
+						$gbGoldElixirChangeEBO = False
+						SetLog("Checking if the battle has finished", $COLOR_BLUE)
+						While GoldElixirChangeEBO()
+							CheckHeroesHealth()
+						WEnd						
 						smartZap()
 						$ichkSmartZap = 0
 					Case "MAKE"

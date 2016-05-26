@@ -104,7 +104,8 @@ $tabTroops = GUICtrlCreateTabItem(GetTranslated(1,1, "Troops"))
 			GUICtrlSetOnEvent(-1, "lblTotalCountSpell")
 ; Noyax		$lblTimesLightS = GUICtrlCreateLabel("x", $x + 112, $y, -1, -1)
 ;		GUICtrlSetState(-1, $GUI_HIDE)
-		$chkBrewInAdvanceLightningSpell = GUICtrlCreateCheckbox("", $x + 107, $y + 3, 17, 17) ; Noyax
+		$chkBrewInAdvanceLightningSpell = GUICtrlCreateCheckbox("", $x + 107, $y, 17, 17) ; Noyax
+		GUICtrlSetState(-1, $GUI_HIDE) ;Noyax
 			GUICtrlSetTip(-1, $sTxtBrewInAdvance) ; Noyax
 
 		$y +=25
@@ -120,7 +121,8 @@ $tabTroops = GUICtrlCreateTabItem(GetTranslated(1,1, "Troops"))
 			GUICtrlSetOnEvent(-1, "lblTotalCountSpell")
 ; Noyax		$lblTimesHealS = GUICtrlCreateLabel("x", $x + 112, $y, -1, -1)
 ;		GUICtrlSetState(-1, $GUI_HIDE)
-		$chkBrewInAdvanceHealSpell = GUICtrlCreateCheckbox("", $x + 107, $y + 3, 17, 17) ; Noyax
+		$chkBrewInAdvanceHealSpell = GUICtrlCreateCheckbox("", $x + 107, $y, 17, 17) ; Noyax
+		GUICtrlSetState(-1, $GUI_HIDE) ;Noyax
 			GUICtrlSetTip(-1, $sTxtBrewInAdvance) ; Noyax
 		
 		$y +=25
@@ -136,7 +138,8 @@ $tabTroops = GUICtrlCreateTabItem(GetTranslated(1,1, "Troops"))
 			GUICtrlSetOnEvent(-1, "lblTotalCountSpell")
 ; Noyax		$lblTimesRageS = GUICtrlCreateLabel("x", $x + 112, $y, -1, -1)
 ;		GUICtrlSetState(-1, $GUI_HIDE)
-		$chkBrewInAdvanceRageSpell = GUICtrlCreateCheckbox("", $x + 107, $y + 3, 17, 17) ; Noyax
+		$chkBrewInAdvanceRageSpell = GUICtrlCreateCheckbox("", $x + 107, $y, 17, 17) ; Noyax
+		GUICtrlSetState(-1, $GUI_HIDE) ;Noyax
 			GUICtrlSetTip(-1, $sTxtBrewInAdvance) ; Noyax
 		
 		$y +=25
@@ -152,7 +155,8 @@ $tabTroops = GUICtrlCreateTabItem(GetTranslated(1,1, "Troops"))
 			GUICtrlSetOnEvent(-1, "lblTotalCountSpell")
 ; Noyax		$lblTimesJumpS = GUICtrlCreateLabel("x", $x + 112, $y, -1, -1)
 ;		GUICtrlSetState(-1, $GUI_HIDE)
-		$chkBrewInAdvanceJumpSpell = GUICtrlCreateCheckbox("", $x + 107, $y + 3, 17, 17) ; Noyax
+		$chkBrewInAdvanceJumpSpell = GUICtrlCreateCheckbox("", $x + 107, $y, 17, 17) ; Noyax
+		GUICtrlSetState(-1, $GUI_HIDE) ;Noyax
 			GUICtrlSetTip(-1, $sTxtBrewInAdvance) ; Noyax
 		
 		$y +=25
@@ -168,7 +172,8 @@ $tabTroops = GUICtrlCreateTabItem(GetTranslated(1,1, "Troops"))
 			GUICtrlSetOnEvent(-1, "lblTotalCountSpell")
 ; Noyax		$lblFreezeS = GUICtrlCreateLabel("x", $x + 112, $y, -1, -1)
 ;		GUICtrlSetState(-1, $GUI_HIDE)
-		$chkBrewInAdvanceFreezeSpell = GUICtrlCreateCheckbox("", $x + 107, $y + 3, 17, 17) ; Noyax
+		$chkBrewInAdvanceFreezeSpell = GUICtrlCreateCheckbox("", $x + 107, $y, 17, 17) ; Noyax
+		GUICtrlSetState(-1, $GUI_HIDE) ;Noyax
 			GUICtrlSetTip(-1, $sTxtBrewInAdvance) ; Noyax
 	GUICtrlCreateGroup("", -99, -99, 1, 1)
 
